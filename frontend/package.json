@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@material/material-color-utilities": "^0.2.7",
     "@material/web": "^1.4.1",
     "vue": "^3.4.21"
   },

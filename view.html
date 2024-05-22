@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Chat</title>
+</head>
+
+<body>
+    <h1>Bingo Boss</h1>
+    <h2>Your ID: <span id="ws-id"></span></h2>
+    <form action="" onsubmit="sendMessage(event)">
+        <input type="text" id="messageText" autocomplete="off" />
+        <button>Send</button>
+    </form>
+    <ul id='messages'>
+    </ul>
+    <div>
+        <table id="bingoFeld" border="1">
+        </table>
+    </div>
+    <script>
+        var client_id = Date.now()
+        document.querySelector("#ws-id").textContent = client_id;
+        let feld = document.querySelector("#bingoFeld");
+        var ws = new WebSocket(`ws://localhost:8000/ws/${client_id}`);
+        ws.onmessage = function (event) {
+            feld.innerHTML = "";
+            console.log(event);
+            let data = JSON.parse(event.data);
+            console.log(data);
+            for (row of data) {
+                let rowElement = document.createElement("tr");
+                for (cell of row) {
+                    let tableCell = document.createElement("td");
+                    tableCell.innerText = cell;
+                    tableCell.classList.add("checked")
+                    rowElement.appendChild(tableCell);
+                }
+                feld.appendChild(rowElement);
+            }
+        };
+        function sendMessage(event) {
+            var input = document.getElementById("messageText")
+            ws.send(input.value)
+            input.value = ''
+            event.preventDefault()
+        }
+    </script>
+    <style>
+        .checked {
+            background-color: green;
+        }
+    </style>
+</body>
+
+</html>

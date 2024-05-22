@@ -1,5 +1,6 @@
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
+import schemas
 
 app = FastAPI()
 
@@ -65,10 +66,29 @@ class ConnectionManager:
 
 manager = ConnectionManager()
 
+class GameManager():
+    def __init__(self) -> None:
+        self.active_games: list[schemas.Game] = []
+    
+    def add_game(self, create_game_data: schemas.CreateGame) -> schemas.Game:
+        """Thro"""
+        game = schemas.Game(**create_game_data.model_dump())
+        self.active_games.append(game)
+        return game
+
+
+
 
 @app.get("/")
 async def get():
     return HTMLResponse(html)
+
+@app.websocket("/create-game")
+async def create(create_game: schemas.CreateGame):
+    """Create a game and immediatly connect to it"""
+
+
+
 
 
 @app.websocket("/ws/{client_id}")

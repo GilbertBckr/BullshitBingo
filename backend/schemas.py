@@ -13,11 +13,12 @@ class Player(BaseModel):
     fields: list[list[Field]]
     has_bingo: bool
 
-class Game(BaseModel):
-    id: str
+class CreateGame(BaseModel):
     private: bool = False
+    dimensions: int = 3
     theme: str
     admin_token_hash: str
-    dimensions: int
-    boards: list[Player]
-    game_state: Literal["DRAFT"] | Literal["RUNNING"] | Literal["ENDED"]
+class Game(CreateGame):
+    id: str = "thisIsId"
+    boards: list[Player] = []
+    game_state: Literal["DRAFT"] | Literal["RUNNING"] | Literal["ENDED"] = "DRAFT"

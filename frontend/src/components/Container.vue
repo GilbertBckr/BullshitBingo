@@ -25,6 +25,13 @@ h2 {
     position: relative;
     height: 100%;
     width: 100%;
+    display: flex;
+    flex-direction: column;
     --md-elevation-level: 1;
+}
+
+.container {
+    position: relative;
+    flex-grow: 1;
 }
 </style>

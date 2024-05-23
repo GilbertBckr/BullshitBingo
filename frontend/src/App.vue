@@ -73,8 +73,8 @@ main {
   display: flex;
   flex-direction: row;
   gap: 18px;
-  height: max-content;
   flex-grow: 1;
+  height: 100%;
   margin: 30px;
   margin-top: 0;
 }

@@ -21,12 +21,10 @@ h2 {
 .wrapper {
     border-radius: 8px;
     background-color: var( --md-sys-color-surface-container);
-    position: absolute;
-    top: 130px;
-    left: 30px;
-    right: 30px;
-    bottom: 30px;
+    position: relative;
+    height: 100%;
 }
 
-.container {}
+.container {
+}
 </style>

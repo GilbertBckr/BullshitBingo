@@ -5,7 +5,9 @@
 </template>
 <style scoped>
 h1 {
-    position: absolute;
+    position: relative;
+    top: 0;
+    left: 0;
     font-weight: bolder !important;
     padding: 30px;
     margin: 0;

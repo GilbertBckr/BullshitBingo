@@ -5,4 +5,16 @@
 body {
   background-color: var(--md-sys-color-surface);
   color: var(--md-sys-color-on-surface);
+  margin: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+#app {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }

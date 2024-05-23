@@ -1,54 +1,19 @@
 <script setup>
-import {styles as typescaleStyles} from '@material/web/typography/md-typescale-styles.js';
-import { argbFromHex, themeFromSourceColor, applyTheme } from "@material/material-color-utilities";
+import { styles as typescaleStyles } from '@material/web/typography/md-typescale-styles.js';
+import PageTitle from './components/PageTitle.vue';
+import Container from './components/Container.vue';
 
 // Apply material typescale style classes
 document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
-
-
-// Theme app with material colors
-// Get the theme from a hex color
-const theme = themeFromSourceColor(argbFromHex('#f82506'));
-
-// Check if the user has dark mode turned on
-const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-
-// Apply the theme to the body by updating custom properties for material tokens
-applyTheme(theme, {target: document.body, dark: systemDark});
 </script>
 
 <template>
+  <header>
+    <PageTitle>Bullshit Bingo</PageTitle>
+  </header>
   <main>
-
-    <p class="md-typescale-body-medium">Test Text</p>
+    <Container title="Active Games"></Container>
   </main>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>
+<style scoped></style>

@@ -24,6 +24,7 @@ h2 {
     background-color: var(--md-sys-color-surface-container);
     position: relative;
     height: 100%;
+    width: 100%;
     --md-elevation-level: 1;
 }
 </style>

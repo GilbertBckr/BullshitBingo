@@ -17,6 +17,51 @@ document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
     <Container title="Active Games">
       <GameCardContainer>
         <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
       </GameCardContainer>
     </Container>
   </main>

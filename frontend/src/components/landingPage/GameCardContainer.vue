@@ -4,6 +4,16 @@ export default {
 }
 </script>
 <template>
-    <slot />
+    <div class="wrapper">
+        <slot />
+    </div>
+
 </template>
-<style></style>
+<style scoped>
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 13px;
+    flex-wrap: wrap;
+}
+</style>

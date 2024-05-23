@@ -16,7 +16,7 @@ document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
   <main>
     <Container title="Active Games">
       <GameCardContainer>
-        <GameCard name="SAP-Tec." player="20" dimensions="3"/>
+        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
       </GameCardContainer>
     </Container>
   </main>

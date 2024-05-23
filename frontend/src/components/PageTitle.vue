@@ -1,7 +1,9 @@
 <script>
 </script>
 <template>
-    <h1 class="md-typescale-display-large"><slot/></h1>
+    <h1 class="md-typescale-display-large">
+        <slot />
+    </h1>
 </template>
 <style scoped>
 h1 {

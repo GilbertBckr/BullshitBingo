@@ -5,6 +5,7 @@ export default {
 </script>
 <template>
     <div class="wrapper">
+        <md-elevation></md-elevation>
         <h2 class="md-typescale-headline-large">{{ title }}</h2>
         <div class="container">
             <slot />
@@ -19,12 +20,10 @@ h2 {
 }
 
 .wrapper {
-    border-radius: 8px;
-    background-color: var( --md-sys-color-surface-container);
+    border-radius: 12px;
+    background-color: var(--md-sys-color-surface-container);
     position: relative;
     height: 100%;
-}
-
-.container {
+    --md-elevation-level: 1;
 }
 </style>

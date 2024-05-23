@@ -26,7 +26,7 @@ def test_check_bingo_vertical():
 
     assert bingoUtils.check_bingo(board)
 
-def test_check_bingo_primary():
+def test_check_bingo_primary_diagonal():
     fields: list[list[Field]] = [[Field(content='', checked=False) for _ in range(3)] for _ in range(3)]
     for i in range(3):
         fields[i][i].checked = True 
@@ -35,7 +35,7 @@ def test_check_bingo_primary():
 
     assert bingoUtils.check_bingo(board)
 
-def test_check_bingo_secondary():
+def test_check_bingo_secondary_diagonal():
     fields: list[list[Field]] = [[Field(content='', checked=False) for _ in range(3)] for _ in range(3)]
     for i in range(3):
         fields[i][len(fields)-i-1].checked = True 
@@ -45,6 +45,37 @@ def test_check_bingo_secondary():
     assert bingoUtils.check_bingo(board)
 
 
-def test_check_board_is_complete():
-    assert 1==1
+def test_check_game_is_complete_true():
+    player1 = Player(name="player1", token_hash="01", fields=[[Field(content='', checked=False) for _ in range(3)] for _ in range(3)], has_bingo=False)
+    player2 = Player(name="player2", token_hash="02", fields=[[Field(content='', checked=False) for _ in range(3)] for _ in range(3)], has_bingo=False)
+    player3 = Player(name="player3", token_hash="03", fields=[[Field(content='', checked=False) for _ in range(3)] for _ in range(3)], has_bingo=False)
 
+    game = Game(
+            private=False,
+            dimensions=3,
+            theme="theme",
+            admin_token_hash="admin_token_hash",
+            id="id",
+            players=[player1, player2, player3],
+            game_state="DRAFT"
+            )
+
+    assert bingoUtils.check_game_is_complete(game)
+
+
+def test_check_game_is_complete_false():
+    player1 = Player(name="player1", token_hash="01", fields=[[Field(content='', checked=False) for _ in range(2)] for _ in range(3)], has_bingo=False)
+    player2 = Player(name="player2", token_hash="02", fields=[[Field(content='', checked=False) for _ in range(3)] for _ in range(3)], has_bingo=False)
+    player3 = Player(name="player3", token_hash="03", fields=[[Field(content='', checked=False) for _ in range(3)] for _ in range(3)], has_bingo=False)
+
+    game = Game(
+            private=False,
+            dimensions=3,
+            theme="theme",
+            admin_token_hash="admin_token_hash",
+            id="id",
+            players=[player1, player2, player3],
+            game_state="DRAFT"
+            )
+
+    assert not bingoUtils.check_game_is_complete(game) 

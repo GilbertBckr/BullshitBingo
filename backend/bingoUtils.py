@@ -1,4 +1,4 @@
-from schemas import Player, Game
+from schemas import Player, Game, Field
 
 
 def check_bingo(board:Player) -> bool:
@@ -27,13 +27,18 @@ def check_bingo(board:Player) -> bool:
 
 
 
-def check_board_is_complete(game: Game):
-    dim = Game.dimensions
+def check_game_is_complete(game: Game):
+    dim = game.dimensions
 
-    for board in game.boards:
-        flatten = [x for row in board.fields for x in row]
-        if flatten != dim*dim:
+    for player in game.players:
+        i = 0
+        for i, row in enumerate(player.fields):
+            # horizontal 
+            if len(row) != dim:
+                return False 
+            
+        # vertical 
+        if i != dim-1:
             return False
 
-
-
+    return True

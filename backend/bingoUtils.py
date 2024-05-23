@@ -27,11 +27,11 @@ def check_bingo(board:Player) -> bool:
 
 
 
-def check_game_is_complete(game: Game):
-    dim = game.dimensions
+def check_game_is_complete(game: Game) -> bool:
+    dim: int = game.dimensions
 
     for player in game.players:
-        i = 0
+        i: int = 0
         for i, row in enumerate(player.fields):
             # horizontal 
             if len(row) != dim:

@@ -46,11 +46,11 @@ def test_check_bingo_secondary_diagonal():
 
 
 def test_check_game_is_complete_true():
-    player1 = Player(name="player1", token_hash="01", fields=[[Field(content='', checked=False) for _ in range(3)] for _ in range(3)], has_bingo=False)
-    player2 = Player(name="player2", token_hash="02", fields=[[Field(content='', checked=False) for _ in range(3)] for _ in range(3)], has_bingo=False)
-    player3 = Player(name="player3", token_hash="03", fields=[[Field(content='', checked=False) for _ in range(3)] for _ in range(3)], has_bingo=False)
+    player1: Player = Player(name="player1", token_hash="01", fields=[[Field(content='', checked=False) for _ in range(3)] for _ in range(3)], has_bingo=False)
+    player2: Player = Player(name="player2", token_hash="02", fields=[[Field(content='', checked=False) for _ in range(3)] for _ in range(3)], has_bingo=False)
+    player3: Player = Player(name="player3", token_hash="03", fields=[[Field(content='', checked=False) for _ in range(3)] for _ in range(3)], has_bingo=False)
 
-    game = Game(
+    game: Game = Game(
             private=False,
             dimensions=3,
             theme="theme",
@@ -64,11 +64,11 @@ def test_check_game_is_complete_true():
 
 
 def test_check_game_is_complete_false():
-    player1 = Player(name="player1", token_hash="01", fields=[[Field(content='', checked=False) for _ in range(2)] for _ in range(3)], has_bingo=False)
-    player2 = Player(name="player2", token_hash="02", fields=[[Field(content='', checked=False) for _ in range(3)] for _ in range(3)], has_bingo=False)
-    player3 = Player(name="player3", token_hash="03", fields=[[Field(content='', checked=False) for _ in range(3)] for _ in range(3)], has_bingo=False)
+    player1: Player = Player(name="player1", token_hash="01", fields=[[Field(content='', checked=False) for _ in range(2)] for _ in range(3)], has_bingo=False)
+    player2: Player = Player(name="player2", token_hash="02", fields=[[Field(content='', checked=False) for _ in range(3)] for _ in range(3)], has_bingo=False)
+    player3: Player = Player(name="player3", token_hash="03", fields=[[Field(content='', checked=False) for _ in range(3)] for _ in range(3)], has_bingo=False)
 
-    game = Game(
+    game: Game = Game(
             private=False,
             dimensions=3,
             theme="theme",

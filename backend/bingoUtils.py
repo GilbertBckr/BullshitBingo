@@ -30,9 +30,10 @@ def check_bingo(board:Player) -> bool:
 def check_board_is_complete(game: Game):
     dim = Game.dimensions
 
-    for board in game.boards:
+    for board in game.players:
+        #TODO rewrite this to loop through lens
         flatten = [x for row in board.fields for x in row]
-        if flatten != dim*dim:
+        if len(flatten) != dim*dim:
             return False
 
 

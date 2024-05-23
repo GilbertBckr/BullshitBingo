@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from typing import Literal
+import uuid
 
 
 class Field(BaseModel):
@@ -8,10 +9,11 @@ class Field(BaseModel):
 
 class CreatePlayer(BaseModel):
     name: str
-    token_hash: str
+    user_id: str
 
 
 class Player(CreatePlayer):
+    id: uuid.UUID
     fields: list[list[Field]]
     has_bingo: bool
 
@@ -19,11 +21,9 @@ class CreateGame(BaseModel):
     private: bool = False
     dimensions: int = 3
     theme: str
-    admin_token_hash: str
+    admin_id: str
 
 class Game(CreateGame):
     id: str = "thisIsId"
     players: list[Player] = []
     game_state: Literal["DRAFT"] | Literal["RUNNING"] | Literal["ENDED"] = "DRAFT"
-
-"""{"theme": "Röthig", "admin_token_hash": "asdfa"}"""

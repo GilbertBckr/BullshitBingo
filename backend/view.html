@@ -23,7 +23,7 @@
         var client_id = Date.now()
         document.querySelector("#ws-id").textContent = client_id;
         let feld = document.querySelector("#bingoFeld");
-        var ws = new WebSocket(`ws://localhost:8000/create-game`);
+        var ws = new WebSocket(`ws://localhost:8000/create-game/perry}`);
         ws.onmessage = function (event) {
             console.log(event)
             feld.innerHTML = "";

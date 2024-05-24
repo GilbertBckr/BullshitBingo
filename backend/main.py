@@ -1,6 +1,7 @@
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
 from fastapi import Depends, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 import schemas
 import uuid
 import security
@@ -8,6 +9,10 @@ from typing import Annotated, Any
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"]
+)
 
 with open("view.html", "r") as f:
     html = f.read()
@@ -151,7 +156,7 @@ async def create(
         pass
 
 
-@app.websocket("/ws/join-game/{game_id}/{username}")
+@app.websocket("/join-game/{game_id}/{username}")
 async def join_game(
     websocket: WebSocket,
     game_id: str,

@@ -1,187 +1,208 @@
 <script setup>
-import GameCardContainer from "./GameCardContainer.vue";
-import GameCard from "./GameCard.vue";
+import GameCardContainer from './GameCardContainer.vue';
+import GameCard from './GameCard.vue';
+import { getAwailableGames } from '../../logic/gameRetrieval'
 </script>
 
 <script>
 export default {
-  data() {
-    return {
-      isPopupVisible: false,
-      formData: {
-        theme: '',
-        username: ''
-      }
-    }
-  },
-  methods: {
-    showPopup() {
-      this.isPopupVisible = true;
+    data() {
+        return {
+            isPopupVisible: false,
+            formData: {
+                theme: '',
+                username: ''
+            },
+            privateGameId: "",
+            games: []
+        }
     },
-    closePopup() {
-      this.formData.field1 = '';
-      this.formData.field2 = '';
+    methods: {
+        showPopup() {
+            this.isPopupVisible = true;
+        },
+        closePopup() {
+            this.formData.theme = '';
+            this.formData.username = '';
 
-      this.isPopupVisible = false;
+            this.isPopupVisible = false;
+        },
+
+        submitForm() {
+            console.log(this.formData);
+
+            this.closePopup();
+        },
+        async onJoinedPrivateGame() {
+            let games = await getAwailableGames();
+            games.push({ private: false, dimensions: 1, id: "ABCD", theme: "roethig bingo", players: [{ name: "marvin", user_id: "duibdiluasbd" }, { name: "mathis", user_id: "duibdiluasbd" }] });
+            games.push({ private: false, dimensions: 2, id: "BCDE", theme: "saptech bingo", players: [{ name: "marvin", user_id: "duibdiluasbd" }, { name: "mathis", user_id: "duibdiluasbd" }] });
+            games.push({ private: false, dimensions: 3, id: "CDEF", theme: "boyle bingo", players: [{ name: "marvin", user_id: "duibdiluasbd" }, { name: "mathis", user_id: "duibdiluasbd" }] });
+            games.push({ private: false, dimensions: 4, id: "DEFG", theme: "bingo bingo", players: [{ name: "marvin", user_id: "duibdiluasbd" }, { name: "mathis", user_id: "duibdiluasbd" }] });
+            this.games = games;
+            for (let i = 0; i < games.length; i++) {
+                if (games[i].id == this.privateGameId) {
+                    console.log("Joining Game...");
+                    // Join private Game and route 
+                }
+            }
+        }
     },
-
-    submitForm() {
-      console.log(this.formData);
-
-      this.closePopup();
+    async mounted() {
+        let games = await getAwailableGames();
+        games.push({ private: false, dimensions: 1, id: "ABCD", theme: "roethig bingo", players: [{ name: "marvin", user_id: "duibdiluasbd" }, { name: "mathis", user_id: "duibdiluasbd" }] });
+        games.push({ private: false, dimensions: 2, id: "BCDE", theme: "saptech bingo", players: [{ name: "marvin", user_id: "duibdiluasbd" }, { name: "mathis", user_id: "duibdiluasbd" }] });
+        games.push({ private: false, dimensions: 3, id: "CDEF", theme: "boyle bingo", players: [{ name: "marvin", user_id: "duibdiluasbd" }, { name: "mathis", user_id: "duibdiluasbd" }] });
+        games.push({ private: false, dimensions: 4, id: "DEFG", theme: "bingo bingo", players: [{ name: "marvin", user_id: "duibdiluasbd" }, { name: "mathis", user_id: "duibdiluasbd" }] });
+        this.games = games;
     }
-  }
 }
 </script>
 <template>
-  <div>
-    <h2 class="md-typescale-headline-large">Active Games</h2>
-    <div class="buttons">
-      <md-outlined-button style="margin-right: 13px">
-        Join Game
-        <span
-          slot="icon"
-          class="material-symbols-outlined"
-          style="font-size: 18px"
-        >
-          edit
-        </span>
-      </md-outlined-button>
+    <div>
+        <h2 class="md-typescale-headline-large">Active Games</h2>
+        <div class="buttons">
+            <input v-model="privateGameId" style="width: 10px;" />
+            <md-outlined-text-field label="Game ID" class="gameid-textfield" v-model="privateGameId">
+            </md-outlined-text-field>
+            <md-outlined-button style="margin-right: 13px;" @click="onJoinedPrivateGame()">
+                Join Game
+                <span slot="icon" class="material-symbols-outlined" style="font-size: 18px;">
+                    edit
+                </span>
+            </md-outlined-button>
 
-      <md-filled-button @click="showPopup">
-        Create New
-        <span
-          slot="icon"
-          class="material-symbols-outlined"
-          style="font-size: 18px"
-        >
-          add
-        </span>
-      </md-filled-button>
+            <md-filled-button @click="showPopup">
+                Create New
+                <span slot="icon" class="material-symbols-outlined" style="font-size: 18px">
+                    add
+                </span>
+            </md-filled-button>
+
+        </div>
+
+        <div v-if="isPopupVisible" class="popup">
+            <form @submit.prevent="submitForm" class="dialog">
+                <h2 class="dialog-title">Create New Game</h2>
+
+                <div class="dialog-content">
+                    <label for="gameVisibility">Visibility:</label>
+                    <select name="gameVisibility" id="gameVisibility" v-model="formData.gameVisibility">
+                        <option value="private">Private</option>
+                        <option value="public">Public</option>
+                    </select>
+
+                    <label for="theme">Theme:</label>
+                    <input type="text" id="theme" v-model="formData.theme" required />
+
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" v-model="formData.username" required />
+                </div>
+
+                <div class="dialog-actions">
+                    <button type="submit" class="mdc-button mdc-button--raised">Submit</button>
+                    <button type="button" class="mdc-button mdc-button--outlined" @click="closePopup">Close</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="container">
+            <GameCardContainer>
+                <GameCard v-for="(game) in games" :name="game.theme" :playerCount="game.players.length"
+                    :dimensions="game.dimensions" :key="game.id" />
+            </GameCardContainer>
+        </div>
     </div>
-
-     <div v-if="isPopupVisible" class="popup">
-    <form @submit.prevent="submitForm" class="dialog">
-      <h2 class="dialog-title">Create New Game</h2>
-
-      <div class="dialog-content">
-        <label for="gameVisibility">Visibility:</label>
-        <select name="gameVisibility" id="gameVisibility" v-model="formData.gameVisibility">
-          <option value="private">Private</option>
-          <option value="public">Public</option>
-        </select>
-
-        <label for="theme">Theme:</label>
-        <input type="text" id="theme" v-model="formData.theme" required />
-
-        <label for="username">Username:</label>
-        <input type="text" id="username" v-model="formData.username" required />
-      </div>
-
-      <div class="dialog-actions">
-        <button type="submit" class="mdc-button mdc-button--raised">Submit</button>
-        <button type="button" class="mdc-button mdc-button--outlined" @click="closePopup">Close</button>
-      </div>
-    </form>
-  </div>
-
-    <div class="container">
-      <GameCardContainer>
-        <GameCard
-          v-for="index in 28"
-          name="SAP-Tec."
-          playerCount="20"
-          dimensions="3"
-        />
-      </GameCardContainer>
-    </div>
-  </div>
 </template>
 <style scoped>
 h2 {
-  margin: 0;
-  padding: 30px;
+    margin: 0;
+    padding: 30px;
 }
 
 .container {
-  position: relative;
-  flex-grow: 1;
+    position: relative;
+    flex-grow: 1;
 }
 
 .buttons {
-  position: absolute;
-  top: 30px;
-  right: 30px;
+    position: absolute;
+    top: 30px;
+    right: 30px;
 }
 
 .popup {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.3);
-  z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 1000;
 }
 
 .dialog {
-  background: white;
-  border-radius: 4px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  max-width: 500px;
-  width: 100%;
-  padding: 20px;
-  box-sizing: border-box;
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .dialog-title {
-  margin-top: 0;
-  margin-bottom: 16px;
-  font-size: 24px;
-  text-align: center;
+    margin-top: 0;
+    margin-bottom: 16px;
+    font-size: 24px;
+    text-align: center;
 }
 
 .dialog-content label {
-  display: block;
-  margin-top: 8px;
+    display: block;
+    margin-top: 8px;
 }
 
 .dialog-content input,
 .dialog-content select {
-  width: calc(100% - 24px);
-  margin: 8px 0;
-  padding: 8px 12px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+    width: calc(100% - 24px);
+    margin: 8px 0;
+    padding: 8px 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
 .dialog-actions {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 24px;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 24px;
 }
 
 .mdc-button {
-  font-size: 14px;
-  padding: 0 16px;
-  line-height: 36px;
-  border-radius: 4px;
-  text-transform: uppercase;
+    font-size: 14px;
+    padding: 0 16px;
+    line-height: 36px;
+    border-radius: 4px;
+    text-transform: uppercase;
 }
 
 .mdc-button--raised {
-  background-color: #6200ea;
-  color: white;
-  margin-right: 8px;
+    background-color: #6200ea;
+    color: white;
+    margin-right: 8px;
 }
 
 .mdc-button--outlined {
-  border: 1px solid #6200ea;
-  color: #6200ea;
+    border: 1px solid #6200ea;
+    color: #6200ea;
 }
 
+.gameid-textfield {
+    height: 40px;
+    padding-right: 10px;
+}
 </style>

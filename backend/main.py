@@ -107,8 +107,8 @@ class GameManager:
         print("braodcasting game state")
 
     def get_active_games(self) -> list[schemas.Game]:
-        self.active_games = {k: v for k, v in self.active_games.items() if not v.private and v.game_state == "DRAFT"}
-        return list(self.active_games.values())
+        games: dict[str, schemas.Game] = {k: v for k, v in self.active_games.items() if not v.private and v.game_state == "DRAFT"}
+        return list(games.values())
 
 
 game_manager = GameManager()

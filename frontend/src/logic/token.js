@@ -3,7 +3,7 @@ const sayHello = name => `Hello, ${testVariable}!`;
 let testVariable = 0
 const baseUrl = "localhost:8000/"
 const serverUrl = `http://${baseUrl}`
-const sockerBaseUrl = `ws://${baseUrl}`
+const socketBaseUrl = `ws://${baseUrl}`
 
 const mutater = () => {
     testVariable++;
@@ -21,12 +21,28 @@ const getAccessToken = async () => {
 
 const createGame = async (username) => {
     try {
-        const socket = new WebSocket(sockerBaseUrl);
-        socket.no
+        const token = await getAccessToken()
+        const socket = new WebSocket(socketBaseUrl + "create-game/" + username,);
+        socket.onopen = (event) => {
+            socket.send(token);
+            socket.send(JSON.stringify({ theme: "Test Theme" }));
+        }
+        socket.onmessage = (event) => {
+            console.log(event);
+        }
+        socket.onerror = (error) => {
+            console.log("Error creating game:")
+            console.log(error)
+        }
     } catch (error) {
 
     }
 }
 
+const joinGame = async (username) => {
+    const token = await getAccessToken()
+    socket = new WebSocket
+}
+
 // Exporting the function
-export { sayHello, getAccessToken };
+export { sayHello, getAccessToken, createGame, };

@@ -58,7 +58,7 @@ def create_access_token(data: dict[str, Any], expires_delta: timedelta | None = 
     return encoded_jwt
 
 
-async def get_current_user_id(authorization: Annotated[str | None, Header()] = None) -> str:
+def get_current_user_id(authorization: Annotated[str | None, Header()] = None) -> str:
     if authorization is None or not authorization.strip():
         raise HTTPException(401, "Token is not set")
     try:

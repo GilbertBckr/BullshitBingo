@@ -9,10 +9,7 @@ from typing import Annotated, Any
 
 app = FastAPI()
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"]
-)
+app.add_middleware(CORSMiddleware, allow_origins=["*"])
 
 with open("view.html", "r") as f:
     html = f.read()
@@ -117,10 +114,13 @@ async def get_active_games():
 async def create(
     websocket: WebSocket,
     username: str,
-    user_id: Annotated[str, Depends(security.get_current_user_id)],
 ):
     """Create a game and immediately connect to it"""
     await websocket.accept()
+
+    token = await websocket.receive_text()
+    user_id = security.get_current_user_id(token)
+    await websocket.send_text("Hallo")
     try:
         # As this is the create endpoint we require the user to immediately send the game data before further communication is possible
         create_game_data = await websocket.receive_json()
@@ -135,6 +135,7 @@ async def create(
         validated_create_player_data = schemas.CreatePlayer(
             name=username, user_id=user_id
         )
+        print(f"{game=}")
         game_manager.join_game(game.id, validated_create_player_data)
 
         # After creating the game the admin socket is saved and receives the game state

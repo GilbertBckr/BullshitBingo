@@ -19,6 +19,9 @@ export default {
         changeCell(payload) {
             console.log(payload)
             this.socket.send(`CHANGE_CELL ${JSON.stringify(payload)}`)
+        },
+        watchPlayer(index){
+            console.log("watching..." + index);
         }
     },
     mounted() {
@@ -47,8 +50,8 @@ export default {
 
         </template>
     </div>
-    <div>
-        <PlayersList :game="game"></PlayersList>
+    <div style="width: 30%;">
+        <PlayersList :game="game" @watchPlayer="watchPlayer"></PlayersList>
     </div>
 </template>
 

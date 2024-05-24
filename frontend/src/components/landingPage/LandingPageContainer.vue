@@ -40,18 +40,19 @@ export default {
                 let id = game.id
 
                 this.$router.push('/lobby/' + id);
+                saveWebsocket(socket, id);
 
             }
             this.games = await getAvailableGames();
             this.closePopup();
         },
 
-        async submitPrivateGame(){
+        async submitPrivateGame() {
             this.isPrivateGameJoinVisible = false;
             joinGame(this.privateGameId, this.privateGameUsername);
             this.$router.push('/lobby/' + this.privateGameId);
         },
-        closePopupPrivateGame(){
+        closePopupPrivateGame() {
             this.isPrivateGameJoinVisible = false;
         },
 
@@ -61,7 +62,7 @@ export default {
                     this.isPrivateGameJoinVisible = true;
                 }
             }
-            
+
         },
         async updateGames() {
             this.games = await getAvailableGames();
@@ -127,17 +128,18 @@ export default {
 
         <div v-if="isPrivateGameJoinVisible" class="popup">
             <form @submit.prevent="submitPrivateGame" class="dialog">
-            <h2 class="dialog-title">Join Game</h2>
+                <h2 class="dialog-title">Join Game</h2>
 
-            <div class="dialog-content">
-                <label for="username">Username:</label>
-                <input type="text" id="username" v-model="privateGameUsername" required />
-            </div>
+                <div class="dialog-content">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" v-model="privateGameUsername" required />
+                </div>
 
-            <div class="dialog-actions">
-                <button type="submit" class="mdc-button mdc-button--raised">Join Game</button>
-                <button type="button" class="mdc-button mdc-button--outlined" @click="closePopupPrivateGame">Close</button>
-            </div>
+                <div class="dialog-actions">
+                    <button type="submit" class="mdc-button mdc-button--raised">Join Game</button>
+                    <button type="button" class="mdc-button mdc-button--outlined"
+                        @click="closePopupPrivateGame">Close</button>
+                </div>
             </form>
         </div>
 

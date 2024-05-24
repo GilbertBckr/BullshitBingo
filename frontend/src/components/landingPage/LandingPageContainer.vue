@@ -12,7 +12,7 @@ export default {
         <h2 class="md-typescale-headline-large">Active Games</h2>
         <div class="buttons">
             <md-outlined-button style="margin-right: 13px;">
-                Enter Code
+                Join Game
                 <span slot="icon" class="material-symbols-outlined" style="font-size: 18px;">
                     edit
                 </span>

@@ -3,6 +3,7 @@ from fastapi.responses import HTMLResponse
 from fastapi import Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from typing import Annotated, Any
+from typing import Literal
 import schemas
 import uuid
 import security
@@ -106,6 +107,7 @@ class GameManager:
         print("braodcasting game state")
 
     def get_active_games(self) -> list[schemas.Game]:
+        self.active_games = {k: v for k, v in self.active_games.items() if not v.private and v.game_state == "DRAFT"}
         return list(self.active_games.values())
 
 

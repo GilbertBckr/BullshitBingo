@@ -9,7 +9,7 @@ export default {
         return {
             socket: null,
             game: {},
-
+            playerBoardIndex: 0
         }
     },
     methods: {
@@ -21,6 +21,7 @@ export default {
             this.socket.send(`CHANGE_CELL ${JSON.stringify(payload)}`)
         },
         watchPlayer(index){
+            this.playerBoardIndex = index;
             console.log("watching..." + index);
         }
     },
@@ -35,8 +36,10 @@ export default {
             console.log("Local game:")
             console.log(localGame)
             this.game = localGame
+            this.playerBoardIndex = this.game.players.length - 1;
         }
         this.refreshSocket()
+        
     }
 
 }
@@ -46,7 +49,7 @@ export default {
     <div>
         <h1>Lobby Game {{ $route.params.game_id }}</h1>
         <template v-if="game != null">
-            <PlayerBoard :board="game.players == undefined ? null : game.players[0]" @change-cell="changeCell"></PlayerBoard>
+            <PlayerBoard :board="game.players == undefined ? null : game.players[playerBoardIndex]" @change-cell="changeCell"></PlayerBoard>
 
         </template>
     </div>

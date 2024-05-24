@@ -11,6 +11,16 @@ body {
   height: 100vh;
 }
 
+.topLevelContainer {
+  border-radius: 28px;
+  background-color: var(--md-sys-color-surface-container);
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 #app {
   position: relative;
   width: 100vw;

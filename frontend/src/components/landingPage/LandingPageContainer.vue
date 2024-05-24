@@ -8,8 +8,22 @@ export default {
 }
 </script>
 <template>
-    <div class="wrapper">
+    <div class="topLevelContainer">
         <h2 class="md-typescale-headline-large">Active Games</h2>
+        <div class="buttons">
+            <md-outlined-button style="margin-right: 13px;">
+                Enter Code
+                <span slot="icon" class="material-symbols-outlined" style="font-size: 18px;">
+                    edit
+                </span>
+            </md-outlined-button>
+            <md-filled-button>
+                Create New
+                <span slot="icon" class="material-symbols-outlined" style="font-size: 18px;">
+                    add
+                </span>
+            </md-filled-button>
+        </div>
         <div class="container">
             <GameCardContainer>
                 <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
@@ -24,18 +38,14 @@ h2 {
     padding: 30px;
 }
 
-.wrapper {
-    border-radius: 28px;
-    background-color: var(--md-sys-color-surface-container);
-    position: relative;
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
 .container {
     position: relative;
     flex-grow: 1;
+}
+
+.buttons {
+    position: absolute;
+    top: 30px;
+    right: 30px;
 }
 </style>

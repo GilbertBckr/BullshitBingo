@@ -5,18 +5,6 @@
 <script>
 export default {
     props: ['game'],
-    data(){
-
-    },
-    created(){
-        this.players = this.game.players;
-
-    },
-    methods: {
-        watchPlayer(index){
-            console.log("watching..." + index);
-        }
-    }
 }
 </script>
 

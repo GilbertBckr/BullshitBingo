@@ -7,6 +7,7 @@ import schemas
 import uuid
 import security
 import bingoUtils
+import command_handler
 
 app = FastAPI()
 
@@ -108,6 +109,8 @@ class GameManager:
 
 game_manager = GameManager()
 
+command_handler_instance = command_handler.CommandHandler(game_manager)
+
 
 @app.get("/")
 async def get():
@@ -190,7 +193,8 @@ async def join_game(
 
     try:
         while True:
-            await websocket.receive_json()
+            command = await websocket.receive_text()
+            await command_handler_instance.handle_command(command, game_id)
 
     except WebSocketDisconnect:
         websocket_manager.disconnect(user_id, game_id)
@@ -202,8 +206,7 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
     await websocket.accept()
     try:
         while True:
-            pass
-            # data = await websocket.receive_text()
+            command = await websocket.receive_text()
             # await websocket_manager.send_personal_message(f"You wrote: {data}", websocket)
             # await websocket_manager.broadcast(f"{data}")
     except WebSocketDisconnect:

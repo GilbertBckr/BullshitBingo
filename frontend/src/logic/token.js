@@ -38,12 +38,13 @@ const createGame = async (username, theme) => {
     }
 }
 
-const joinGame = async (gameId, username) => {
+const joinGame = async (gameId, username, callbackAfterConnect) => {
     const token = await getAccessToken()
     const socket = new WebSocket(`${socketBaseUrl}join-game/${gameId}/${username}`)
     socket.onopen = () => {
         socket.send(token);
         saveWebsocket(socket, gameId)
+        callbackAfterConnect()
     }
 }
 

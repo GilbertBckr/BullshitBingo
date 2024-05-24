@@ -2,10 +2,11 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
 from fastapi import Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from typing import Annotated, Any
 import schemas
 import uuid
 import security
-from typing import Annotated, Any
+import bingoUtils
 
 app = FastAPI()
 
@@ -55,9 +56,18 @@ class GameManager:
     def add_game(self, create_game_data: schemas.CreateGame) -> schemas.Game:
         """Throws error"""
         # TODO logic for generating game ids
-        game = schemas.Game(**create_game_data.model_dump())
+        game = schemas.Game(**create_game_data.model_dump(), id=self.generate_id())
         self.active_games[game.id] = game
         return game
+
+
+    def generate_id(self) -> str:
+        while True:
+            id: str = bingoUtils.create_id()
+            if id in self.active_games:
+                pass
+
+            return id
 
     def can_join_game(self, game_id: str) -> bool:
         """Determines if the specified game can be joined"""
@@ -65,6 +75,7 @@ class GameManager:
         if game is None:
             return False
         return game.game_state == "DRAFT"
+
 
     def name_is_available(self, game_id: str, username: str) -> bool:
         # TODO handle reconnect case
@@ -127,7 +138,7 @@ async def create(
 
         # Checking if the data is valid TODO error handling
         validated_create_game_data: schemas.CreateGame = schemas.CreateGame(
-            **create_game_data, admin_id=user_id, id=str(uuid.uuid4())
+            **create_game_data, admin_id=user_id 
         )
         game: schemas.Game = game_manager.add_game(validated_create_game_data)
 

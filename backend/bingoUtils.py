@@ -1,4 +1,6 @@
 from schemas import Player, Game
+import string
+import random
 
 
 def check_bingo(board:Player) -> bool:
@@ -47,5 +49,13 @@ def check_game_is_complete(game: Game) -> bool:
             return False
 
     return True
+
+def create_id(length: int = 5) -> str:
+    alphabet: list[str] = list(string.ascii_uppercase)
+    id: str = "" 
+    for i in range(length):
+        index: int = random.randint(0, 25)
+        id += alphabet[index]
+    return id
 
 

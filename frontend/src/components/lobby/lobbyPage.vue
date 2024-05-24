@@ -16,11 +16,11 @@ export default {
         refreshSocket() {
             this.socket.send("REFRESH");
         },
-        changeCell(payload) {
-            console.log(payload)
-            this.socket.send(`CHANGE_CELL ${JSON.stringify(payload)}`)
+        changeCellChecked(payload) {
+            payload["game_id"] = this.game.id
+            this.socket.send(`CHANGE_CELL_CHECKED ${JSON.stringify(payload)}`)
         },
-        watchPlayer(index){
+        watchPlayer(index) {
             this.playerBoardIndex = index;
             console.log("watching..." + index);
         }
@@ -39,7 +39,7 @@ export default {
             this.playerBoardIndex = this.game.players.length - 1;
         }
         this.refreshSocket()
-        
+
     }
 
 }
@@ -48,8 +48,10 @@ export default {
 <template>
     <div>
         <h1>Lobby Game {{ $route.params.game_id }}</h1>
+        <h2>{{ game.theme }}</h2>
         <template v-if="game != null">
-            <PlayerBoard :board="game.players == undefined ? null : game.players[playerBoardIndex]" @change-cell="changeCell"></PlayerBoard>
+            <PlayerBoard :board="game.players == undefined ? null : game.players[playerBoardIndex]"
+                @change-cell-checked="changeCellChecked"></PlayerBoard>
 
         </template>
     </div>

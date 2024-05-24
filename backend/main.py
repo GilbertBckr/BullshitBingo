@@ -246,7 +246,7 @@ async def join_game(
 async def login_for_access_token() -> security.Token:
     user_id = uuid.uuid4()
     access_token = security.create_access_token(data={"sub": str(user_id)})
-    return security.Token(access_token=access_token)
+    return security.Token(access_token=access_token, user_id=str(user_id))
 
 
 @app.get("/users/me/", response_model=str)

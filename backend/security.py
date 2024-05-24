@@ -30,6 +30,7 @@ def mocked_user_token() -> str:
     
 class Token(BaseModel):
     access_token: str
+    user_id: str
 
 
 

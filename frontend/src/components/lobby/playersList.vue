@@ -13,8 +13,7 @@ export default {
 </script>
 
 <template>
-    <h1>Lobby</h1>
-    Game {{ $route.params.game_id }}
+    <p>Players</p>
 </template>
 
 <style scoped>

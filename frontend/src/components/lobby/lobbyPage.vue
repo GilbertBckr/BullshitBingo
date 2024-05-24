@@ -1,5 +1,6 @@
 <script setup>
-import playersList from "./playersList.vue";
+import PlayersList from "./playersList.vue";
+import PlayerBoard from "./playerBoard.vue";
 </script>
 
 <script>
@@ -35,9 +36,13 @@ export default {
 </script>
 
 <template>
-    <h1>Lobby</h1>
-    Game {{ $route.params.game_id }}
-    <p>{{ game }}</p>
+    <div>
+        <h1>Lobby Game {{ $route.params.game_id }}</h1>
+        <PlayerBoard :game="game"></PlayerBoard>
+    </div>
+    <div>
+        <PlayersList :game="game"></PlayersList>
+    </div>
 </template>
 
 <style scoped></style>

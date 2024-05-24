@@ -118,7 +118,10 @@ async def create(
         )
         game: schemas.Game = game_manager.add_game(validated_create_game_data)
 
-        # TODO admin needs to join game as player as well
+        # Admin needs to join the game as well
+        validated_create_player_data = schemas.CreatePlayer(name=username, user_id=user_id)
+        game_manager.join_game(game.id, validated_create_player_data)
+
         # After creating the game the admin socket is saved and receives the game state
         await websocket_manager.save_connection(
             game_id=game.id, user_id=user_id, websocket=websocket
@@ -128,6 +131,7 @@ async def create(
         while True:
             print("Added admind")
             data = await websocket.receive_json()
+            print(data)
             # TODO handle data
             # await websocket_manager.broadcast(f"{data}")
 
@@ -158,7 +162,7 @@ async def join_game(
 
     try:
         while True:
-            pass
+            await websocket.receive_json()
 
     except WebSocketDisconnect:
         websocket_manager.disconnect(user_id, game_id)
@@ -184,7 +188,7 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
 async def login_for_access_token() -> security.Token:
     user_id = uuid.uuid4()
     access_token = security.create_access_token(data={"sub": str(user_id)})
-    return security.Token(access_token=access_token, token_type="bearer")
+    return security.Token(access_token=access_token)
 
 
 @app.get("/users/me/", response_model=str)

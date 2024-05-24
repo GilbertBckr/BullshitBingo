@@ -37,13 +37,13 @@ class ConnectionManager:
     # async def send_personal_message(self, message: str, websocket: WebSocket):
     # await websocket.send_text(message)
 
-    async def broadcast(self, game_id: str, data: Any):
+    async def broadcast(self, game_id: str, data: str):
         """Sends messages to all the active websocket's of a game"""
         sockets = self.active_connections[game_id].values()
 
         for socket in sockets:
             # TODO optimize parallelization
-            await socket.send_json(data)
+            await socket.send_text(data)
 
 
 websocket_manager = ConnectionManager()
@@ -60,7 +60,6 @@ class GameManager:
         self.active_games[game.id] = game
         return game
 
-
     def generate_id(self) -> str:
         while True:
             id: str = bingoUtils.create_id()
@@ -75,7 +74,6 @@ class GameManager:
         if game is None:
             return False
         return game.game_state == "DRAFT"
-
 
     def name_is_available(self, game_id: str, username: str) -> bool:
         # TODO handle reconnect case
@@ -131,14 +129,13 @@ async def create(
 
     token = await websocket.receive_text()
     user_id = security.get_current_user_id(token)
-    await websocket.send_text("Hallo")
     try:
         # As this is the create endpoint we require the user to immediately send the game data before further communication is possible
         create_game_data = await websocket.receive_json()
 
         # Checking if the data is valid TODO error handling
         validated_create_game_data: schemas.CreateGame = schemas.CreateGame(
-            **create_game_data, admin_id=user_id 
+            **create_game_data, admin_id=user_id
         )
         game: schemas.Game = game_manager.add_game(validated_create_game_data)
 

@@ -2,7 +2,7 @@
 import GameCardContainer from './GameCardContainer.vue';
 import GameCard from './GameCard.vue';
 import { getAvailableGames } from '../../logic/gameRetrieval'
-import { createGame, joinGame } from '../../logic/token'
+import { createGame, saveWebsocket } from '../../logic/token'
 </script>
 
 <script>
@@ -30,7 +30,16 @@ export default {
         },
 
         async submitForm() {
-            createGame(this.formData.username);
+            let socket = await createGame(this.formData.username);
+            socket.onmessage = (event) => {
+                console.log(event.data);
+                let game = JSON.parse(event.data);
+                console.log(game)
+                let id = game.id
+
+                this.$router.push('/lobby/' + id);
+
+            }
             this.games = await getAvailableGames();
             this.closePopup();
         },
@@ -44,13 +53,15 @@ export default {
                 }
             }
         },
-        async updateGames(){
+        async updateGames() {
             this.games = await getAvailableGames();
         }
     },
     async created() {
         this.interval = setInterval(() => {
             this.updateGames();
+            console.log("Data from landing page");
+            console.log(window.data);
         }, 8000)
         this.updateGames();
     }
@@ -107,7 +118,7 @@ export default {
         <div class="container">
             <GameCardContainer>
                 <GameCard v-for="(game) in games" :name="game.theme" :playerCount="game.players.length"
-                    :dimensions="game.dimensions" :key="game.id" :gameId="game.id"/>
+                    :dimensions="game.dimensions" :key="game.id" :gameId="game.id" />
             </GameCardContainer>
         </div>
     </div>

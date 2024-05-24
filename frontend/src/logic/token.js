@@ -9,6 +9,7 @@ const mutater = () => {
     testVariable++;
 }
 
+window.data = {}
 
 const getAccessToken = async () => {
     try {
@@ -27,13 +28,11 @@ const createGame = async (username) => {
             socket.send(token);
             socket.send(JSON.stringify({ theme: "Test Theme" }));
         }
-        socket.onmessage = (event) => {
-            console.log(event);
-        }
         socket.onerror = (error) => {
             console.log("Error creating game:")
             console.log(error)
         }
+        return socket
     } catch (error) {
 
     }
@@ -44,8 +43,13 @@ const joinGame = async (gameId, username) => {
     const socket = new WebSocket(`${socketBaseUrl}join-game/${gameId}/${username}`)
     socket.onopen = () => {
         socket.send(token);
+        saveWebsocket(socket, gameId)
     }
 }
 
+const saveWebsocket = (socket, gameId) => {
+    window.data[gameId] = socket
+}
+
 // Exporting the function
-export { sayHello, getAccessToken, createGame, joinGame };
+export { sayHello, getAccessToken, createGame, joinGame, saveWebsocket };

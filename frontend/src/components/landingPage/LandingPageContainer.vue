@@ -3,7 +3,6 @@ import GameCardContainer from './GameCardContainer.vue';
 import GameCard from './GameCard.vue';
 import { getAvailableGames } from '../../logic/gameRetrieval'
 import { createGame, joinGame } from '../../logic/token'
-import { getAvailableGames } from '../../logic/gameRetrieval'
 </script>
 
 <script>

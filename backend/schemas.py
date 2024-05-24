@@ -1,6 +1,5 @@
 from pydantic import BaseModel
 from typing import Literal
-import uuid
 
 
 class Field(BaseModel):
@@ -13,7 +12,6 @@ class CreatePlayer(BaseModel):
 
 
 class Player(CreatePlayer):
-    id: uuid.UUID
     fields: list[list[Field]]
     has_bingo: bool
 

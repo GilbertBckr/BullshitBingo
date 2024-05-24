@@ -10,10 +10,12 @@ export default {
     data() {
         return {
             isPopupVisible: false,
+            isPrivateGameJoinVisible: false,
             formData: {
                 theme: '',
                 username: ''
             },
+            privateGameUsername: '',
             privateGameId: "",
             games: []
         }
@@ -34,15 +36,23 @@ export default {
             this.games = await getAvailableGames();
             this.closePopup();
         },
+
+        async submitPrivateGame(){
+            this.isPrivateGameJoinVisible = false;
+            joinGame(this.privateGameId, this.privateGameUsername);
+            this.$router.push('/lobby/' + this.privateGameId);
+        },
+        closePopupPrivateGame(){
+            this.isPrivateGameJoinVisible = false;
+        },
+
         async onJoinedPrivateGame() {
-            let games = await getAvailableGames();
-            this.games = games;
-            for (let i = 0; i < games.length; i++) {
-                if (games[i].id == this.privateGameId) {
-                    console.log("Joining Game...");
-                    // Join private Game and route 
+            for (let i = 0; i < this.games.length; i++) {
+                if (this.games[i].id == this.privateGameId) {
+                    this.isPrivateGameJoinVisible = true;
                 }
             }
+            
         },
         async updateGames(){
             this.games = await getAvailableGames();
@@ -103,6 +113,23 @@ export default {
                 </div>
             </form>
         </div>
+
+        <div v-if="isPrivateGameJoinVisible" class="popup">
+            <form @submit.prevent="submitPrivateGame" class="dialog">
+            <h2 class="dialog-title">Join Game</h2>
+
+            <div class="dialog-content">
+                <label for="username">Username:</label>
+                <input type="text" id="username" v-model="privateGameUsername" required />
+            </div>
+
+            <div class="dialog-actions">
+                <button type="submit" class="mdc-button mdc-button--raised">Join Game</button>
+                <button type="button" class="mdc-button mdc-button--outlined" @click="closePopupPrivateGame">Close</button>
+            </div>
+            </form>
+        </div>
+
 
         <div class="container">
             <GameCardContainer>

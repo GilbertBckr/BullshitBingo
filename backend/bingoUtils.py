@@ -36,9 +36,16 @@ def check_game_is_complete(game: Game) -> bool:
             # horizontal 
             if len(row) != dim:
                 return False 
+
+            # check if content is empty
+            for field in row:
+                if not field.content:
+                    return False
             
         # vertical 
         if i != dim-1:
             return False
 
     return True
+
+

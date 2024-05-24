@@ -1,88 +1,73 @@
-import bingoUtils
 from schemas import Player, Game, Field
+from typing import Final
+
+import bingoUtils
+
+
+DIM: Final[int] = 3
+
+
+def create_player(content: str="", checked=False) -> Player:
+    fields: list[list[Field]] = [
+        [Field(content=content, checked=checked) for _ in range(DIM)] for _ in range(DIM)
+    ]
+
+    player: Player = Player(name="", user_id="token", fields=fields, has_bingo=False)
+
+    return player 
 
 
 def test_check_bingo_false():
-    # false
-    fields: list[list[Field]] = [
-        [Field(content="", checked=False) for _ in range(3)] for _ in range(3)
-    ]
-    board: Player = Player(name="name", user_id="token", fields=fields, has_bingo=False)
+    board: Player = create_player()
 
     assert not bingoUtils.check_bingo(board)
 
 
 def test_check_bingo_horizontal():
-    fields: list[list[Field]] = [
-        [Field(content="", checked=False) for _ in range(3)] for _ in range(3)
-    ]
-    for i in range(3):
-        fields[0][i].checked = True
 
-    board: Player = Player(name="name", user_id="token", fields=fields, has_bingo=False)
+    board: Player = create_player()
+    for i in range(3):
+        board.fields[0][i].checked = True
+
+
 
     assert bingoUtils.check_bingo(board)
 
 
 def test_check_bingo_vertical():
-    fields: list[list[Field]] = [
-        [Field(content="", checked=False) for _ in range(3)] for _ in range(3)
-    ]
-    for i in range(3):
-        fields[i][0].checked = True
-
-    board: Player = Player(name="name", user_id="token", fields=fields, has_bingo=False)
+    board: Player = create_player()
+    for i in range(DIM):
+        board.fields[i][0].checked = True
 
     assert bingoUtils.check_bingo(board)
 
 
 def test_check_bingo_primary_diagonal():
-    fields: list[list[Field]] = [
-        [Field(content="", checked=False) for _ in range(3)] for _ in range(3)
-    ]
-    for i in range(3):
-        fields[i][i].checked = True
-
-    board: Player = Player(name="name", user_id="token", fields=fields, has_bingo=False)
+    board: Player = create_player()
+    for i in range(DIM):
+        board.fields[i][i].checked = True
 
     assert bingoUtils.check_bingo(board)
 
 
 def test_check_bingo_secondary_diagonal():
-    fields: list[list[Field]] = [
-        [Field(content="", checked=False) for _ in range(3)] for _ in range(3)
-    ]
-    for i in range(3):
-        fields[i][len(fields) - i - 1].checked = True
+    board: Player = create_player()
 
-    board: Player = Player(name="name", user_id="token", fields=fields, has_bingo=False)
+    for i in range(3):
+        board.fields[i][len(board.fields) - i - 1].checked = True
 
     assert bingoUtils.check_bingo(board)
 
 
 def test_check_game_is_complete_true():
-    player1: Player = Player(
-        name="player1",
-        user_id="01",
-        fields=[[Field(content="", checked=False) for _ in range(3)] for _ in range(3)],
-        has_bingo=False,
-    )
-    player2: Player = Player(
-        name="player2",
-        user_id="02",
-        fields=[[Field(content="", checked=False) for _ in range(3)] for _ in range(3)],
-        has_bingo=False,
-    )
-    player3: Player = Player(
-        name="player3",
-        user_id="03",
-        fields=[[Field(content="", checked=False) for _ in range(3)] for _ in range(3)],
-        has_bingo=False,
-    )
+
+    player1: Player = create_player(content="test")
+    player2: Player = create_player(content="test")
+    player3: Player = create_player(content="test")
 
     game: Game = Game(
         private=False,
-        dimensions=3,
+        dimensions=DIM,
         theme="theme",
         admin_id="admin_token",
         id="id",
@@ -94,24 +79,9 @@ def test_check_game_is_complete_true():
 
 
 def test_check_game_is_complete_false():
-    player1: Player = Player(
-        name="player1",
-        user_id="01",
-        fields=[[Field(content="", checked=False) for _ in range(2)] for _ in range(3)],
-        has_bingo=False,
-    )
-    player2: Player = Player(
-        name="player2",
-        user_id="02",
-        fields=[[Field(content="", checked=False) for _ in range(3)] for _ in range(3)],
-        has_bingo=False,
-    )
-    player3: Player = Player(
-        name="player3",
-        user_id="03",
-        fields=[[Field(content="", checked=False) for _ in range(3)] for _ in range(3)],
-        has_bingo=False,
-    )
+    player1: Player = create_player()
+    player2: Player = create_player()
+    player3: Player = create_player()
 
     game: Game = Game(
         private=False,

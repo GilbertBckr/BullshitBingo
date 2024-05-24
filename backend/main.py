@@ -2,8 +2,7 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
 from fastapi import Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from typing import Annotated, Any
-from typing import Literal
+from typing import Annotated
 import schemas
 import uuid
 import security
@@ -203,7 +202,7 @@ async def create(
         while True:
             print("Added admind")
             command: str = await websocket.receive_text()
-            await command_handler_instance.handle_command(command, game.id)
+            await command_handler_instance.handle_command(command, game.id, user_id)
 
     except WebSocketDisconnect:
         print("Admin disconnected")
@@ -237,7 +236,7 @@ async def join_game(
     try:
         while True:
             command: str = await websocket.receive_text()
-            await command_handler_instance.handle_command(command, game_id)
+            await command_handler_instance.handle_command(command, game_id, user_id)
 
     except WebSocketDisconnect:
         websocket_manager.disconnect(user_id, game_id)

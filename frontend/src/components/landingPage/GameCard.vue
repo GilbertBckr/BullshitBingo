@@ -22,8 +22,9 @@ export default {
       console.log(this.formData);
       console.log(this.gameId);
       joinGame(this.gameId, this.formData.username);
-
       this.closePopup();
+
+      this.$router.push('/lobby/' + this.gameId);
     }
   }
 }

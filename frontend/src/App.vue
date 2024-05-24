@@ -12,9 +12,7 @@ document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
     <PageTitle>Bullshit Bingo</PageTitle>
   </header>
   <main>
-    <LandingPageContainer>
-      
-    </LandingPageContainer>
+    <RouterView />
   </main>
 </template>
 

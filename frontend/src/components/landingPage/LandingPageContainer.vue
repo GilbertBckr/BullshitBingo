@@ -4,7 +4,6 @@ import GameCard from './GameCard.vue';
 import { getAwailableGames } from '../../logic/gameRetrieval'
 import { createGame, joinGame } from '../../logic/token'
 import { getAvailableGames } from '../../logic/gameRetrieval'
-import { createGame } from '../../logic/token'
 </script>
 
 <script>

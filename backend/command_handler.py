@@ -14,7 +14,7 @@ class CommandHandler:
         match command_splitted[0]:
             case "REFRESH":
                 await self.game_manager.broadcast_game_state(game_id)
-            case "CHANGE_CELL":
-                self.game_manager.change_cell(" ".join(command_splitted[1:]))
+            case "CHANGE_CELL_CHECKED":
+                await self.game_manager.change_cell_checked(" ".join(command_splitted[1:]), logged_in_user_id)
             case _:
                 print(f"command {command=} is not know")

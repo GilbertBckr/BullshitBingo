@@ -30,8 +30,9 @@ class Game(CreateGame):
     game_state: Literal["DRAFT"] | Literal["RUNNING"] | Literal["ENDED"] = "DRAFT"
 
 
-class ChangeCellPayload(BaseModel):
+class ChangeCellCheckedPayload(BaseModel):
     row: int
     col: int
     new_checked: bool
     user_id: str
+    game_id: str

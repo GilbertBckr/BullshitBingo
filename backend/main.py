@@ -111,10 +111,32 @@ class GameManager:
                 ],
             )
         )
-    
-    def change_cell(self, payload: str, current_user_id: str) -> None:
+
+    async def change_cell_checked(self, payload: str, current_user_id: str) -> None:
         """Checks if the call is valid and changes the cell"""
-        pass
+        validated_payload: schemas.ChangeCellCheckedPayload = (
+            schemas.ChangeCellCheckedPayload.model_validate_json(payload)
+        )
+        if current_user_id != validated_payload.user_id:
+            print("Attempted to change field did not belong to user")
+            return
+
+        game: schemas.Game = self.get_game_throws_error(validated_payload.game_id)
+        choosen_player = None
+        for player in game.players:
+            if player.user_id == validated_payload.user_id:
+                choosen_player = player
+                break
+        if choosen_player is None:
+            raise Exception(f"Player ${validated_payload.user_id} not found")
+        field: schemas.Field = choosen_player.fields[validated_payload.row][
+            validated_payload.col
+        ]
+
+        # TODO check if cell can be checked at this point of the game
+        field.checked = validated_payload.new_checked
+
+        await self.broadcast_game_state(validated_payload.game_id)
 
     async def broadcast_game_state(self, game_id: str) -> None:
         game: schemas.Game = self.get_game_throws_error(game_id)

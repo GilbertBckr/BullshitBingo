@@ -1,5 +1,5 @@
 <script setup>
-
+import playersList from "./playersList.vue";
 </script>
 
 <script>

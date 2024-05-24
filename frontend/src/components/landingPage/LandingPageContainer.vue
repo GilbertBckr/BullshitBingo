@@ -13,7 +13,8 @@ export default {
             isPrivateGameJoinVisible: false,
             formData: {
                 theme: '',
-                username: ''
+                username: '',
+                gameVisibility: ''
             },
             privateGameUsername: '',
             privateGameId: "",
@@ -32,7 +33,13 @@ export default {
         },
 
         async submitForm() {
-            let socket = await createGame(this.formData.username, this.formData.theme);
+            let isPrivate;
+            if (this.formData.gameVisibility == 'public'){
+                isPrivate = false;
+            }else if(this.formData.gameVisibility == 'private'){
+                isPrivate = true;
+            }
+            let socket = await createGame(this.formData.username, this.formData.theme, isPrivate);
             socket.onmessage = (event) => {
                 console.log(event.data);
                 let game = JSON.parse(event.data);

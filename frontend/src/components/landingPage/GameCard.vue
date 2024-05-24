@@ -1,6 +1,7 @@
 <script>
+import { joinGame } from '@/logic/token';
 export default {
-    props: ['name', 'playerCount', 'dimensions'],
+  props: ['name', 'playerCount', 'dimensions', "gameId"],
   data() {
     return {
       isPopupVisible: false,
@@ -19,6 +20,8 @@ export default {
     },
     joinGame() {
       console.log(this.formData);
+      console.log(this.gameId);
+      joinGame(this.gameId, this.formData.username);
 
       this.closePopup();
     }
@@ -26,50 +29,50 @@ export default {
 }
 </script>
 <template>
-    <div class="card">
-        <md-elevation></md-elevation>
-        <h4 class="name md-typescale-title-large">{{ name }}</h4>
-        <p class="info md-typescale-label-medium">{{ playerCount }} Player · {{ dimensions }}x{{ dimensions }}</p>
-        <md-filled-button class="button" @click="showPopup">Join</md-filled-button>
-    </div>
+  <div class="card">
+    <md-elevation></md-elevation>
+    <h4 class="name md-typescale-title-large">{{ name }}</h4>
+    <p class="info md-typescale-label-medium">{{ playerCount }} Player · {{ dimensions }}x{{ dimensions }}</p>
+    <md-filled-button class="button" @click="showPopup">Join</md-filled-button>
+  </div>
 
-     <div v-if="isPopupVisible" class="popup">
-       <form @game.prevent="joinGame" class="dialog">
-         <h2 class="dialog-title">Join Game</h2>
+  <div v-if="isPopupVisible" class="popup">
+    <form @game.prevent="joinGame" class="dialog">
+      <h2 class="dialog-title">Join Game</h2>
 
-         <div class="dialog-content">
-           <label for="username">Username:</label>
-           <input type="text" id="username" v-model="formData.username" required />
-         </div>
-
-         <div class="dialog-actions">
-           <button type="submit" class="mdc-button mdc-button--raised">Join Game</button>
-           <button type="button" class="mdc-button mdc-button--outlined" @click="closePopup">Close</button>
-         </div>
-       </form>
+      <div class="dialog-content">
+        <label for="username">Username:</label>
+        <input type="text" id="username" v-model="formData.username" required />
       </div>
+
+      <div class="dialog-actions">
+        <button type="submit" class="mdc-button mdc-button--raised" @click.prevent="joinGame">Join Game</button>
+        <button type="button" class="mdc-button mdc-button--outlined" @click="closePopup">Close</button>
+      </div>
+    </form>
+  </div>
 
 </template>
 <style scoped>
 .card {
-    position: relative;
-    width: calc(200px - 24px);
-    height: calc(200px - 24px);
-    padding: 12px;
-    border-radius: 12px;
-    background-color: var(--md-sys-color-surface-container-highest);
-    --md-elevation-level: 1;
+  position: relative;
+  width: calc(200px - 24px);
+  height: calc(200px - 24px);
+  padding: 12px;
+  border-radius: 12px;
+  background-color: var(--md-sys-color-surface-container-highest);
+  --md-elevation-level: 1;
 }
 
 .name,
 .info {
-    margin: 0;
+  margin: 0;
 }
 
 .button {
-    position: absolute;
-    bottom: 12px;
-    right: 12px;
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
 }
 
 .popup {
@@ -141,5 +144,4 @@ export default {
   border: 1px solid #6200ea;
   color: #6200ea;
 }
-
 </style>

@@ -2,7 +2,7 @@
 import GameCardContainer from './GameCardContainer.vue';
 import GameCard from './GameCard.vue';
 import { getAwailableGames } from '../../logic/gameRetrieval'
-import { createGame } from '../../logic/token'
+import { createGame, joinGame } from '../../logic/token'
 </script>
 
 <script>
@@ -35,14 +35,10 @@ export default {
             this.closePopup();
         },
         async onJoinedPrivateGame() {
-            let games = await getAwailableGames();
-            this.games = games;
-            for (let i = 0; i < games.length; i++) {
-                if (games[i].id == this.privateGameId) {
-                    console.log("Joining Game...");
-                    // Join private Game and route 
-                }
-            }
+            let gameId = this.games[0].id;
+            joinGame(gameId, "hallo");
+
+
         }
     },
     async mounted() {
@@ -102,7 +98,7 @@ export default {
         <div class="container">
             <GameCardContainer>
                 <GameCard v-for="(game) in games" :name="game.theme" :playerCount="game.players.length"
-                    :dimensions="game.dimensions" :key="game.id" />
+                    :dimensions="game.dimensions" :key="game.id" :gameId="game.id"/>
             </GameCardContainer>
         </div>
     </div>

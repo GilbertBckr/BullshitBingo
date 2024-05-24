@@ -39,10 +39,13 @@ const createGame = async (username) => {
     }
 }
 
-const joinGame = async (username) => {
+const joinGame = async (gameId, username) => {
     const token = await getAccessToken()
-    socket = new WebSocket
+    const socket = new WebSocket(`${socketBaseUrl}join-game/${gameId}/${username}`)
+    socket.onopen = () => {
+        socket.send(token);
+    }
 }
 
 // Exporting the function
-export { sayHello, getAccessToken, createGame, };
+export { sayHello, getAccessToken, createGame, joinGame };

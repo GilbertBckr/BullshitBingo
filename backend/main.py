@@ -162,7 +162,6 @@ async def join_game(
     websocket: WebSocket,
     game_id: str,
     username: str,
-    user_id: Annotated[str, Depends(security.get_current_user_id)],
 ):
 
     if not game_manager.can_join_game(game_id):
@@ -170,9 +169,14 @@ async def join_game(
     if not game_manager.name_is_available(game_id, username):
         raise HTTPException(400, "Username is not available")
 
-    create_player_data = schemas.CreatePlayer(name=username, user_id=user_id)
-    game_manager.join_game(game_id, create_player_data)
     await websocket.accept()
+    token: str = await websocket.receive_text()
+    user_id: str = security.get_current_user_id(token)
+
+    create_player_data: schemas.CreatePlayer = schemas.CreatePlayer(
+        name=username, user_id=user_id
+    )
+    game_manager.join_game(game_id, create_player_data)
     await websocket_manager.save_connection(game_id, user_id, websocket)
     await game_manager.broadcast_game_state(game_id)
 

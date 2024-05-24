@@ -44,7 +44,10 @@ class ConnectionManager:
 
         for socket in sockets:
             # TODO optimize parallelization
-            await socket.send_text(data)
+            try:
+                await socket.send_text(data)
+            except:
+                pass
 
 
 websocket_manager = ConnectionManager()
@@ -100,8 +103,7 @@ class GameManager:
     async def broadcast_game_state(self, game_id: str) -> None:
         game: schemas.Game = self.get_game_throws_error(game_id)
         await websocket_manager.broadcast(game_id, game.model_dump_json())
-
-        pass
+        print("braodcasting game state")
 
     def get_active_games(self) -> list[schemas.Game]:
         return list(self.active_games.values())
@@ -157,10 +159,8 @@ async def create(
 
         while True:
             print("Added admind")
-            data = await websocket.receive_json()
-            print(data)
-            # TODO handle data
-            # await websocket_manager.broadcast(f"{data}")
+            command: str = await websocket.receive_text()
+            await command_handler_instance.handle_command(command, game.id)
 
     except WebSocketDisconnect:
         print("Admin disconnected")
@@ -193,26 +193,11 @@ async def join_game(
 
     try:
         while True:
-            command = await websocket.receive_text()
+            command: str = await websocket.receive_text()
             await command_handler_instance.handle_command(command, game_id)
 
     except WebSocketDisconnect:
         websocket_manager.disconnect(user_id, game_id)
-
-
-@app.websocket("/ws/{client_id}")
-async def websocket_endpoint(websocket: WebSocket, client_id: int):
-    # await websocket_manager.connect(websocket)
-    await websocket.accept()
-    try:
-        while True:
-            command = await websocket.receive_text()
-            # await websocket_manager.send_personal_message(f"You wrote: {data}", websocket)
-            # await websocket_manager.broadcast(f"{data}")
-    except WebSocketDisconnect:
-        pass
-        # websocket_manager.disconnect(websocket)
-        # await websocket_manager.broadcast(f"Client #{client_id} left the chat")
 
 
 @app.post("/token")

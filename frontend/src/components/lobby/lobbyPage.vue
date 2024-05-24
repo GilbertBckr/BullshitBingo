@@ -22,9 +22,13 @@ export default {
             alert("Socket was not found")
         }
         this.socket.onmessage = (event) => {
-            let game = JSON.parse(event.data)
-            console.log(game)
+            console.log("Reeived message from token")
+            let localGame = JSON.parse(event.data)
+            console.log("Local game:")
+            console.log(localGame)
+            this.game = localGame
         }
+        this.refreshSocket()
     }
 
 }

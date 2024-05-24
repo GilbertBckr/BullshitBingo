@@ -1,4 +1,4 @@
-from schemas import Player, Game, Field
+from schemas import Player, Game
 
 
 def check_bingo(board:Player) -> bool:

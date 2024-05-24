@@ -2,6 +2,7 @@
 import GameCardContainer from './GameCardContainer.vue';
 import GameCard from './GameCard.vue';
 import { getAwailableGames } from '../../logic/gameRetrieval'
+import { createGame } from '../../logic/token'
 </script>
 
 <script>
@@ -28,17 +29,13 @@ export default {
             this.isPopupVisible = false;
         },
 
-        submitForm() {
-            console.log(this.formData);
-
+        async submitForm() {
+            createGame(this.formData.username);
+            this.games = await getAwailableGames();
             this.closePopup();
         },
         async onJoinedPrivateGame() {
             let games = await getAwailableGames();
-            games.push({ private: false, dimensions: 1, id: "ABCD", theme: "roethig bingo", players: [{ name: "marvin", user_id: "duibdiluasbd" }, { name: "mathis", user_id: "duibdiluasbd" }] });
-            games.push({ private: false, dimensions: 2, id: "BCDE", theme: "saptech bingo", players: [{ name: "marvin", user_id: "duibdiluasbd" }, { name: "mathis", user_id: "duibdiluasbd" }] });
-            games.push({ private: false, dimensions: 3, id: "CDEF", theme: "boyle bingo", players: [{ name: "marvin", user_id: "duibdiluasbd" }, { name: "mathis", user_id: "duibdiluasbd" }] });
-            games.push({ private: false, dimensions: 4, id: "DEFG", theme: "bingo bingo", players: [{ name: "marvin", user_id: "duibdiluasbd" }, { name: "mathis", user_id: "duibdiluasbd" }] });
             this.games = games;
             for (let i = 0; i < games.length; i++) {
                 if (games[i].id == this.privateGameId) {
@@ -50,10 +47,6 @@ export default {
     },
     async mounted() {
         let games = await getAwailableGames();
-        games.push({ private: false, dimensions: 1, id: "ABCD", theme: "roethig bingo", players: [{ name: "marvin", user_id: "duibdiluasbd" }, { name: "mathis", user_id: "duibdiluasbd" }] });
-        games.push({ private: false, dimensions: 2, id: "BCDE", theme: "saptech bingo", players: [{ name: "marvin", user_id: "duibdiluasbd" }, { name: "mathis", user_id: "duibdiluasbd" }] });
-        games.push({ private: false, dimensions: 3, id: "CDEF", theme: "boyle bingo", players: [{ name: "marvin", user_id: "duibdiluasbd" }, { name: "mathis", user_id: "duibdiluasbd" }] });
-        games.push({ private: false, dimensions: 4, id: "DEFG", theme: "bingo bingo", players: [{ name: "marvin", user_id: "duibdiluasbd" }, { name: "mathis", user_id: "duibdiluasbd" }] });
         this.games = games;
     }
 }

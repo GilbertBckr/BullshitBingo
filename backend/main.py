@@ -127,7 +127,7 @@ async def create(
 
         # Checking if the data is valid TODO error handling
         validated_create_game_data: schemas.CreateGame = schemas.CreateGame(
-            **create_game_data, admin_id=user_id
+            **create_game_data, admin_id=user_id, id=str(uuid.uuid4())
         )
         game: schemas.Game = game_manager.add_game(validated_create_game_data)
 

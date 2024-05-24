@@ -20,8 +20,9 @@ class CreateGame(BaseModel):
     dimensions: int = 3
     theme: str
     admin_id: str
+    id: str
 
 class Game(CreateGame):
-    id: str = "thisIsId"
+
     players: list[Player] = []
     game_state: Literal["DRAFT"] | Literal["RUNNING"] | Literal["ENDED"] = "DRAFT"

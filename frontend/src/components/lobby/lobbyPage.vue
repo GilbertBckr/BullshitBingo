@@ -15,6 +15,10 @@ export default {
     methods: {
         refreshSocket() {
             this.socket.send("REFRESH");
+        },
+        changeCell(payload) {
+            console.log(payload)
+            this.socket.send(`CHANGE_CELL ${JSON.stringify(payload)}`)
         }
     },
     mounted() {
@@ -38,7 +42,10 @@ export default {
 <template>
     <div>
         <h1>Lobby Game {{ $route.params.game_id }}</h1>
-        <PlayerBoard :game="game"></PlayerBoard>
+        <template v-if="game != null">
+            <PlayerBoard :board="game.players == undefined ? null : game.players[0]" @change-cell="changeCell"></PlayerBoard>
+
+        </template>
     </div>
     <div>
         <PlayersList :game="game"></PlayersList>

@@ -1,24 +1,40 @@
 <script setup>
-    
+
 </script>
 
 <script>
 export default {
-    data(){
+    props: ["board"],
+    emits: ["change-cell"],
+    data() {
 
     },
-    created(){
+    created() {
     }
 }
 </script>
 
 <template>
+
     <div>
-    <p>Board</p>
-    
+        <div v-if="board != null">
+            <table border="1">
+                <tr v-for="(row, rowIndex) in board.fields" :key="rowIndex">
+                    <td v-for="(elem, colIndex) of row" :key="`${rowIndex};${colIndex}`"
+                        @click="$emit('change-cell', { row: rowIndex, col: colIndex, newCheckedValue: !elem.checked })"
+                        :class="{ checked: elem.checked }"> {{ rowIndex }} {{ colIndex }}
+                        {{ elem }}
+
+                    </td>
+                </tr>
+            </table>
+
+        </div>
     </div>
 </template>
 
 <style scoped>
-
+.checked {
+    background-color: green;
+}
 </style>

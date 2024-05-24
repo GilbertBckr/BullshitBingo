@@ -99,7 +99,22 @@ class GameManager:
 
     def join_game(self, game_id: str, create_player_data: schemas.CreatePlayer):
         game: schemas.Game = self.get_game_throws_error(game_id)
-        game.players.append(schemas.Player(**create_player_data.model_dump()))
+        game.players.append(
+            schemas.Player(
+                **create_player_data.model_dump(),
+                fields=[
+                    [
+                        schemas.Field(checked=False, content="")
+                        for _ in range(game.dimensions)
+                    ]
+                    for _ in range(game.dimensions)
+                ],
+            )
+        )
+    
+    def change_cell(self, payload: str, current_user_id: str) -> None:
+        """Checks if the call is valid and changes the cell"""
+        pass
 
     async def broadcast_game_state(self, game_id: str) -> None:
         game: schemas.Game = self.get_game_throws_error(game_id)
@@ -107,7 +122,11 @@ class GameManager:
         print("braodcasting game state")
 
     def get_active_games(self) -> list[schemas.Game]:
-        games: dict[str, schemas.Game] = {k: v for k, v in self.active_games.items() if not v.private and v.game_state == "DRAFT"}
+        games: dict[str, schemas.Game] = {
+            k: v
+            for k, v in self.active_games.items()
+            if not v.private and v.game_state == "DRAFT"
+        }
         return list(games.values())
 
 

@@ -91,6 +91,9 @@ class GameManager:
 
         pass
 
+    def get_active_games(self) -> list[schemas.Game]:
+        return list(self.active_games.values())
+
 
 game_manager = GameManager()
 
@@ -98,6 +101,11 @@ game_manager = GameManager()
 @app.get("/")
 async def get():
     return HTMLResponse(html)
+
+
+@app.get("/active-games", response_model=list[schemas.Game])
+async def get_active_games():
+    return game_manager.get_active_games()
 
 
 @app.websocket("/create-game/{username}")
@@ -119,7 +127,9 @@ async def create(
         game: schemas.Game = game_manager.add_game(validated_create_game_data)
 
         # Admin needs to join the game as well
-        validated_create_player_data = schemas.CreatePlayer(name=username, user_id=user_id)
+        validated_create_player_data = schemas.CreatePlayer(
+            name=username, user_id=user_id
+        )
         game_manager.join_game(game.id, validated_create_player_data)
 
         # After creating the game the admin socket is saved and receives the game state

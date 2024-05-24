@@ -22,7 +22,8 @@ export default {
             alert("Socket was not found")
         }
         this.socket.onmessage = (event) => {
-            this.game = JSON.parse(event.data);
+            let game = JSON.parse(event.data)
+            console.log(game)
         }
     }
 
@@ -32,7 +33,7 @@ export default {
 <template>
     <h1>Lobby</h1>
     Game {{ $route.params.game_id }}
-    {{ game }}
+    <p>{{ game }}</p>
 </template>
 
 <style scoped></style>

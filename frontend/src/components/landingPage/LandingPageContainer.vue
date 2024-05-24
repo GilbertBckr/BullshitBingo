@@ -78,8 +78,6 @@ export default {
     async created() {
         this.interval = setInterval(() => {
             this.updateGames();
-            console.log("Data from landing page");
-            console.log(window.data);
         }, 8000)
         this.updateGames();
     }

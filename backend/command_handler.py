@@ -1,9 +1,11 @@
-import main
+from typing import TYPE_CHECKING
 
+if TYPE_CHECKING:
+    import main
 
 class CommandHandler:
 
-    def __init__(self, game_manager: main.GameManager) -> None:
+    def __init__(self, game_manager: 'main.GameManager') -> None:
         self.game_manager = game_manager
 
     async def handle_command(self, command: str, game_id: str):

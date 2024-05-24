@@ -28,10 +28,10 @@ export default {
             <md-list style="width: 100%; background-color: var(--md-sys-color-surface-container);">
                 <div v-for="(player, index) in game.players" style="width: 250px;">
                     <!-- TODO: dynamically size the div-->
-                    <md-list-item style="width: 100%"@click="$emit('watchPlayer', index)">
+                    <md-list-item style="width: 100%" @click="$emit('watchPlayer', index)">
                         <md-outlined-icon-button><md-icon>check</md-icon></md-outlined-icon-button>
                         {{ player.name }}
-                        <md-icon slot="end" :key="index" >check</md-icon>
+                        <md-icon slot="end" :key="index">check</md-icon>
                     </md-list-item>
                     <md-divider></md-divider>
                 </div>

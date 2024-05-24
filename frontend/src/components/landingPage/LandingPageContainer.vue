@@ -2,7 +2,7 @@
 import GameCardContainer from './GameCardContainer.vue';
 import GameCard from './GameCard.vue';
 import { getAvailableGames } from '../../logic/gameRetrieval'
-import { createGame, saveWebsocket } from '../../logic/token'
+import { createGame, saveGameData } from '../../logic/token'
 </script>
 
 <script>
@@ -34,12 +34,12 @@ export default {
 
         async submitForm() {
             let isPrivate;
-            if (this.formData.gameVisibility == 'public'){
+            if (this.formData.gameVisibility == 'public') {
                 isPrivate = false;
-            }else if(this.formData.gameVisibility == 'private'){
+            } else if (this.formData.gameVisibility == 'private') {
                 isPrivate = true;
             }
-            let socket = await createGame(this.formData.username, this.formData.theme, isPrivate);
+            let [socket, user_id] = await createGame(this.formData.username, this.formData.theme, isPrivate);
             socket.onmessage = (event) => {
                 console.log(event.data);
                 let game = JSON.parse(event.data);
@@ -47,7 +47,7 @@ export default {
                 let id = game.id
 
                 this.$router.push('/lobby/' + id);
-                saveWebsocket(socket, id);
+                saveGameData(socket, id, user_id);
 
             }
             this.games = await getAvailableGames();

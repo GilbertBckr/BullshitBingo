@@ -1,20 +1,17 @@
 import axios from "axios";
-const sayHello = name => `Hello, ${testVariable}!`;
 let testVariable = 0
 const baseUrl = "localhost:8000/"
 const serverUrl = `http://${baseUrl}`
 const socketBaseUrl = `ws://${baseUrl}`
 
-const mutater = () => {
-    testVariable++;
-}
 
-window.data = {}
+window.data = {};
+window.userIds = {};
 
 const getAccessToken = async () => {
     try {
         let result = await axios.post(serverUrl + "token")
-        return result.data.access_token;
+        return result.data;
     } catch (error) {
 
     }
@@ -22,35 +19,39 @@ const getAccessToken = async () => {
 
 const createGame = async (username, theme, isPrivate) => {
     try {
-        const token = await getAccessToken()
+        const credentials = await getAccessToken()
         const socket = new WebSocket(socketBaseUrl + "create-game/" + username,);
         socket.onopen = (event) => {
-            socket.send(token);
+
+            console.log(credentials)
+            socket.send(credentials.access_token);
+            console.log("Send token: " + credentials.access_token);
             socket.send(JSON.stringify({ theme: theme, private: isPrivate }));
         }
         socket.onerror = (error) => {
             console.log("Error creating game:")
             console.log(error)
         }
-        return socket
+        return [socket, credentials.user_id];
     } catch (error) {
 
     }
 }
 
 const joinGame = async (gameId, username, callbackAfterConnect) => {
-    const token = await getAccessToken()
+    const credentials = await getAccessToken()
     const socket = new WebSocket(`${socketBaseUrl}join-game/${gameId}/${username}`)
     socket.onopen = () => {
-        socket.send(token);
-        saveWebsocket(socket, gameId)
+        socket.send(credentials.access_token);
+        saveGameData(socket, gameId, credentials.user_id)
         callbackAfterConnect()
     }
 }
 
-const saveWebsocket = (socket, gameId) => {
+const saveGameData = (socket, gameId, user_id) => {
     window.data[gameId] = socket
+    window.userIds[gameId] = user_id
 }
 
 // Exporting the function
-export { sayHello, getAccessToken, createGame, joinGame, saveWebsocket };
+export { createGame, joinGame, saveGameData };

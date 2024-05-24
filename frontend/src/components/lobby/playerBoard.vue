@@ -4,18 +4,21 @@
 
 <script>
 export default {
-    props: ["board"],
+    props: ["board", "gameId"],
     emits: ["change-cell-checked"],
     data() {
+        return {
+            ownUserId: ""
+        }
 
     },
     created() {
     },
     methods: {
-        startGame(){
-            
+        getUserId() {
+            return window.userIds[this.gameId];
         }
-    }
+    },
 }
 </script>
 
@@ -24,7 +27,7 @@ export default {
 
     <div>
         <div v-if="board != null">
-            <h2>{{ board.name }}</h2>
+            <h2>{{ board.user_id == getUserId() ? "Du" : board.name }}</h2>
             <table border="1">
                 <tr v-for="(row, rowIndex) in board.fields" :key="rowIndex">
                     <td v-for="(elem, colIndex) of row" :key="`${rowIndex};${colIndex}`"

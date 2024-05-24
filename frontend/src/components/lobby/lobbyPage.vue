@@ -9,7 +9,8 @@ export default {
         return {
             socket: null,
             game: {},
-            playerBoardIndex: 0
+            playerBoardIndex: 0,
+            isFirstListen: true
         }
     },
     methods: {
@@ -36,7 +37,11 @@ export default {
             console.log("Local game:")
             console.log(localGame)
             this.game = localGame
-            this.playerBoardIndex = this.game.players.length - 1;
+            if (this.isFirstListen) {
+                this.playerBoardIndex = this.game.players.length - 1;
+                this.isFirstListen = false;
+
+            }
         }
         this.refreshSocket()
 
@@ -50,7 +55,7 @@ export default {
         <h1>Lobby Game {{ $route.params.game_id }}</h1>
         <h2>{{ game.theme }}</h2>
         <template v-if="game != null">
-            <PlayerBoard :board="game.players == undefined ? null : game.players[playerBoardIndex]"
+            <PlayerBoard :board="game.players == undefined ? null : game.players[playerBoardIndex]" :game-id="game.id"
                 @change-cell-checked="changeCellChecked"></PlayerBoard>
 
         </template>

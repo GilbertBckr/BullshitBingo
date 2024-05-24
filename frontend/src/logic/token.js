@@ -20,13 +20,13 @@ const getAccessToken = async () => {
     }
 }
 
-const createGame = async (username) => {
+const createGame = async (username, theme) => {
     try {
         const token = await getAccessToken()
         const socket = new WebSocket(socketBaseUrl + "create-game/" + username,);
         socket.onopen = (event) => {
             socket.send(token);
-            socket.send(JSON.stringify({ theme: "Test Theme" }));
+            socket.send(JSON.stringify({ theme: theme }));
         }
         socket.onerror = (error) => {
             console.log("Error creating game:")

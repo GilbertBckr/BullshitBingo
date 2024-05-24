@@ -32,7 +32,7 @@ export default {
         },
 
         async submitForm() {
-            let socket = await createGame(this.formData.username);
+            let socket = await createGame(this.formData.username, this.formData.theme);
             socket.onmessage = (event) => {
                 console.log(event.data);
                 let game = JSON.parse(event.data);

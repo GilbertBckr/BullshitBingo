@@ -10,6 +10,11 @@ export default {
 
     },
     created() {
+    },
+    methods: {
+        startGame(){
+            
+        }
     }
 }
 </script>
@@ -31,6 +36,14 @@ export default {
                 </tr>
             </table>
 
+        </div>
+        <div class="buttons" style="bottom: 20px; position: absolute; right: 30px;">
+            <md-outlined-button @click="startGame">
+                Start Game
+                <span slot="icon" class="material-symbols-outlined" style="font-size: 18px;">
+                    edit
+                </span>
+            </md-outlined-button>
         </div>
     </div>
 </template>

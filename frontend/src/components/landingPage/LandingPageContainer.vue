@@ -1,7 +1,7 @@
 <script setup>
 import GameCardContainer from './GameCardContainer.vue';
 import GameCard from './GameCard.vue';
-import { getAwailableGames } from '../../logic/gameRetrieval'
+import { getAvailableGames } from '../../logic/gameRetrieval'
 import { createGame } from '../../logic/token'
 </script>
 
@@ -31,11 +31,11 @@ export default {
 
         async submitForm() {
             createGame(this.formData.username);
-            this.games = await getAwailableGames();
+            this.games = await getAvailableGames();
             this.closePopup();
         },
         async onJoinedPrivateGame() {
-            let games = await getAwailableGames();
+            let games = await getAvailableGames();
             this.games = games;
             for (let i = 0; i < games.length; i++) {
                 if (games[i].id == this.privateGameId) {
@@ -43,11 +43,16 @@ export default {
                     // Join private Game and route 
                 }
             }
+        },
+        async updateGames(){
+            this.games = await getAvailableGames();
         }
     },
-    async mounted() {
-        let games = await getAwailableGames();
-        this.games = games;
+    async created() {
+        this.interval = setInterval(() => {
+            this.updateGames();
+        }, 8000)
+        this.updateGames();
     }
 }
 </script>

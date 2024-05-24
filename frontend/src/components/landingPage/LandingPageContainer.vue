@@ -113,7 +113,7 @@ export default {
                 <div class="dialog-content">
                     <label for="gameVisibility">Visibility:</label>
                     <select name="gameVisibility" id="gameVisibility" v-model="formData.gameVisibility">
-                        <option value="private">Private</option>
+                        <option value="private" selected>Private</option>
                         <option value="public">Public</option>
                     </select>
 

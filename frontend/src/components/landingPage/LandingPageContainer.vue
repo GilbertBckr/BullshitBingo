@@ -1,17 +1,22 @@
+<script setup>
+import GameCardContainer from './GameCardContainer.vue';
+import GameCard from './GameCard.vue';
+</script>
+
 <script>
 export default {
-    props: ['title']
 }
 </script>
 <template>
     <div class="wrapper">
-        <md-elevation></md-elevation>
-        <h2 class="md-typescale-headline-large">{{ title }}</h2>
+        <h2 class="md-typescale-headline-large">Active Games</h2>
         <div class="container">
-            <slot />
+            <GameCardContainer>
+                <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+                <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
+            </GameCardContainer>
         </div>
     </div>
-
 </template>
 <style scoped>
 h2 {
@@ -20,14 +25,13 @@ h2 {
 }
 
 .wrapper {
-    border-radius: 12px;
+    border-radius: 28px;
     background-color: var(--md-sys-color-surface-container);
     position: relative;
     height: 100%;
     width: 100%;
     display: flex;
     flex-direction: column;
-    --md-elevation-level: 1;
 }
 
 .container {

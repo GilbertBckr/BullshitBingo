@@ -1,9 +1,7 @@
 <script setup>
 import { styles as typescaleStyles } from '@material/web/typography/md-typescale-styles.js';
 import PageTitle from './components/PageTitle.vue';
-import Container from './components/Container.vue';
-import GameCardContainer from './components/landingPage/GameCardContainer.vue'
-import GameCard from './components/landingPage/GameCard.vue'
+import LandingPageContainer from './components/landingPage/LandingPageContainer.vue';
 
 // Apply material typescale style classes
 document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
@@ -14,56 +12,9 @@ document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
     <PageTitle>Bullshit Bingo</PageTitle>
   </header>
   <main>
-    <Container title="Active Games">
-      <GameCardContainer>
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-        <GameCard name="SAP-Tec." playerCount="20" dimensions="3" />
-      </GameCardContainer>
-    </Container>
+    <LandingPageContainer>
+      
+    </LandingPageContainer>
   </main>
 </template>
 
@@ -75,7 +26,7 @@ main {
   gap: 18px;
   flex-grow: 1;
   height: 100%;
-  margin: 30px;
+  margin: 12px;
   margin-top: 0;
 }
 

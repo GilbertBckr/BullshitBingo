@@ -7,22 +7,26 @@ export default {
     },
 
     mounted() {
-        this.centerWrapper()
+        this.centerContainer()
     },
 
     created() {
-        window.addEventListener("resize", this.centerWrapper);
+        window.addEventListener("resize", this.centerContainer);
     },
     destroyed() {
-        window.removeEventListener("resize", this.centerWrapper);
+        window.removeEventListener("resize", this.centerContainer);
     },
     methods: {
-        centerWrapper() {
-            let cardWidth = 200;
-            let gapWidth = 13;
-            let paddingContainer = 30;
-            let gap = (this.$refs.wrapper.offsetWidth - 2 * paddingContainer) % (cardWidth + gapWidth);
-            if (gap < cardWidth) {
+        centerContainer() {
+            const cardCount = this.$refs.cardContainer.childElementCount;
+            const cardWidth = 200;
+            const gapWidth = 13;
+            const paddingContainer = 30;
+            const containerWidth = this.$refs.cardContainer.offsetWidth
+            const gap = (containerWidth - 2 * paddingContainer) % (cardWidth + gapWidth);
+            if (containerWidth - 2 * paddingContainer >= cardCount * (cardWidth + gapWidth) - gapWidth) {
+                this.$data.centeringOffset = 0;
+            } else if (gap < cardWidth) {
                 this.$data.centeringOffset = gap / 2;
             } else {
                 this.$data.centeringOffset = (gap - cardWidth) / 2;
@@ -32,16 +36,17 @@ export default {
 }
 </script>
 <template>
-    <div ref="wrapper" class="wrapper">
+    <div ref="cardContainer" class="cardContainer">
         <slot />
     </div>
 
 </template>
 <style scoped>
-.wrapper {
+.cardContainer {
     display: flex;
     flex-direction: row;
     padding-right: 30px;
+    padding-bottom: 30px;
     padding-left: calc(30px + calc(v-bind(centeringOffset) * 1px));
     gap: 13px;
     flex-wrap: wrap;
@@ -49,5 +54,7 @@ export default {
     position: absolute;
     top: 0;
     bottom: 0;
+    right: 0;
+    left: 0;
 }
 </style>

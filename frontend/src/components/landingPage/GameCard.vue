@@ -8,7 +8,7 @@ export default {
         <md-elevation></md-elevation>
         <h4 class="name md-typescale-title-large">{{ name }}</h4>
         <p class="info md-typescale-label-medium">{{ playerCount }} Player · {{ dimensions }}x{{ dimensions }}</p>
-        <md-filled-button class="button">Enter</md-filled-button>
+        <md-filled-button class="button">Join</md-filled-button>
     </div>
 </template>
 <style scoped>

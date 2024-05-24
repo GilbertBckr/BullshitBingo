@@ -1,6 +1,6 @@
 <script>
 export default {
-    props: ['name', 'playerCount', 'dimensions']
+    props: ['name', 'playerCount', 'dimensions'],
 }
 </script>
 <template>

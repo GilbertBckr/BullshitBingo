@@ -21,9 +21,6 @@ export default {
             return document.getElementById(`${rowIndex};${colIndex}`).value
         }
     },
-    mounted() {
-
-    }
 }
 </script>
 
@@ -33,24 +30,23 @@ export default {
     <div>
         <div v-if="board != null">
             <h2>{{ board.user_id == getUserId() ? "Du" : board.name }}</h2>
-            <table border="1" :class="{won: board.has_bingo}">
+            <table border="1" :class="{ won: board.has_bingo }">
                 <tr v-for="(row, rowIndex) in board.fields" :key="rowIndex">
-                    <td v-for="(elem, colIndex) of row" :key="`${rowIndex};${colIndex}`"> {{ rowIndex }} {{ colIndex }}
+                    <td v-for="(elem, colIndex) of row" :key="`${rowIndex};${colIndex}`">
                         <template v-if="game.game_state == 'DRAFT'">
-                            <form
-                                @submit.prevent="$emit('change-cell-text', { row: rowIndex, col: colIndex, new_text: getValueOfTextField(rowIndex, colIndex), user_id: board.user_id })">
-                                <input type="text" name="field-content" :id="`${rowIndex};${colIndex}`"
-                                    :value="elem.content">
-                            </form>
+                            <template v-if="board.user_id !== getUserId()">
+                                <span> {{ elem.content }}</span>
+                            </template>
+                            <input v-else type="text" name="field-content" :id="`${rowIndex};${colIndex}`"
+                                @change.prevent="$emit('change-cell-text', { row: rowIndex, col: colIndex, new_text: getValueOfTextField(rowIndex, colIndex), user_id: board.user_id })"
+                                :value="elem.content">
 
                         </template>
                         <template v-else-if="game.game_state == 'RUNNING'">
                             <div @click="$emit('change-cell-checked', {
                                 row: rowIndex, col: colIndex, new_checked:
                                     !elem.checked, user_id: board.user_id
-                            })" :class="{ checked: elem.checked }"> {{ rowIndex
-                                }} {{ colIndex }}
-                                {{ elem }}</div>
+                            })" :class="{ checked: elem.checked }"> {{ elem.content }}</div>
 
                         </template>
 

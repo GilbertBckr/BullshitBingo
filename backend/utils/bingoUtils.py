@@ -28,6 +28,25 @@ def check_bingo(board:Player) -> bool:
     return False
 
 
+def check_board_is_complete(player: Player) -> bool:
+
+    i = 0
+    for i, row in enumerate(player.fields):
+        # horizontal 
+            if len(row) != 3:
+                return False 
+
+            # check if content is empty
+            for field in row:
+                if not field.content:
+                    return False
+
+        # vertical 
+    if i != 2:
+        return False
+
+    return True
+
 
 def check_game_is_complete(game: Game) -> bool:
     dim: int = game.dimensions

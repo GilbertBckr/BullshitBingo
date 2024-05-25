@@ -68,7 +68,7 @@ class GameManager:
         game: schemas.Game = self.get_game_throws_error(game_id)
 
         for player in game.players:
-            if player.user_id == current_user_id:
+            if player.user_id == current_user_id and bingoUtils.check_board_is_complete(player): 
                 player.is_ready = True
                 break
 
@@ -189,9 +189,15 @@ class GameManager:
 
     async def start_game(self, payload: str, current_user_id: str) -> None:
         game: schemas.Game = self.get_game_throws_error(payload)
+
         if game.admin_id != current_user_id:
             print("user is not admin")
             return
+
+        for player in game.players:
+            if not player.is_ready:
+                return
+
         game.game_state = "RUNNING"
         print(f"Changed game state {payload=}")
         print(f"{game.game_state=}")

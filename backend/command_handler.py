@@ -16,5 +16,7 @@ class CommandHandler:
                 await self.game_manager.broadcast_game_state(game_id)
             case "CHANGE_CELL_CHECKED":
                 await self.game_manager.change_cell_checked(" ".join(command_splitted[1:]), logged_in_user_id)
+            case "SET_READY":
+                await self.game_manager.set_ready(game_id,logged_in_user_id)
             case _:
                 print(f"command {command=} is not know")

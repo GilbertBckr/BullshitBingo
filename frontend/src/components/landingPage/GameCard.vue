@@ -21,6 +21,7 @@ export default {
     joinGame() {
       console.log(this.formData);
       console.log(this.gameId);
+      // TODO: check if username is already used 
       joinGame(this.gameId, this.formData.username, () => {
         this.$router.push('/lobby/' + this.gameId);
       });

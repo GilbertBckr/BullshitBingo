@@ -15,6 +15,7 @@ class CreatePlayer(BaseModel):
 class Player(CreatePlayer):
     fields: list[list[Field]] = []
     has_bingo: bool = False
+    is_ready: bool = False
 
 
 class CreateGame(BaseModel):

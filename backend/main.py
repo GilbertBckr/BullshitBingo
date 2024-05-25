@@ -64,6 +64,16 @@ class GameManager:
         self.active_games[game.id] = game
         return game
 
+    async def set_ready(self, game_id: str, current_user_id: str) -> None:
+        game: schemas.Game = self.get_game_throws_error(game_id)
+
+        for player in game.players:
+            if player.user_id == current_user_id:
+                player.is_ready = True
+                break
+
+        await websocket_manager.broadcast(game_id, game.model_dump_json())
+
     def generate_id(self) -> str:
         while True:
             id: str = bingoUtils.create_id()

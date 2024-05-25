@@ -26,7 +26,7 @@ export default {
         <div style="max-width: fit-content; margin-left: auto; margin-right: auto;">
             <h1>Players</h1>
             <md-list style="width: 100%; background-color: var(--md-sys-color-surface-container);">
-                <div v-for="(player, index) in game.players" style="width: 250px;">
+                <div v-for="(player, index) in game.players" style="width: 250px;" :class="{won: player.has_bingo}">
                     <!-- TODO: dynamically size the div-->
                     <md-list-item style="width: 100%" @click="$emit('watchPlayer', index)">
                         <md-outlined-icon-button><md-icon>check</md-icon></md-outlined-icon-button>
@@ -40,4 +40,8 @@ export default {
     </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.won {
+    background-color: gold;
+}
+</style>

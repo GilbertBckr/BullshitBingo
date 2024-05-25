@@ -11,7 +11,6 @@ export default {
             game: {},
             playerBoardIndex: 0,
             isFirstListen: true,
-            test: false
         }
     },
     methods: {
@@ -65,7 +64,6 @@ export default {
 
 <template>
     <div :key="game.game_state">
-        {{ test }}
         <h1>Lobby Game {{ $route.params.game_id }}</h1>
         <h2>{{ game.theme }}</h2>
         <template v-if="game != null">

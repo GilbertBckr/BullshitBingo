@@ -37,6 +37,19 @@ export default {
         setReady() {
             this.socket.send("SET_READY");
         },
+        getOwnBoard() {
+            let ownId = window.userIds[this.game.id];
+            for (let player of this.game.players) {
+                if (player.user_id == ownId) {
+                    return player
+                }
+            }
+        },
+        checkIfAllFieldsHaveContent() {
+            let ownBoard = this.getOwnBoard()
+            // sorry chris
+            return ownBoard.fields.every((row) => row.every((col) => col.content !== ""))
+        }
 
     },
     mounted() {
@@ -64,18 +77,21 @@ export default {
 
 <template>
     <div :key="game.game_state">
-        <h1>Lobby Game {{ $route.params.game_id }}</h1>
-        <h2>{{ game.theme }}</h2>
+        <h1>Theme: {{ game.theme }}</h1>
+        <h3>Lobby Game {{ $route.params.game_id }}</h3>
         <template v-if="game != null">
-            {{ game }}
             <PlayerBoard :board="game.players == undefined ? null : game.players[playerBoardIndex]" :game="game"
                 @change-cell-checked="changeCellChecked" @change-cell-text="changeCellText" @start-game="startGame">
             </PlayerBoard>
         </template>
 
-        <md-filled-button @click="setReady">
+        <md-filled-button @click="setReady" v-if="game.game_state == 'DRAFT' && !getOwnBoard().is_ready"
+            :disabled="!checkIfAllFieldsHaveContent()">
             Ready
         </md-filled-button>
+        <div v-else>
+            Already is ready
+        </div>
 
     </div>
 

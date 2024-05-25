@@ -19,7 +19,18 @@ export default {
         },
         getValueOfTextField(rowIndex, colIndex) {
             return document.getElementById(`${rowIndex};${colIndex}`).value
+        },
+        checkIfUserIsAdmin() {
+            return this.getUserId() == this.game.admin_id
+        },
+        checkIfEveryOneIsReady() {
+            if (this.game == undefined || this.game.players == undefined) {
+                return true
+            }
+            console.log(this.game)
+            return !this.game.players.every((value) => value.is_ready)
         }
+
     },
 }
 </script>
@@ -55,8 +66,8 @@ export default {
             </table>
 
         </div>
-        <div class="buttons" style="bottom: 20px; position: absolute; right: 30px;">
-            <md-outlined-button @click="this.$emit('start-game')">
+        <div class="buttons" style="bottom: 20px; position: absolute; right: 30px;" v-if="checkIfUserIsAdmin() && game.game_state == 'DRAFT'">
+            <md-outlined-button @click="this.$emit('start-game')" :disabled="checkIfEveryOneIsReady()">
                 Start Game
                 <span slot="icon" class="material-symbols-outlined" style="font-size: 18px;">
                     edit

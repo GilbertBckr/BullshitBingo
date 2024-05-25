@@ -132,8 +132,10 @@ class GameManager:
             validated_payload.col
         ]
 
-        # TODO check if cell can be checked at this point of the game
         field.checked = validated_payload.new_checked
+
+        if bingoUtils.check_bingo(choosen_player):
+            choosen_player.has_bingo = True
 
         await self.broadcast_game_state(validated_payload.game_id)
 

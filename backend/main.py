@@ -6,7 +6,7 @@ from typing import Annotated
 import schemas
 import uuid
 import security
-import bingoUtils
+import utils.bingoUtils as bingoUtils
 import command_handler
 
 app = FastAPI()

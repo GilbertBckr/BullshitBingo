@@ -1,7 +1,7 @@
-from schemas import Player, Game, Field
+from ..schemas import Player, Game, Field
 from typing import Final
 
-import bingoUtils
+import utils.bingoUtils as bingoUtils
 
 
 DIM: Final[int] = 3

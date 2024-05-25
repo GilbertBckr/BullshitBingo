@@ -53,7 +53,7 @@ def check_game_is_complete(game: Game) -> bool:
 def create_id(length: int = 5) -> str:
     alphabet: list[str] = list(string.ascii_uppercase)
     id: str = "" 
-    for i in range(length):
+    for _ in range(length):
         index: int = random.randint(0, 25)
         id += alphabet[index]
     return id

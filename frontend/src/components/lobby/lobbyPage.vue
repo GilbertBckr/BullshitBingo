@@ -74,6 +74,7 @@ export default {
                 @change-cell-checked="changeCellChecked" @change-cell-text="changeCellText" @start-game="startGame">
             </PlayerBoard>
         </template>
+
         <md-filled-button @click="setReady">
             Ready
         </md-filled-button>

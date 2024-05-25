@@ -144,8 +144,7 @@ class GameManager:
 
         field.checked = validated_payload.new_checked
 
-        if bingoUtils.check_bingo(choosen_player):
-            choosen_player.has_bingo = True
+        choosen_player.has_bingo = bingoUtils.check_bingo(choosen_player)
 
         await self.broadcast_game_state(validated_payload.game_id)
 

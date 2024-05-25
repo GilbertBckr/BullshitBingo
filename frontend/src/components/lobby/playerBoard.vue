@@ -33,7 +33,7 @@ export default {
     <div>
         <div v-if="board != null">
             <h2>{{ board.user_id == getUserId() ? "Du" : board.name }}</h2>
-            <table border="1">
+            <table border="1" :class="{won: board.has_bingo}">
                 <tr v-for="(row, rowIndex) in board.fields" :key="rowIndex">
                     <td v-for="(elem, colIndex) of row" :key="`${rowIndex};${colIndex}`"> {{ rowIndex }} {{ colIndex }}
                         <template v-if="game.game_state == 'DRAFT'">
@@ -73,5 +73,9 @@ export default {
 <style scoped>
 .checked {
     background-color: green;
+}
+
+.won {
+    background-color: gold;
 }
 </style>

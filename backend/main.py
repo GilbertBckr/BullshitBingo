@@ -103,7 +103,7 @@ class GameManager:
         """Returns the game, throws error if it does not exist"""
         game: schemas.Game | None = self.active_games.get(game_id)
         if game is None:
-            raise Exception()
+            raise Exception("Game does not exist")
         return game
 
     def join_game(self, game_id: str, create_player_data: schemas.CreatePlayer):
@@ -151,6 +151,7 @@ class GameManager:
 
     async def broadcast_game_state(self, game_id: str) -> None:
         game: schemas.Game = self.get_game_throws_error(game_id)
+        print(f"{game.model_dump_json()=}")
         await websocket_manager.broadcast(game_id, game.model_dump_json())
         print("braodcasting game state")
 
@@ -161,6 +162,41 @@ class GameManager:
             if not v.private and v.game_state == "DRAFT"
         }
         return list(games.values())
+
+    async def change_cell_text(self, payload: str, current_user_id: str) -> None:
+        validated_payload: schemas.ChangeCellTextPayload = (
+            schemas.ChangeCellTextPayload.model_validate_json(payload)
+        )
+        if current_user_id != validated_payload.user_id:
+            print("Attempted to change field did not belong to user")
+            return
+
+        game: schemas.Game = self.get_game_throws_error(validated_payload.game_id)
+        choosen_player = None
+        for player in game.players:
+            if player.user_id == validated_payload.user_id:
+                choosen_player = player
+                break
+        if choosen_player is None:
+            raise Exception(f"Player ${validated_payload.user_id} not found")
+        field: schemas.Field = choosen_player.fields[validated_payload.row][
+            validated_payload.col
+        ]
+
+        # TODO check if text can be changed
+        field.content = validated_payload.new_text
+
+        await self.broadcast_game_state(validated_payload.game_id)
+
+    async def start_game(self, payload: str, current_user_id: str) -> None:
+        game: schemas.Game = self.get_game_throws_error(payload)
+        if game.admin_id != current_user_id:
+            print("user is not admin")
+            return
+        game.game_state = "RUNNING"
+        print(f"Changed game state {payload=}")
+        print(f"{game.game_state=}")
+        await self.broadcast_game_state(payload)
 
 
 game_manager = GameManager()

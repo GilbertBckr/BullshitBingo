@@ -4,11 +4,10 @@
 
 <script>
 export default {
-    props: ["board", "gameId"],
-    emits: ["change-cell-checked"],
+    props: ["board", "game"],
+    emits: ["change-cell-checked", "change-cell-text", "start-game"],
     data() {
         return {
-            ownUserId: ""
         }
 
     },
@@ -16,9 +15,15 @@ export default {
     },
     methods: {
         getUserId() {
-            return window.userIds[this.gameId];
+            return window.userIds[this.game.id];
+        },
+        getValueOfTextField(rowIndex, colIndex) {
+            return document.getElementById(`${rowIndex};${colIndex}`).value
         }
     },
+    mounted() {
+
+    }
 }
 </script>
 
@@ -30,10 +35,24 @@ export default {
             <h2>{{ board.user_id == getUserId() ? "Du" : board.name }}</h2>
             <table border="1">
                 <tr v-for="(row, rowIndex) in board.fields" :key="rowIndex">
-                    <td v-for="(elem, colIndex) of row" :key="`${rowIndex};${colIndex}`"
-                        @click="$emit('change-cell-checked', { row: rowIndex, col: colIndex, new_checked: !elem.checked, user_id: board.user_id })"
-                        :class="{ checked: elem.checked }"> {{ rowIndex }} {{ colIndex }}
-                        {{ elem }}
+                    <td v-for="(elem, colIndex) of row" :key="`${rowIndex};${colIndex}`"> {{ rowIndex }} {{ colIndex }}
+                        <template v-if="game.game_state == 'DRAFT'">
+                            <form
+                                @submit.prevent="$emit('change-cell-text', { row: rowIndex, col: colIndex, new_text: getValueOfTextField(rowIndex, colIndex), user_id: board.user_id })">
+                                <input type="text" name="field-content" :id="`${rowIndex};${colIndex}`"
+                                    :value="elem.content">
+                            </form>
+
+                        </template>
+                        <template v-else-if="game.game_state == 'RUNNING'">
+                            <div @click="$emit('change-cell-checked', {
+                                row: rowIndex, col: colIndex, new_checked:
+                                    !elem.checked, user_id: board.user_id
+                            })" :class="{ checked: elem.checked }"> {{ rowIndex
+                                }} {{ colIndex }}
+                                {{ elem }}</div>
+
+                        </template>
 
                     </td>
                 </tr>
@@ -41,7 +60,7 @@ export default {
 
         </div>
         <div class="buttons" style="bottom: 20px; position: absolute; right: 30px;">
-            <md-outlined-button @click="startGame">
+            <md-outlined-button @click="this.$emit('start-game')">
                 Start Game
                 <span slot="icon" class="material-symbols-outlined" style="font-size: 18px;">
                     edit

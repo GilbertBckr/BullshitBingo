@@ -37,3 +37,11 @@ class ChangeCellCheckedPayload(BaseModel):
     new_checked: bool
     user_id: str
     game_id: str
+
+
+class ChangeCellTextPayload(BaseModel):
+    row: int
+    col: int
+    new_text: str
+    user_id: str
+    game_id: str

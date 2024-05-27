@@ -3,9 +3,8 @@ import GameCardContainer from "./GameCardContainer.vue";
 import GameCard from "./GameCard.vue";
 import { getAvailableGames } from "../../logic/gameRetrieval";
 import { createGame, saveGameData } from "../../logic/token";
-import UsernameDialog from "./DialogUsername.vue";
-import JoinGameDialog from "./DialogJoinGame.vue";
-import CreateGameDialog from "./DialogCreateGame.vue";
+import DialogJoinGame from "./DialogJoinGame.vue";
+import DialogCreateGame from "./DialogCreateGame.vue";
 </script>
 
 <script>
@@ -30,52 +29,7 @@ export default {
         };
     },
     methods: {
-        onCreateNewGame() {
-            this.$refs.createGameDialog.show();
-        },
-        closePopup() {
-            this.formData.theme = "";
-            this.formData.username = "";
-
-            this.isPopupVisible = false;
-        },
-
-        async submitForm() {
-            let isPrivate;
-            if (this.formData.gameVisibility == "public") {
-                isPrivate = false;
-            } else if (this.formData.gameVisibility == "private") {
-                isPrivate = true;
-            }
-            let [socket, user_id] = await createGame(
-                this.formData.username,
-                this.formData.theme,
-                isPrivate,
-            );
-            socket.onmessage = (event) => {
-                console.log(event.data);
-                let game = JSON.parse(event.data);
-                console.log(game);
-                let id = game.id;
-
-                this.$router.push("/lobby/" + id);
-                saveGameData(socket, id, user_id);
-            };
-            this.games = await getAvailableGames();
-            this.closePopup();
-        },
-
-        async submitPrivateGame() {
-            this.isPrivateGameJoinVisible = false;
-            joinGame(this.privateGameId, this.privateGameUsername);
-            this.$router.push("/lobby/" + this.privateGameId);
-        },
-        closePopupPrivateGame() {
-            this.isPrivateGameJoinVisible = false;
-        },
-
         onJoinPrivateGame() {
-            this.$refs.joinGameDialog.reset();
             this.$refs.joinGameDialog.show();
         },
 
@@ -93,20 +47,19 @@ export default {
 </script>
 <template>
     <div ref="container">
-        <CreateGameDialog ref="createGameDialog" />
-        <JoinGameDialog ref="joinGameDialog" />
-        <UsernameDialog ref="usernameDialog" />
+        <DialogCreateGame ref="createGameDialog" />
+        <DialogJoinGame ref="joinGameDialog" />
         <h2 class="md-typescale-headline-large">Active Games</h2>
         <div class="buttons">
             <md-outlined-button
                 style="margin-right: 12px"
-                @click="onJoinPrivateGame"
+                @click="$refs.joinGameDialog.show"
             >
                 Join Game
                 <md-icon slot="icon"> edit </md-icon>
             </md-outlined-button>
 
-            <md-filled-button @click="onCreateNewGame">
+            <md-filled-button @click="$refs.createGameDialog.show">
                 Create New
                 <md-icon slot="icon"> add </md-icon>
             </md-filled-button>
@@ -140,80 +93,5 @@ h2 {
     position: absolute;
     top: 30px;
     right: 30px;
-}
-
-.popup {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0.3);
-    z-index: 1000;
-}
-
-.dialog {
-    background: white;
-    border-radius: 4px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    max-width: 500px;
-    width: 100%;
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-.dialog-title {
-    margin-top: 0;
-    margin-bottom: 16px;
-    font-size: 24px;
-    text-align: center;
-}
-
-.dialog-content label {
-    display: block;
-    margin-top: 8px;
-}
-
-.dialog-content input,
-.dialog-content select {
-    width: calc(100% - 24px);
-    margin: 8px 0;
-    padding: 8px 12px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.dialog-actions {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 24px;
-}
-
-.mdc-button {
-    font-size: 14px;
-    padding: 0 16px;
-    line-height: 36px;
-    border-radius: 4px;
-    text-transform: uppercase;
-}
-
-.mdc-button--raised {
-    background-color: #6200ea;
-    color: white;
-    margin-right: 8px;
-}
-
-.mdc-button--outlined {
-    border: 1px solid #6200ea;
-    color: #6200ea;
-}
-
-.gameid-textfield {
-    height: 40px;
-    padding-right: 10px;
 }
 </style>

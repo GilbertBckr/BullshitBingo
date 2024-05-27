@@ -1,6 +1,8 @@
 // TODO: Do manual validation.
 <script setup></script>
 <script>
+import { saveGameData, createGame } from "../../logic/token";
+
 export default {
     data() {
         return {
@@ -23,10 +25,28 @@ export default {
             this.$refs.dialog.close();
         },
 
-        onFormSubmit() {
+        async onFormSubmit() {
             const username = this.$data.username;
             const theme = this.$data.theme;
             const isPrivate = this.$data.isPrivate;
+
+            let [socket, user_id] = await createGame(
+                username,
+                theme,
+                isPrivate,
+            );
+            socket.onmessage = (event) => {
+                // TODO: Error handling
+                console.log(event.data);
+                let game = JSON.parse(event.data);
+                console.log(game);
+                let id = game.id;
+
+                this.$router.push("/lobby/" + id);
+                saveGameData(socket, id, user_id);
+            };
+
+            this.hide();
         },
     },
 };

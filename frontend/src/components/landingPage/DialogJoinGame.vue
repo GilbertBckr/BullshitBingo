@@ -1,6 +1,8 @@
 // TODO: Do manual validation.
 <script setup></script>
 <script>
+import { joinGame } from "@/logic/token";
+
 export default {
     data() {
         return {
@@ -23,6 +25,10 @@ export default {
         onFormSubmit() {
             const username = this.$data.username;
             const id = this.$data.id;
+            // TODO: Error handling
+            joinGame(id, username);
+            this.$router.push("/lobby/" + id);
+            this.hide();
         },
     },
 };
@@ -38,13 +44,13 @@ export default {
                 required
                 minLength="5"
                 maxLength="5"
-                v-model="inputID"
+                v-model="id"
             ></md-outlined-text-field>
             <md-outlined-text-field
                 label="Username"
                 ref="inputUsername"
                 required
-                v-model="inputUsername"
+                v-model="username"
             ></md-outlined-text-field>
         </form>
         <div slot="actions">

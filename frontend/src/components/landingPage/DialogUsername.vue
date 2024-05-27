@@ -1,7 +1,11 @@
 // TODO: Do manual validation.
 <script setup></script>
 <script>
+import { joinGame } from "@/logic/token";
+
 export default {
+    props: ["id"],
+
     data() {
         return {
             username: "",
@@ -20,6 +24,11 @@ export default {
 
         onFormSubmit() {
             const username = this.$data.username;
+            const id = this.id;
+            // TODO: Error handling
+            joinGame(id, username);
+            this.$router.push("/lobby/" + id);
+            this.hide();
         },
     },
 };

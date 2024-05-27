@@ -10,23 +10,6 @@ export default {
         };
     },
 
-    mounted() {
-        this.$refs.buttonCancel.addEventListener("click", async () => {
-            this.hide();
-        });
-
-        this.$refs.inputPrivate.addEventListener("change", () => {
-            this.$data.isPrivate = this.$refs.inputPrivate.selected;
-        });
-
-        this.$refs.form.addEventListener("submit", async (e) => {
-            const username = this.$data.username;
-            const theme = this.$data.theme;
-            const isPrivate = this.$data.isPrivate;
-            e.preventDefault();
-        });
-    },
-
     methods: {
         show() {
             this.$refs.inputTheme.reset();
@@ -39,6 +22,12 @@ export default {
         hide() {
             this.$refs.dialog.close();
         },
+
+        onFormSubmit() {
+            const username = this.$data.username;
+            const theme = this.$data.theme;
+            const isPrivate = this.$data.isPrivate;
+        },
     },
 };
 </script>
@@ -46,7 +35,7 @@ export default {
 <template>
     <md-dialog ref="dialog">
         <div slot="headline">Create Game</div>
-        <form slot="content" id="createGameForm" ref="form">
+        <form slot="content" id="createGameForm" @submit.prevent="onFormSubmit">
             <md-outlined-text-field
                 label="Theme"
                 ref="inputTheme"
@@ -66,11 +55,14 @@ export default {
                     selected
                     icons
                     show-only-selected-icon
+                    @change="
+                        this.$data.isPrivate = this.$refs.inputPrivate.selected
+                    "
                 ></md-switch>
             </label>
         </form>
         <div slot="actions">
-            <md-text-button value="cancel" ref="buttonCancel"
+            <md-text-button value="cancel" ref="buttonCancel" @click="hide"
                 >Cancel</md-text-button
             >
             <md-text-button value="join" form="createGameForm" ref="buttonJoin"

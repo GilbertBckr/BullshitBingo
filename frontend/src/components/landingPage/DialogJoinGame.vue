@@ -9,18 +9,6 @@ export default {
         };
     },
 
-    mounted() {
-        this.$refs.buttonCancel.addEventListener("click", async () => {
-            this.hide();
-        });
-
-        this.$refs.form.addEventListener("submit", async () => {
-            const username = this.$data.username;
-            const id = this.$data.id;
-            debugger;
-        });
-    },
-
     methods: {
         show() {
             this.$refs.inputID.reset();
@@ -31,6 +19,11 @@ export default {
         hide() {
             this.$refs.dialog.close();
         },
+
+        onFormSubmit() {
+            const username = this.$data.username;
+            const id = this.$data.id;
+        },
     },
 };
 </script>
@@ -38,7 +31,7 @@ export default {
 <template>
     <md-dialog ref="dialog">
         <div slot="headline">Join Game</div>
-        <form slot="content" id="joinGameForm" ref="form">
+        <form slot="content" id="joinGameForm" @submit.prevent="onFormSubmit">
             <md-outlined-text-field
                 label="Game ID"
                 ref="inputID"
@@ -55,7 +48,7 @@ export default {
             ></md-outlined-text-field>
         </form>
         <div slot="actions">
-            <md-text-button value="cancel" ref="buttonCancel"
+            <md-text-button value="cancel" ref="buttonCancel" @click="hide"
                 >Cancel</md-text-button
             >
             <md-text-button value="join" form="joinGameForm" ref="buttonJoin"

@@ -8,19 +8,7 @@ export default {
         };
     },
 
-    mounted() {
-        this.$refs.buttonCancel.addEventListener("click", async () => {
-            this.hide();
-        });
-
-        this.$refs.form.addEventListener("submit", async () => {
-            const username = this.$data.username;
-        });
-    },
-
     methods: {
-        reset() {},
-
         show() {
             this.$refs.inputUsername.reset();
             this.$refs.dialog.show();
@@ -29,6 +17,10 @@ export default {
         hide() {
             this.$refs.dialog.close();
         },
+
+        onFormSubmit() {
+            const username = this.$data.username;
+        },
     },
 };
 </script>
@@ -36,16 +28,16 @@ export default {
 <template>
     <md-dialog ref="dialog">
         <div slot="headline">Enter Username</div>
-        <form slot="content" id="usernameForm" ref="form">
+        <form slot="content" id="usernameForm" @submit.prevent="onFormSubmit">
             <md-outlined-text-field
                 label="Username"
                 ref="inputUsername"
                 required
-                :value="username"
+                v-model="username"
             ></md-outlined-text-field>
         </form>
         <div slot="actions">
-            <md-text-button value="cancel" ref="buttonCancel"
+            <md-text-button value="cancel" ref="buttonCancel" @click="hide"
                 >Cancel</md-text-button
             >
             <md-text-button value="join" form="usernameForm" ref="buttonJoin"

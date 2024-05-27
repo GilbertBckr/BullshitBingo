@@ -1,4 +1,4 @@
-from schemas import Player, Game
+from ..schemas import Player, Game
 import string
 import random
 

@@ -3,6 +3,9 @@ import GameCardContainer from './GameCardContainer.vue';
 import GameCard from './GameCard.vue';
 import { getAvailableGames } from '../../logic/gameRetrieval'
 import { createGame, saveGameData } from '../../logic/token'
+import UsernameDialog from './UsernameDialog.vue';
+import JoinGameDialog from './JoinGameDialog.vue'
+import CreateGameDialog from './CreateGameDialog.vue'
 </script>
 
 <script>
@@ -85,6 +88,7 @@ export default {
 </script>
 <template>
     <div>
+        <CreateGameDialog></CreateGameDialog>
         <h2 class="md-typescale-headline-large">Active Games</h2>
         <div class="buttons">
             <input v-model="privateGameId" style="width: 10px;" />

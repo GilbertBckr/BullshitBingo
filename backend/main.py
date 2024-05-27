@@ -3,11 +3,11 @@ from fastapi.responses import HTMLResponse
 from fastapi import Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from typing import Annotated
-import schemas
+from . import schemas
 import uuid
-import security
-import utils.bingoUtils as bingoUtils
-import command_handler
+from . import security
+from .utils import bingoUtils as bingoUtils
+from . import command_handler
 
 app = FastAPI()
 

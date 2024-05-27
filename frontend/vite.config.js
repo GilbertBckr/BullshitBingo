@@ -1,7 +1,7 @@
-import { fileURLToPath, URL } from 'node:url'
+import { fileURLToPath, URL } from "node:url";
 
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -9,14 +9,23 @@ export default defineConfig({
     vue({
       template: {
         compilerOptions: {
-          isCustomElement: (tag) => ['md-elevation', 'md-filled-button'].includes(tag)
-        }
-      }
+          isCustomElement: (tag) =>
+            [
+              "md-elevation",
+              "md-filled-button",
+              "md-dialog",
+              "md-text-button",
+              "md-outlined-button",
+              "md-outlined-text-field",
+              "md-switch",
+            ].includes(tag),
+        },
+      },
     }),
   ],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
-    }
-  }
-})
+      "@": fileURLToPath(new URL("./src", import.meta.url)),
+    },
+  },
+});

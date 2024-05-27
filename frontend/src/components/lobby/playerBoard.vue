@@ -1,75 +1,101 @@
-<script setup>
-
-</script>
+<script setup></script>
 
 <script>
 export default {
     props: ["board", "game"],
     emits: ["change-cell-checked", "change-cell-text", "start-game"],
     data() {
-        return {
-        }
-
+        return {};
     },
-    created() {
-    },
+    created() {},
     methods: {
         getUserId() {
             return window.userIds[this.game.id];
         },
         getValueOfTextField(rowIndex, colIndex) {
-            return document.getElementById(`${rowIndex};${colIndex}`).value
+            return document.getElementById(`${rowIndex};${colIndex}`).value;
         },
         checkIfUserIsAdmin() {
-            return this.getUserId() == this.game.admin_id
+            return this.getUserId() == this.game.admin_id;
         },
         checkIfEveryOneIsReady() {
             if (this.game == undefined || this.game.players == undefined) {
-                return true
+                return true;
             }
-            console.log(this.game)
-            return !this.game.players.every((value) => value.is_ready)
-        }
-
+            console.log(this.game);
+            return !this.game.players.every((value) => value.is_ready);
+        },
     },
-}
+};
 </script>
 
 <template>
-
-
     <div>
         <div v-if="board != null">
             <h2>{{ board.user_id == getUserId() ? "Du" : board.name }}</h2>
             <table border="1" :class="{ won: board.has_bingo }">
                 <tr v-for="(row, rowIndex) in board.fields" :key="rowIndex">
-                    <td v-for="(elem, colIndex) of row" :key="`${rowIndex};${colIndex}`">
+                    <td
+                        v-for="(elem, colIndex) of row"
+                        :key="`${rowIndex};${colIndex}`"
+                    >
                         <template v-if="game.game_state == 'DRAFT'">
                             <template v-if="board.user_id !== getUserId()">
                                 <span> {{ elem.content }}</span>
                             </template>
-                            <input v-else type="text" name="field-content" :id="`${rowIndex};${colIndex}`"
-                                @change.prevent="$emit('change-cell-text', { row: rowIndex, col: colIndex, new_text: getValueOfTextField(rowIndex, colIndex), user_id: board.user_id })"
-                                :value="elem.content">
-
+                            <input
+                                v-else
+                                type="text"
+                                name="field-content"
+                                :id="`${rowIndex};${colIndex}`"
+                                @change.prevent="
+                                    $emit('change-cell-text', {
+                                        row: rowIndex,
+                                        col: colIndex,
+                                        new_text: getValueOfTextField(
+                                            rowIndex,
+                                            colIndex,
+                                        ),
+                                        user_id: board.user_id,
+                                    })
+                                "
+                                :value="elem.content"
+                            />
                         </template>
                         <template v-else-if="game.game_state == 'RUNNING'">
-                            <div @click="$emit('change-cell-checked', {
-                                row: rowIndex, col: colIndex, new_checked:
-                                    !elem.checked, user_id: board.user_id
-                            })" :class="{ checked: elem.checked }"> {{ elem.content }}</div>
-
+                            <div
+                                @click="
+                                    $emit('change-cell-checked', {
+                                        row: rowIndex,
+                                        col: colIndex,
+                                        new_checked: !elem.checked,
+                                        user_id: board.user_id,
+                                    })
+                                "
+                                :class="{ checked: elem.checked }"
+                            >
+                                {{ elem.content }}
+                            </div>
                         </template>
-
                     </td>
                 </tr>
             </table>
-
         </div>
-        <div class="buttons" style="bottom: 20px; position: absolute; right: 30px;" v-if="checkIfUserIsAdmin() && game.game_state == 'DRAFT'">
-            <md-outlined-button @click="this.$emit('start-game')" :disabled="checkIfEveryOneIsReady()">
+        <div
+            class="buttons"
+            style="bottom: 20px; position: absolute; right: 30px"
+            v-if="checkIfUserIsAdmin() && game.game_state == 'DRAFT'"
+        >
+            <md-outlined-button
+                @click="this.$emit('start-game')"
+                :disabled="checkIfEveryOneIsReady()"
+            >
                 Start Game
-                <span slot="icon" class="material-symbols-outlined" style="font-size: 18px;">
+                <span
+                    slot="icon"
+                    class="material-symbols-outlined"
+                    style="font-size: 18px"
+                >
                     edit
                 </span>
             </md-outlined-button>

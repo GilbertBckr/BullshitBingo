@@ -7,7 +7,7 @@ export default {
     },
 
     mounted() {
-        this.centerContainer()
+        this.centerContainer();
     },
 
     created() {
@@ -22,24 +22,28 @@ export default {
             const cardWidth = 200;
             const gapWidth = 13;
             const paddingContainer = 30;
-            const containerWidth = this.$refs.cardContainer.offsetWidth
-            const gap = (containerWidth - 2 * paddingContainer) % (cardWidth + gapWidth);
-            if (containerWidth - 2 * paddingContainer >= cardCount * (cardWidth + gapWidth) - gapWidth) {
+            const containerWidth = this.$refs.cardContainer.offsetWidth;
+            const gap =
+                (containerWidth - 2 * paddingContainer) %
+                (cardWidth + gapWidth);
+            if (
+                containerWidth - 2 * paddingContainer >=
+                cardCount * (cardWidth + gapWidth) - gapWidth
+            ) {
                 this.$data.centeringOffset = 0;
             } else if (gap < cardWidth) {
                 this.$data.centeringOffset = gap / 2;
             } else {
                 this.$data.centeringOffset = (gap - cardWidth) / 2;
             }
-        }
-    }
-}
+        },
+    },
+};
 </script>
 <template>
     <div ref="cardContainer" class="cardContainer">
         <slot />
     </div>
-
 </template>
 <style scoped>
 .cardContainer {

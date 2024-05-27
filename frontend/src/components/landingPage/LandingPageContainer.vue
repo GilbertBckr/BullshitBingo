@@ -1,58 +1,66 @@
 <script setup>
-import GameCardContainer from './GameCardContainer.vue';
-import GameCard from './GameCard.vue';
-import { getAvailableGames } from '../../logic/gameRetrieval'
-import { createGame, saveGameData } from '../../logic/token'
-import UsernameDialog from './UsernameDialog.vue';
-import JoinGameDialog from './JoinGameDialog.vue'
-import CreateGameDialog from './CreateGameDialog.vue'
+import GameCardContainer from "./GameCardContainer.vue";
+import GameCard from "./GameCard.vue";
+import { getAvailableGames } from "../../logic/gameRetrieval";
+import { createGame, saveGameData } from "../../logic/token";
+import UsernameDialog from "./DialogUsername.vue";
+import JoinGameDialog from "./DialogJoinGame.vue";
+import CreateGameDialog from "./DialogCreateGame.vue";
 </script>
 
 <script>
+import { createApp } from "vue";
+
 export default {
     data() {
         return {
             isPopupVisible: false,
             isPrivateGameJoinVisible: false,
             formData: {
-                theme: '',
-                username: '',
-                gameVisibility: ''
+                theme: "",
+                username: "",
+                gameVisibility: "",
             },
-            privateGameUsername: '',
+            privateGameUsername: "",
             privateGameId: "",
-            games: []
-        }
+            games: [],
+            renderCreateGameDialog: false,
+            renderJoinGameDialog: false,
+            renderUsernameDialog: false,
+        };
     },
     methods: {
-        showPopup() {
-            this.isPopupVisible = true;
+        onCreateNewGame() {
+            this.$refs.createGameDialog.show();
         },
         closePopup() {
-            this.formData.theme = '';
-            this.formData.username = '';
+            this.formData.theme = "";
+            this.formData.username = "";
 
             this.isPopupVisible = false;
         },
 
         async submitForm() {
             let isPrivate;
-            if (this.formData.gameVisibility == 'public') {
+            if (this.formData.gameVisibility == "public") {
                 isPrivate = false;
-            } else if (this.formData.gameVisibility == 'private') {
+            } else if (this.formData.gameVisibility == "private") {
                 isPrivate = true;
             }
-            let [socket, user_id] = await createGame(this.formData.username, this.formData.theme, isPrivate);
+            let [socket, user_id] = await createGame(
+                this.formData.username,
+                this.formData.theme,
+                isPrivate,
+            );
             socket.onmessage = (event) => {
                 console.log(event.data);
                 let game = JSON.parse(event.data);
-                console.log(game)
-                let id = game.id
+                console.log(game);
+                let id = game.id;
 
-                this.$router.push('/lobby/' + id);
+                this.$router.push("/lobby/" + id);
                 saveGameData(socket, id, user_id);
-
-            }
+            };
             this.games = await getAvailableGames();
             this.closePopup();
         },
@@ -60,54 +68,48 @@ export default {
         async submitPrivateGame() {
             this.isPrivateGameJoinVisible = false;
             joinGame(this.privateGameId, this.privateGameUsername);
-            this.$router.push('/lobby/' + this.privateGameId);
+            this.$router.push("/lobby/" + this.privateGameId);
         },
         closePopupPrivateGame() {
             this.isPrivateGameJoinVisible = false;
         },
 
-        async onJoinedPrivateGame() {
-            for (let i = 0; i < this.games.length; i++) {
-                if (this.games[i].id == this.privateGameId) {
-                    this.isPrivateGameJoinVisible = true;
-                }
-            }
-
+        onJoinPrivateGame() {
+            this.$refs.joinGameDialog.reset();
+            this.$refs.joinGameDialog.show();
         },
+
         async updateGames() {
             this.games = await getAvailableGames();
-        }
+        },
     },
     async created() {
         this.interval = setInterval(() => {
             this.updateGames();
-        }, 8000)
+        }, 8000);
         this.updateGames();
-    }
-}
+    },
+};
 </script>
 <template>
-    <div>
-        <CreateGameDialog></CreateGameDialog>
+    <div ref="container">
+        <CreateGameDialog ref="createGameDialog" />
+        <JoinGameDialog ref="joinGameDialog" />
+        <UsernameDialog ref="usernameDialog" />
         <h2 class="md-typescale-headline-large">Active Games</h2>
         <div class="buttons">
-            <input v-model="privateGameId" style="width: 10px;" />
-            <md-outlined-text-field label="Game ID" class="gameid-textfield" v-model="privateGameId">
-            </md-outlined-text-field>
-            <md-outlined-button style="margin-right: 13px;" @click="onJoinedPrivateGame()">
+            <md-outlined-button
+                style="margin-right: 12px"
+                @click="onJoinPrivateGame"
+            >
                 Join Game
-                <span slot="icon" class="material-symbols-outlined" style="font-size: 18px;">
-                    edit
-                </span>
+                <md-icon slot="icon"> edit </md-icon>
             </md-outlined-button>
 
-            <md-filled-button @click="showPopup">
+            <md-filled-button @click="onCreateNewGame">
                 Create New
-                <span slot="icon" class="material-symbols-outlined" style="font-size: 18px">
-                    add
-                </span>
+                <md-icon slot="icon"> add </md-icon>
             </md-filled-button>
-
         </div>
 
         <div v-if="isPopupVisible" class="popup">
@@ -116,21 +118,43 @@ export default {
 
                 <div class="dialog-content">
                     <label for="gameVisibility">Visibility:</label>
-                    <select name="gameVisibility" id="gameVisibility" v-model="formData.gameVisibility">
+                    <select
+                        name="gameVisibility"
+                        id="gameVisibility"
+                        v-model="formData.gameVisibility"
+                    >
                         <option value="private" selected>Private</option>
                         <option value="public">Public</option>
                     </select>
 
                     <label for="theme">Theme:</label>
-                    <input type="text" id="theme" v-model="formData.theme" required />
+                    <input
+                        type="text"
+                        id="theme"
+                        v-model="formData.theme"
+                        required
+                    />
 
                     <label for="username">Username:</label>
-                    <input type="text" id="username" v-model="formData.username" required />
+                    <input
+                        type="text"
+                        id="username"
+                        v-model="formData.username"
+                        required
+                    />
                 </div>
 
                 <div class="dialog-actions">
-                    <button type="submit" class="mdc-button mdc-button--raised">Submit</button>
-                    <button type="button" class="mdc-button mdc-button--outlined" @click="closePopup">Close</button>
+                    <button type="submit" class="mdc-button mdc-button--raised">
+                        Submit
+                    </button>
+                    <button
+                        type="button"
+                        class="mdc-button mdc-button--outlined"
+                        @click="closePopup"
+                    >
+                        Close
+                    </button>
                 </div>
             </form>
         </div>
@@ -141,22 +165,39 @@ export default {
 
                 <div class="dialog-content">
                     <label for="username">Username:</label>
-                    <input type="text" id="username" v-model="privateGameUsername" required />
+                    <input
+                        type="text"
+                        id="username"
+                        v-model="privateGameUsername"
+                        required
+                    />
                 </div>
 
                 <div class="dialog-actions">
-                    <button type="submit" class="mdc-button mdc-button--raised">Join Game</button>
-                    <button type="button" class="mdc-button mdc-button--outlined"
-                        @click="closePopupPrivateGame">Close</button>
+                    <button type="submit" class="mdc-button mdc-button--raised">
+                        Join Game
+                    </button>
+                    <button
+                        type="button"
+                        class="mdc-button mdc-button--outlined"
+                        @click="closePopupPrivateGame"
+                    >
+                        Close
+                    </button>
                 </div>
             </form>
         </div>
 
-
         <div class="container">
             <GameCardContainer>
-                <GameCard v-for="(game) in games" :name="game.theme" :playerCount="game.players.length"
-                    :dimensions="game.dimensions" :key="game.id" :gameId="game.id" />
+                <GameCard
+                    v-for="game in games"
+                    :name="game.theme"
+                    :playerCount="game.players.length"
+                    :dimensions="game.dimensions"
+                    :key="game.id"
+                    :gameId="game.id"
+                />
             </GameCardContainer>
         </div>
     </div>

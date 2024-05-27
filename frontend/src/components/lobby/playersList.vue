@@ -1,35 +1,49 @@
-<script setup>
-
-</script>
+<script setup></script>
 
 <script>
 export default {
-    props: ['game'],
-    data() {
-
-    },
+    props: ["game"],
+    data() {},
     created() {
         this.players = this.game.players;
-
     },
     methods: {
         watchPlayer(index) {
             console.log("watching..." + index);
-        }
-    }
-}
+        },
+    },
+};
 </script>
 
 <template>
     <div>
-
-        <div style="max-width: fit-content; margin-left: auto; margin-right: auto;">
+        <div
+            style="
+                max-width: fit-content;
+                margin-left: auto;
+                margin-right: auto;
+            "
+        >
             <h1>Players</h1>
-            <md-list style="width: 100%; background-color: var(--md-sys-color-surface-container);">
-                <div v-for="(player, index) in game.players" style="width: 250px;" :class="{won: player.has_bingo}">
+            <md-list
+                style="
+                    width: 100%;
+                    background-color: var(--md-sys-color-surface-container);
+                "
+            >
+                <div
+                    v-for="(player, index) in game.players"
+                    style="width: 250px"
+                    :class="{ won: player.has_bingo }"
+                >
                     <!-- TODO: dynamically size the div-->
-                    <md-list-item style="width: 100%" @click="$emit('watchPlayer', index)">
-                        <md-outlined-icon-button><md-icon>check</md-icon></md-outlined-icon-button>
+                    <md-list-item
+                        style="width: 100%"
+                        @click="$emit('watchPlayer', index)"
+                    >
+                        <md-outlined-icon-button
+                            ><md-icon>check</md-icon></md-outlined-icon-button
+                        >
                         {{ player.name }}
                         <md-icon slot="end" :key="index">check</md-icon>
                     </md-list-item>

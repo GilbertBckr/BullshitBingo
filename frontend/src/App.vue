@@ -1,44 +1,44 @@
 <script setup>
-import { styles as typescaleStyles } from '@material/web/typography/md-typescale-styles.js';
-import PageTitle from './components/PageTitle.vue';
-import LandingPageContainer from './components/landingPage/LandingPageContainer.vue';
+import { styles as typescaleStyles } from "@material/web/typography/md-typescale-styles.js";
+import PageTitle from "./components/PageTitle.vue";
+import LandingPageContainer from "./components/landingPage/LandingPageContainer.vue";
 
 // Apply material typescale style classes
 document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
 </script>
 
 <template>
-  <header>
-    <PageTitle>Bullshit Bingo</PageTitle>
-  </header>
-  <main>
-    <RouterView />
-  </main>
+    <header>
+        <PageTitle>Bullshit Bingo</PageTitle>
+    </header>
+    <main>
+        <RouterView />
+    </main>
 </template>
 
 <style scoped>
 main {
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  gap: 18px;
-  flex-grow: 1;
-  height: 100%;
-  margin: 12px;
-  margin-top: 0;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    gap: 18px;
+    flex-grow: 1;
+    height: 100%;
+    margin: 12px;
+    margin-top: 0;
 }
 
-main>*:first-child {
-  flex-grow: 1;
+main > *:first-child {
+    flex-grow: 1;
 }
 
-main>* {
-  border-radius: 28px;
-  background-color: var(--md-sys-color-surface-container);
-  position: relative;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
+main > * {
+    border-radius: 28px;
+    background-color: var(--md-sys-color-surface-container);
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
 }
 </style>

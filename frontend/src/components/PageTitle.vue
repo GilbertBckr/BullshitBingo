@@ -1,5 +1,4 @@
-<script>
-</script>
+<script></script>
 <template>
     <h1 class="md-typescale-display-large">
         <slot />

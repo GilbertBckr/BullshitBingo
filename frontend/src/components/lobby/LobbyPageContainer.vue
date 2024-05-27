@@ -1,6 +1,6 @@
 <script setup>
-import PlayersList from "./playersList.vue";
-import PlayerBoard from "./playerBoard.vue";
+import PlayersList from "./PlayerList.vue";
+import PlayerBoard from "./PlayerBoard.vue";
 </script>
 
 <script>
@@ -59,7 +59,7 @@ export default {
             alert("Socket was not found");
         }
         this.socket.onmessage = (event) => {
-            console.log("Reeived message from token");
+            console.log("Received message from token");
             let localGame = JSON.parse(event.data);
             console.log("Local game: " + localGame.game_state);
             console.log(localGame);
@@ -68,6 +68,11 @@ export default {
                 this.playerBoardIndex = this.game.players.length - 1;
                 this.isFirstListen = false;
             }
+
+            this.$emit(
+                "updateTitle",
+                `${this.game.theme} (${this.$route.params.game_id})`,
+            );
         };
         this.refreshSocket();
     },
@@ -76,9 +81,7 @@ export default {
 
 <template>
     <div :key="game.game_state">
-        <h1>Theme: {{ game.theme }}</h1>
-        <h3>Lobby Game {{ $route.params.game_id }}</h3>
-        <template v-if="game != null">
+        <div v-if="game != null">
             <PlayerBoard
                 :board="
                     game.players == undefined
@@ -91,7 +94,7 @@ export default {
                 @start-game="startGame"
             >
             </PlayerBoard>
-        </template>
+        </div>
 
         <md-filled-button
             @click="setReady"
@@ -103,7 +106,7 @@ export default {
         <div v-else>Already is ready</div>
     </div>
 
-    <div style="width: 30%">
+    <div>
         <PlayersList :game="game" @watchPlayer="watchPlayer"></PlayersList>
     </div>
 </template>

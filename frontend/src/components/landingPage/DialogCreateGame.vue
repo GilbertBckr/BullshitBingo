@@ -16,7 +16,7 @@ export default {
         show() {
             this.$refs.inputTheme.reset();
             this.$refs.inputUsername.reset();
-            this.$data.isPrivate = true;
+            this.isPrivate = true;
             this.$refs.inputPrivate.selected = true;
             this.$refs.dialog.show();
         },
@@ -26,9 +26,9 @@ export default {
         },
 
         async onFormSubmit() {
-            const username = this.$data.username;
-            const theme = this.$data.theme;
-            const isPrivate = this.$data.isPrivate;
+            const username = this.username;
+            const theme = this.theme;
+            const isPrivate = this.isPrivate;
 
             let [socket, user_id] = await createGame(
                 username,
@@ -76,7 +76,7 @@ export default {
                     icons
                     show-only-selected-icon
                     @change="
-                        this.$data.isPrivate = this.$refs.inputPrivate.selected
+                        this.isPrivate = this.$refs.inputPrivate.selected
                     "
                 ></md-switch>
             </label>

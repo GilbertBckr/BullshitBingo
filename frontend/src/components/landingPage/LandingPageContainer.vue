@@ -28,6 +28,11 @@ export default {
             renderUsernameDialog: false,
         };
     },
+
+    mounted() {
+        this.$emit('updateTitle', 'Bullshit Bingo')
+    },
+
     methods: {
         onJoinPrivateGame() {
             this.$refs.joinGameDialog.show();

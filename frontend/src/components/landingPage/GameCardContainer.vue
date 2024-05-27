@@ -30,11 +30,11 @@ export default {
                 containerWidth - 2 * paddingContainer >=
                 cardCount * (cardWidth + gapWidth) - gapWidth
             ) {
-                this.$data.centeringOffset = 0;
+                this.centeringOffset = 0;
             } else if (gap < cardWidth) {
-                this.$data.centeringOffset = gap / 2;
+                this.centeringOffset = gap / 2;
             } else {
-                this.$data.centeringOffset = (gap - cardWidth) / 2;
+                this.centeringOffset = (gap - cardWidth) / 2;
             }
         },
     },

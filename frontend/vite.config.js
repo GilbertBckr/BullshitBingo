@@ -19,6 +19,10 @@ export default defineConfig({
                             "md-outlined-text-field",
                             "md-switch",
                             "md-icon",
+                            "md-divider",
+                            "md-list-item",
+                            "md-outlined-icon-button",
+                            "md-list"
                         ].includes(tag),
                 },
             },

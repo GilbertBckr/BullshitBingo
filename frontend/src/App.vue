@@ -1,18 +1,32 @@
 <script setup>
 import { styles as typescaleStyles } from "@material/web/typography/md-typescale-styles.js";
 import PageTitle from "./components/PageTitle.vue";
-import LandingPageContainer from "./components/landingPage/LandingPageContainer.vue";
 
 // Apply material typescale style classes
 document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
 </script>
+<script>
+export default {
+    data() {
+        return {
+            title: 'Bullshit Bingo'
+        }
+    },
+    methods: {
+        updateTitle(title) {
+            console.log("New Title: " + title)
+            this.title = title;
+        }
+    }
+}
+</script>
 
 <template>
     <header>
-        <PageTitle>Bullshit Bingo</PageTitle>
+        <PageTitle>{{ title }}</PageTitle>
     </header>
     <main>
-        <RouterView />
+        <RouterView @updateTitle="updateTitle"/>
     </main>
 </template>
 
@@ -30,6 +44,7 @@ main {
 
 main > *:first-child {
     flex-grow: 1;
+    width: 100%;
 }
 
 main > * {
@@ -37,7 +52,6 @@ main > * {
     background-color: var(--md-sys-color-surface-container);
     position: relative;
     height: 100%;
-    width: 100%;
     display: flex;
     flex-direction: column;
 }

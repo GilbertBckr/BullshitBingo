@@ -23,8 +23,8 @@ export default {
         },
 
         onFormSubmit() {
-            const username = this.$data.username;
-            const id = this.$data.id;
+            const username = this.username;
+            const id = this.id;
             // TODO: Error handling
             joinGame(id, username);
             this.$router.push("/lobby/" + id);

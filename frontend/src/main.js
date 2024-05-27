@@ -16,11 +16,11 @@ import { createWebHashHistory, createRouter } from "vue-router";
 import { createApp } from "vue";
 import App from "./App.vue";
 import LandingPageContainer from "./components/landingPage/LandingPageContainer.vue";
-import Lobby from "./components/lobby/lobbyPage.vue";
+import LobbyPageContainer from "./components/lobby/LobbyPageContainer.vue";
 
 const routes = [
     { path: "/", component: LandingPageContainer },
-    { path: "/lobby/:game_id", component: Lobby },
+    { path: "/lobby/:game_id", component: LobbyPageContainer },
 ];
 const router = createRouter({
     history: createWebHashHistory(),

@@ -23,7 +23,7 @@ export default {
         },
 
         onFormSubmit() {
-            const username = this.$data.username;
+            const username = this.username;
             const id = this.id;
             // TODO: Error handling
             joinGame(id, username);

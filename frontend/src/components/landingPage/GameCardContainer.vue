@@ -18,6 +18,10 @@ export default {
     },
     methods: {
         centerContainer() {
+            if (this.$refs.cardContainer === null) {
+                return;
+            }
+
             const cardCount = this.$refs.cardContainer.childElementCount;
             const cardWidth = 200;
             const gapWidth = 13;

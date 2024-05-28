@@ -24,7 +24,7 @@ export default {
                 margin-right: auto;
             "
         >
-            <h1>Players</h1>
+            <h2 class="md-typescale-headline-large">Players</h2>
             <md-list
                 style="
                     width: 100%;
@@ -57,5 +57,10 @@ export default {
 <style scoped>
 .won {
     background-color: gold;
+}
+
+h2 {
+    margin: 0;
+    padding: 30px;
 }
 </style>

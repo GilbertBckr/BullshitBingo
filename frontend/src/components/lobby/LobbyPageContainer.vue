@@ -13,6 +13,9 @@ export default {
             isFirstListen: true,
         };
     },
+
+    emits: ["updateTitle"],
+
     methods: {
         refreshSocket() {
             this.socket.send("REFRESH");
@@ -92,18 +95,12 @@ export default {
                 @change-cell-checked="changeCellChecked"
                 @change-cell-text="changeCellText"
                 @start-game="startGame"
+                @set-ready="setReady"
             >
             </PlayerBoard>
         </div>
 
-        <md-filled-button
-            @click="setReady"
-            v-if="game.game_state == 'DRAFT' && !getOwnBoard().is_ready"
-            :disabled="!checkIfAllFieldsHaveContent()"
-        >
-            Ready
-        </md-filled-button>
-        <div v-else>Already is ready</div>
+        
     </div>
 
     <div>

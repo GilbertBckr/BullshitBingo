@@ -41,6 +41,10 @@ export default {
 
         async updateGames() {
             this.games = await getAvailableGames();
+            if (this.$refs.gameCardContainer === null) {
+                return;
+            }
+            
             this.$nextTick(() => {
                 this.$refs.gameCardContainer.centerContainer();
             })

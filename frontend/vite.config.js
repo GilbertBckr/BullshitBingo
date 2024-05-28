@@ -22,7 +22,8 @@ export default defineConfig({
                             "md-divider",
                             "md-list-item",
                             "md-outlined-icon-button",
-                            "md-list"
+                            "md-list",
+                            "md-filled-tonal-button",
                         ].includes(tag),
                 },
             },

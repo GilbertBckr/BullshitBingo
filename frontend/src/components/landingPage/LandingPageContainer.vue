@@ -31,6 +31,7 @@ export default {
 
     mounted() {
         this.$emit('updateTitle', 'Bullshit Bingo')
+        this.$refs.gameCardContainer.centerContainer();
     },
 
     methods: {
@@ -40,6 +41,9 @@ export default {
 
         async updateGames() {
             this.games = await getAvailableGames();
+            this.$nextTick(() => {
+                this.$refs.gameCardContainer.centerContainer();
+            })
         },
     },
     async created() {
@@ -70,7 +74,7 @@ export default {
             </md-filled-button>
         </div>
         <div class="container">
-            <GameCardContainer>
+            <GameCardContainer ref="gameCardContainer">
                 <GameCard
                     v-for="game in games"
                     :name="game.theme"

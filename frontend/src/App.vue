@@ -44,14 +44,12 @@ main {
 
 main > *:first-child {
     flex-grow: 1;
-    width: 100%;
 }
 
 main > * {
     border-radius: 28px;
     background-color: var(--md-sys-color-surface-container);
     position: relative;
-    height: 100%;
     display: flex;
     flex-direction: column;
 }

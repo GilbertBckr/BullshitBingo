@@ -97,6 +97,7 @@ export default {
                     v-on:click="onCellClick(rowIndex, colIndex, elem)"
                     :empty="elem.content === '' ? true : null"
                     :checked="elem.checked ? true : null"
+                    :watchingPlayer="board.user_id == getUserId() ? null : true"
                 >
                     <md-ripple></md-ripple>
                     {{ elem.content }}
@@ -159,13 +160,17 @@ td[checked] {
     background-color: #81c784;
 }
 
+td[watchingPlayer] {
+    pointer-events: none;
+}
+
 h2 {
     margin: 0;
     padding: 30px;
 }
 
 md-filled-tonal-button[hidden] {
-    visibility: collapse;
+    visibility: hidden;
 }
 
 .checked {

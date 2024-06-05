@@ -12,6 +12,7 @@ import "@material/web/iconbutton/outlined-icon-button.js";
 import "@material/web/dialog/dialog.js";
 import "@material/web/button/text-button.js";
 import "@material/web/switch/switch.js";
+import "@material/web/ripple/ripple.js"
 import { createWebHashHistory, createRouter } from "vue-router";
 
 import { createApp } from "vue";

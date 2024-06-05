@@ -1,11 +1,22 @@
-<script setup></script>
+<script setup>
+import DialogCell from "./DialogCell.vue";
+</script>
 
 <script>
 export default {
     props: ["board", "game"],
-    emits: ["change-cell-checked", "change-cell-text", "start-game", "set-ready"],
+    emits: [
+        "change-cell-checked",
+        "change-cell-text",
+        "start-game",
+        "set-ready",
+    ],
     data() {
-        return {};
+        return {
+            focusedColumn: 0,
+            focusedRow: 0,
+            focusedPlayerID: "",
+        };
     },
     created() {},
     methods: {
@@ -22,13 +33,11 @@ export default {
             if (this.game == undefined || this.game.players == undefined) {
                 return true;
             }
-            console.log(this.game);
             return !this.game.players.every((value) => value.is_ready);
         },
 
         getOwnBoard() {
             let ownId = window.userIds[this.game.id];
-            console.log(this.game.players);
             for (let player of this.game.players) {
                 if (player.user_id == ownId) {
                     return player;
@@ -42,13 +51,16 @@ export default {
                 row.every((col) => col.content !== ""),
             );
         },
-        
     },
 };
 </script>
 
 <template>
     <div v-if="board != null">
+        <DialogCell
+            ref="dialog"
+            @change-cell-text="(event) => $emit('change-cell-text', event)"
+        ></DialogCell>
         <h2 class="md-typescale-headline-large">
             {{
                 board.user_id == getUserId()
@@ -61,62 +73,34 @@ export default {
                 <td
                     v-for="(elem, colIndex) of row"
                     :key="`${rowIndex};${colIndex}`"
+                    v-on:click="
+                        $refs.dialog.show(
+                            rowIndex,
+                            colIndex,
+                            board.user_id,
+                            elem.content,
+                        )
+                    "
                 >
-                    <template v-if="game.game_state == 'DRAFT'">
-                        <template v-if="board.user_id !== getUserId()">
-                            <span> {{ elem.content }}</span>
-                        </template>
-                        <input
-                            v-else
-                            type="text"
-                            name="field-content"
-                            :id="`${rowIndex};${colIndex}`"
-                            @change.prevent="
-                                $emit('change-cell-text', {
-                                    row: rowIndex,
-                                    col: colIndex,
-                                    new_text: getValueOfTextField(
-                                        rowIndex,
-                                        colIndex,
-                                    ),
-                                    user_id: board.user_id,
-                                })
-                            "
-                            :value="elem.content"
-                        />
-                    </template>
-                    <template v-else-if="game.game_state == 'RUNNING'">
-                        <div
-                            @click="
-                                $emit('change-cell-checked', {
-                                    row: rowIndex,
-                                    col: colIndex,
-                                    new_checked: !elem.checked,
-                                    user_id: board.user_id,
-                                })
-                            "
-                            :class="{ checked: elem.checked }"
-                        >
-                            {{ elem.content }}
-                        </div>
-                    </template>
+                    <md-ripple></md-ripple>
+                    {{ elem.content }}
                 </td>
             </tr>
         </table>
         <div
             class="buttons"
             style="bottom: 20px; position: absolute; right: 30px"
-            v-if="this.game.game_state === 'DRAFT'"
+            v-if="game.game_state === 'DRAFT'"
         >
             <md-filled-tonal-button
-                @click="this.$emit('set-ready')"
+                @click="$emit('set-ready')"
                 :disabled="!checkIfAllFieldsHaveContent()"
             >
                 Submit Board
                 <md-icon slot="icon"> check </md-icon>
             </md-filled-tonal-button>
             <md-filled-button
-                @click="this.$emit('start-game')"
+                @click="$emit('start-game')"
                 :disabled="checkIfEveryOneIsReady()"
             >
                 Start Game
@@ -127,6 +111,26 @@ export default {
 </template>
 
 <style scoped>
+table {
+    padding: 30px;
+    border: 0;
+    padding-top: 0;
+    border-spacing: 8px;
+}
+
+td {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    border: 0;
+    border-radius: 12px;
+    background-color: var(--md-sys-color-surface-container-highest);
+}
+
+td:hover {
+    cursor: pointer;
+}
+
 h2 {
     margin: 0;
     padding: 30px;

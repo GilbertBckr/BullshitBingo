@@ -22,13 +22,14 @@ export default {
             this.$refs.dialog.close();
         },
 
-        onFormSubmit() {
+        async onFormSubmit() {
             const username = this.username;
             const id = this.id;
             // TODO: Error handling
-            joinGame(id, username);
-            this.$router.push("/lobby/" + id);
             this.hide();
+            joinGame(id, username).then(() => {
+                this.$router.push("/lobby/" + id);
+            });
         },
     },
 };

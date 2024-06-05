@@ -32,16 +32,19 @@ const createGame = async (username, theme, isPrivate) => {
     } catch (error) {}
 };
 
-const joinGame = async (gameId, username, callbackAfterConnect) => {
-    const credentials = await getAccessToken();
-    const socket = new WebSocket(
-        `${socketBaseUrl}join-game/${gameId}/${username}`,
-    );
-    socket.onopen = () => {
-        socket.send(credentials.access_token);
-        saveGameData(socket, gameId, credentials.user_id);
-        callbackAfterConnect();
-    };
+const joinGame = async (gameId, username) => {
+    return new Promise((resolve) => {
+        getAccessToken().then((credentials) => {
+            const socket = new WebSocket(
+                `${socketBaseUrl}join-game/${gameId}/${username}`,
+            );
+            socket.onopen = () => {
+                socket.send(credentials.access_token);
+                saveGameData(socket, gameId, credentials.user_id);
+                resolve();
+            };
+        });
+    });
 };
 
 const saveGameData = (socket, gameId, user_id) => {

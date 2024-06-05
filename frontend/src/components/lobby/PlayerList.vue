@@ -3,7 +3,9 @@
 <script>
 export default {
     props: ["game"],
-    data() {},
+    data() {
+        return {};
+    },
     created() {
         this.players = this.game.players;
     },

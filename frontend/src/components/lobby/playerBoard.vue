@@ -51,19 +51,24 @@ export default {
                 row.every((col) => col.content !== ""),
             );
         },
-        onCellClick(row, column, content) {
+        onCellClick(row, column, element) {
             if (!this.board.is_ready) {
                 this.$refs.dialog.show(
                     row,
                     column,
                     this.board.user_id,
-                    content,
+                    element.content,
                 );
                 return;
             }
 
             if (this.game.game_state === "RUNNING") {
-
+                this.$emit("change-cell-checked", {
+                    row: row,
+                    col: column,
+                    new_checked: !element.checked,
+                    user_id: this.board.user_id,
+                })
             }
         },
     },
@@ -89,8 +94,9 @@ export default {
                     class="md-typescale-body-medium"
                     v-for="(elem, colIndex) of row"
                     :key="`${rowIndex};${colIndex}`"
-                    v-on:click="onCellClick(rowIndex, colIndex, elem.content)"
+                    v-on:click="onCellClick(rowIndex, colIndex, elem)"
                     :empty="elem.content === '' ? true : null"
+                    :checked="elem.checked ? true : null"
                 >
                     <md-ripple></md-ripple>
                     {{ elem.content }}
@@ -138,6 +144,7 @@ td {
     background-color: var(--md-sys-color-surface-container-highest);
     text-align: center;
     padding: 5px;
+    transition: background-color .5s;
 }
 
 td:hover {
@@ -146,6 +153,10 @@ td:hover {
 
 td[empty] {
     background-color: var(--md-sys-color-error-container);
+}
+
+td[checked] {
+    background-color: #81c784;
 }
 
 h2 {

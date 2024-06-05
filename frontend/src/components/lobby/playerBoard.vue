@@ -51,6 +51,21 @@ export default {
                 row.every((col) => col.content !== ""),
             );
         },
+        onCellClick(row, column, content) {
+            if (!this.board.is_ready) {
+                this.$refs.dialog.show(
+                    row,
+                    column,
+                    this.board.user_id,
+                    content,
+                );
+                return;
+            }
+
+            if (this.game.game_state === "RUNNING") {
+
+            }
+        },
     },
 };
 </script>
@@ -71,16 +86,11 @@ export default {
         <table border="1" :class="{ won: board.has_bingo }">
             <tr v-for="(row, rowIndex) in board.fields" :key="rowIndex">
                 <td
+                    class="md-typescale-body-medium"
                     v-for="(elem, colIndex) of row"
                     :key="`${rowIndex};${colIndex}`"
-                    v-on:click="
-                        $refs.dialog.show(
-                            rowIndex,
-                            colIndex,
-                            board.user_id,
-                            elem.content,
-                        )
-                    "
+                    v-on:click="onCellClick(rowIndex, colIndex, elem.content)"
+                    :empty="elem.content === '' ? true : null"
                 >
                     <md-ripple></md-ripple>
                     {{ elem.content }}
@@ -95,6 +105,7 @@ export default {
             <md-filled-tonal-button
                 @click="$emit('set-ready')"
                 :disabled="!checkIfAllFieldsHaveContent()"
+                :hidden="board.is_ready ? true : null"
             >
                 Submit Board
                 <md-icon slot="icon"> check </md-icon>
@@ -125,15 +136,25 @@ td {
     border: 0;
     border-radius: 12px;
     background-color: var(--md-sys-color-surface-container-highest);
+    text-align: center;
+    padding: 5px;
 }
 
 td:hover {
     cursor: pointer;
 }
 
+td[empty] {
+    background-color: var(--md-sys-color-error-container);
+}
+
 h2 {
     margin: 0;
     padding: 30px;
+}
+
+md-filled-tonal-button[hidden] {
+    visibility: collapse;
 }
 
 .checked {

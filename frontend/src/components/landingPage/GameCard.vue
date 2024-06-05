@@ -6,6 +6,7 @@ import DialogUsername from "./DialogUsername.vue";
 import { joinGame } from "@/logic/token";
 export default {
     props: ["name", "playerCount", "dimensions", "gameId"],
+    emits: ["onJoinGame"],
     data() {
         return {
             isPopupVisible: false,
@@ -15,27 +16,10 @@ export default {
         };
     },
     methods: {
-        showPopup() {
-            this.isPopupVisible = true;
-        },
-        closePopup() {
-            this.formData.username = "";
-            this.isPopupVisible = false;
-        },
-        joinGame() {
-            console.log(this.formData);
-            console.log(this.gameId);
-            // TODO: check if username is already used
-            joinGame(this.gameId, this.formData.username, () => {
-                this.$router.push("/lobby/" + this.gameId);
-            });
-            this.closePopup();
-        },
     },
 };
 </script>
 <template>
-    <DialogUsername ref="dialog" :id="gameId"></DialogUsername>
 
     <div class="card">
         <md-elevation></md-elevation>
@@ -43,7 +27,7 @@ export default {
         <p class="info md-typescale-label-medium">
             {{ playerCount }} Player · {{ dimensions }}x{{ dimensions }}
         </p>
-        <md-filled-button class="button" @click="$refs.dialog.show"
+        <md-filled-button class="button" @click="$emit('onJoinGame', gameId)"
             >Join</md-filled-button
         >
     </div>

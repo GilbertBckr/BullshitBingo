@@ -4,8 +4,6 @@
 import { joinGame } from "@/logic/token";
 
 export default {
-    props: ["id"],
-
     data() {
         return {
             username: "",
@@ -13,7 +11,8 @@ export default {
     },
 
     methods: {
-        show() {
+        show(gameID) {
+            this.id = gameID;
             this.$refs.inputUsername.reset();
             this.$refs.dialog.show();
         },
@@ -23,6 +22,7 @@ export default {
         },
 
         onFormSubmit() {
+            console.log(this.id);
             const username = this.username;
             const id = this.id;
             // TODO: Error handling
@@ -49,7 +49,7 @@ export default {
             <md-text-button value="cancel" ref="buttonCancel" @click="hide"
                 >Cancel</md-text-button
             >
-            <md-text-button value="join" form="usernameForm" ref="buttonJoin"
+            <md-text-button type="submit" value="join" form="usernameForm" ref="buttonJoin"
                 >Join</md-text-button
             >
         </div>

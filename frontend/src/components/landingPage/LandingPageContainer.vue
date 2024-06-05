@@ -5,6 +5,7 @@ import { getAvailableGames } from "../../logic/gameRetrieval";
 import { createGame, saveGameData } from "../../logic/token";
 import DialogJoinGame from "./DialogJoinGame.vue";
 import DialogCreateGame from "./DialogCreateGame.vue";
+import DialogUsername from "./DialogUsername.vue";
 </script>
 
 <script>
@@ -49,6 +50,9 @@ export default {
                 this.$refs.gameCardContainer.centerContainer();
             })
         },
+        onEnterUsername(gameID) {
+            this.$refs.enterNameDialog.show(gameID);
+        },
     },
     async created() {
         this.interval = setInterval(() => {
@@ -62,6 +66,7 @@ export default {
     <div ref="container">
         <DialogCreateGame ref="createGameDialog" />
         <DialogJoinGame ref="joinGameDialog" />
+        <DialogUsername ref="enterNameDialog"></DialogUsername>
         <h2 class="md-typescale-headline-large">Active Games</h2>
         <div class="buttons">
             <md-outlined-button
@@ -86,6 +91,7 @@ export default {
                     :dimensions="game.dimensions"
                     :key="game.id"
                     :gameId="game.id"
+                    @onJoinGame="onEnterUsername"
                 />
             </GameCardContainer>
         </div>

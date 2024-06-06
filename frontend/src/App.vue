@@ -9,16 +9,16 @@ document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
 export default {
     data() {
         return {
-            title: 'Bullshit Bingo'
-        }
+            title: "Bullshit Bingo",
+        };
     },
     methods: {
         updateTitle(title) {
-            console.log("New Title: " + title)
+            console.log("New Title: " + title);
             this.title = title;
-        }
-    }
-}
+        },
+    },
+};
 </script>
 
 <template>
@@ -26,10 +26,14 @@ export default {
         <PageTitle>{{ title }}</PageTitle>
     </header>
     <main>
-        <RouterView @updateTitle="updateTitle"/>
+        <RouterView @updateTitle="updateTitle" />
     </main>
+    <footer>
+        <p class="md-typescale-body-small">
+            <a href="#" @click="console.log('Open how to play')">How to play</a> · <a href="#" @click="console.log('Open imprint')">Imprint</a>
+        </p>
+    </footer>
 </template>
-
 <style scoped>
 main {
     position: relative;
@@ -52,5 +56,20 @@ main > * {
     position: relative;
     display: flex;
     flex-direction: column;
+}
+
+footer > p {
+    margin-top: 0;
+    text-align: center;
+}
+
+a {
+    color: var(--md-sys-color-primary);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: var(--md-sys-color-on-primary-container)
 }
 </style>

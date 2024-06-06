@@ -55,7 +55,7 @@ export default {
     flex-direction: row;
     padding-right: 30px;
     padding-bottom: 30px;
-    padding-left: calc(30px + calc(v-bind(centeringOffset) * 1px));
+    padding-left: calc(30px + (v-bind(centeringOffset) * 1px));
     gap: 13px;
     flex-wrap: wrap;
     overflow: scroll;

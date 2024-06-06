@@ -1,8 +1,8 @@
 <script setup>
 import { styles as typescaleStyles } from "@material/web/typography/md-typescale-styles.js";
 import PageTitle from "./components/PageTitle.vue";
-import DialogHowToPlay from "./components/DialogHowToPlay.vue"
-import DialogImprint from "./components/DialogImprint.vue"
+import DialogHowToPlay from "./components/DialogHowToPlay.vue";
+import DialogImprint from "./components/DialogImprint.vue";
 
 // Apply material typescale style classes
 document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
@@ -34,7 +34,8 @@ export default {
     </main>
     <footer>
         <p class="md-typescale-body-small">
-            <a href="#" @click="$refs.howToPlayDialog.show()">How to Play</a> · <a href="#" @click="$refs.imprintDialog.show()">Imprint</a>
+            <a href="#" @click="$refs.howToPlayDialog.show()">How to Play</a> ·
+            <a href="#" @click="$refs.imprintDialog.show()">Imprint</a>
         </p>
     </footer>
 </template>
@@ -74,6 +75,6 @@ a {
 
 a:hover {
     text-decoration: underline;
-    color: var(--md-sys-color-on-primary-container)
+    color: var(--md-sys-color-on-primary-container);
 }
 </style>

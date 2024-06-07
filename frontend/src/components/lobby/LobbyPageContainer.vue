@@ -25,14 +25,11 @@ export default {
             this.socket.send(`CHANGE_CELL_CHECKED ${JSON.stringify(payload)}`);
         },
         changeCellText(payload) {
-            console.log(payload);
-
             payload["game_id"] = this.game.id;
             this.socket.send(`CHANGE_CELL_TEXT ${JSON.stringify(payload)}`);
         },
         watchPlayer(index) {
             this.playerBoardIndex = index;
-            console.log("watching..." + index);
         },
         startGame() {
             this.socket.send(`START_GAME ${this.game.id}`);
@@ -62,10 +59,7 @@ export default {
             alert("Socket was not found");
         }
         this.socket.onmessage = (event) => {
-            console.log("Received message from token");
             let localGame = JSON.parse(event.data);
-            console.log("Local game: " + localGame.game_state);
-            console.log(localGame);
             this.game = localGame;
             if (this.isFirstListen) {
                 this.playerBoardIndex = this.game.players.length - 1;

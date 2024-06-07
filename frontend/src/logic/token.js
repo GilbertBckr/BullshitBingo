@@ -19,9 +19,9 @@ const createGame = async (username, theme, isPrivate) => {
         const credentials = await getAccessToken();
         const socket = new WebSocket(socketBaseUrl + "create-game/" + username);
         socket.onopen = (event) => {
-            console.log(credentials);
+            //console.log(credentials);
             socket.send(credentials.access_token);
-            console.log("Send token: " + credentials.access_token);
+            //console.log("Send token: " + credentials.access_token);
             socket.send(JSON.stringify({ theme: theme, private: isPrivate }));
         };
         socket.onerror = (error) => {

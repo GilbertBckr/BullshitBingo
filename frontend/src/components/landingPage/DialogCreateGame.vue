@@ -37,11 +37,8 @@ export default {
             );
             socket.onmessage = (event) => {
                 // TODO: Error handling
-                console.log(event.data);
                 let game = JSON.parse(event.data);
-                console.log(game);
                 let id = game.id;
-
                 this.$router.push("/lobby/" + id);
                 saveGameData(socket, id, user_id);
             };

@@ -22,7 +22,6 @@ export default {
         },
 
         onFormSubmit() {
-            console.log(this.id);
             const username = this.username;
             const id = this.id;
             // TODO: Error handling

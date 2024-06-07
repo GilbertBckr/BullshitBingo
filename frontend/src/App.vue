@@ -16,7 +16,6 @@ export default {
     },
     methods: {
         updateTitle(title) {
-            console.log("New Title: " + title);
             this.title = title;
         },
     },
@@ -34,8 +33,8 @@ export default {
     </main>
     <footer>
         <p class="md-typescale-body-small">
-            <a href="#" @click="$refs.howToPlayDialog.show()">How to Play</a> ·
-            <a href="#" @click="$refs.imprintDialog.show()">Imprint</a>
+            <a @click="$refs.howToPlayDialog.show()">How to Play</a> ·
+            <a @click="$refs.imprintDialog.show()">Imprint</a>
         </p>
     </footer>
 </template>
@@ -71,6 +70,10 @@ footer > p {
 a {
     color: var(--md-sys-color-primary);
     text-decoration: none;
+}
+
+a:hover {
+    cursor: pointer;
 }
 
 a:hover {

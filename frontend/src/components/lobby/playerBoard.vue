@@ -68,7 +68,7 @@ export default {
                     col: column,
                     new_checked: !element.checked,
                     user_id: this.board.user_id,
-                })
+                });
             }
         },
     },
@@ -106,24 +106,24 @@ export default {
         </table>
         <div
             class="buttons"
-            style="bottom: 20px; position: absolute; right: 30px"
             v-if="game.game_state === 'DRAFT'"
         >
-            <md-filled-tonal-button
-                @click="$emit('set-ready')"
-                :disabled="!checkIfAllFieldsHaveContent()"
-                :hidden="board.is_ready ? true : null"
-            >
-                Submit Board
-                <md-icon slot="icon"> check </md-icon>
-            </md-filled-tonal-button>
             <md-filled-button
                 @click="$emit('start-game')"
                 :disabled="checkIfEveryOneIsReady()"
+                :hidden="checkIfUserIsAdmin() ? null : true"
             >
                 Start Game
                 <md-icon slot="icon"> done_all </md-icon>
             </md-filled-button>
+            <md-filled-tonal-button
+                @click="$emit('set-ready')"
+                :disabled="!checkIfAllFieldsHaveContent()"
+                :hidden="board.is_ready || board.user_id !== getUserId() ? true : null"
+            >
+                Submit Board
+                <md-icon slot="icon"> check </md-icon>
+            </md-filled-tonal-button>
         </div>
     </div>
 </template>
@@ -145,7 +145,7 @@ td {
     background-color: var(--md-sys-color-surface-container-highest);
     text-align: center;
     padding: 5px;
-    transition: background-color .5s;
+    transition: background-color 0.5s;
 }
 
 td:hover {
@@ -169,8 +169,8 @@ h2 {
     padding: 30px;
 }
 
-md-filled-tonal-button[hidden] {
-    visibility: hidden;
+*[hidden] {
+    visibility: collapse;
 }
 
 .checked {
@@ -180,7 +180,7 @@ md-filled-tonal-button[hidden] {
 .buttons {
     position: absolute;
     display: flex;
-    flex-direction: row;
+    flex-direction: row-reverse;
     bottom: 30px;
     right: 30px;
 }

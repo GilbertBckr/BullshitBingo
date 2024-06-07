@@ -72,9 +72,7 @@ export default {
                     selected
                     icons
                     show-only-selected-icon
-                    @change="
-                        this.isPrivate = this.$refs.inputPrivate.selected
-                    "
+                    @change="this.isPrivate = this.$refs.inputPrivate.selected"
                 ></md-switch>
             </label>
         </form>

@@ -10,6 +10,7 @@ export default {
         "change-cell-text",
         "start-game",
         "set-ready",
+        "watch-player",
     ],
     data() {
         return {
@@ -71,6 +72,15 @@ export default {
                 });
             }
         },
+        onReturn() {
+            for (let i = 0; i < this.game.players.length; i++) {
+                const player = this.game.players[i];
+                if (this.getUserId() === player.user_id) {
+                    this.$emit('watch-player', i);
+                    break;
+                }
+            }
+        },
     },
 };
 </script>
@@ -81,13 +91,22 @@ export default {
             ref="dialog"
             @change-cell-text="(event) => $emit('change-cell-text', event)"
         ></DialogCell>
-        <h2 class="md-typescale-headline-large">
-            {{
-                board.user_id == getUserId()
-                    ? `${board.name} (You)`
-                    : board.name
-            }}
-        </h2>
+        <div class="headline">
+            <md-filled-icon-button
+                :hidden="board.user_id === getUserId()"
+                @click="onReturn"
+            >
+                <md-icon>arrow_back</md-icon>
+            </md-filled-icon-button>
+            <h2 class="md-typescale-headline-large">
+                {{
+                    board.user_id == getUserId()
+                        ? `${board.name} (You)`
+                        : board.name
+                }}
+            </h2>
+        </div>
+
         <table border="1">
             <tr v-for="(row, rowIndex) in board.fields" :key="rowIndex">
                 <td
@@ -104,10 +123,7 @@ export default {
                 </td>
             </tr>
         </table>
-        <div
-            class="buttons"
-            v-if="game.game_state === 'DRAFT'"
-        >
+        <div class="buttons" v-if="game.game_state === 'DRAFT'">
             <md-filled-button
                 @click="$emit('start-game')"
                 :disabled="checkIfEveryOneIsReady()"
@@ -119,7 +135,11 @@ export default {
             <md-filled-tonal-button
                 @click="$emit('set-ready')"
                 :disabled="!checkIfAllFieldsHaveContent()"
-                :hidden="board.is_ready || board.user_id !== getUserId() ? true : null"
+                :hidden="
+                    board.is_ready || board.user_id !== getUserId()
+                        ? true
+                        : null
+                "
             >
                 Submit Board
                 <md-icon slot="icon"> check </md-icon>
@@ -164,11 +184,6 @@ td[watchingPlayer] {
     pointer-events: none;
 }
 
-h2 {
-    margin: 0;
-    padding: 30px;
-}
-
 *[hidden] {
     visibility: collapse;
 }
@@ -187,5 +202,15 @@ h2 {
 
 .buttons > * {
     margin-left: 18px;
+}
+
+.headline {
+    display: flex;
+}
+
+.headline > * {
+    margin: 0;
+    padding: 30px;
+    padding-right: 0;
 }
 </style>

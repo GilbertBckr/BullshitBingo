@@ -24,7 +24,8 @@ export default defineConfig({
                             "md-outlined-icon-button",
                             "md-list",
                             "md-filled-tonal-button",
-                            "md-ripple"
+                            "md-ripple",
+                            "md-filled-icon-button",
                         ].includes(tag),
                 },
             },

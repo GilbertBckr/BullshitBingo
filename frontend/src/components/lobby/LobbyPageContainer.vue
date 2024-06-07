@@ -90,6 +90,7 @@ export default {
                 @change-cell-text="changeCellText"
                 @start-game="startGame"
                 @set-ready="setReady"
+                @watch-player="watchPlayer"
             >
             </PlayerBoard>
         </div>

@@ -88,7 +88,7 @@ export default {
                     : board.name
             }}
         </h2>
-        <table border="1" :class="{ won: board.has_bingo }">
+        <table border="1">
             <tr v-for="(row, rowIndex) in board.fields" :key="rowIndex">
                 <td
                     class="md-typescale-body-medium"
@@ -175,10 +175,6 @@ md-filled-tonal-button[hidden] {
 
 .checked {
     background-color: green;
-}
-
-.won {
-    background-color: gold;
 }
 
 .buttons {

@@ -186,6 +186,7 @@ td[watchingPlayer] {
 
 *[hidden] {
     visibility: collapse;
+    display: none;
 }
 
 .checked {

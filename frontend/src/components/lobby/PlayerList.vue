@@ -15,41 +15,30 @@ export default {
 
 <template>
     <div>
-        <div
-            style="
-                max-width: fit-content;
-                margin-left: auto;
-                margin-right: auto;
-            "
-        >
-            <h2 class="md-typescale-headline-large">Players</h2>
-            <md-list>
-                <md-divider></md-divider>
-                <div
-                    v-for="(player, index) in game.players"
-                    style="width: 250px"
+        <h2 class="md-typescale-headline-large">Players</h2>
+        <md-list>
+            <md-divider></md-divider>
+            <div v-for="(player, index) in game.players">
+                <md-list-item
+                    style="width: 100%"
+                    @click="$emit('watchPlayer', index)"
                 >
-                    <md-list-item
-                        style="width: 100%"
-                        @click="$emit('watchPlayer', index)"
-                    >
-                        <md-ripple></md-ripple>
-                        {{ player.name }}
-                        <md-icon slot="start" :key="index">{{
-                            game.game_state === "DRAFT"
-                                ? player.is_ready
-                                    ? "check"
-                                    : ""
-                                : player.has_bingo
-                                  ? "trophy"
-                                  : ""
-                        }}</md-icon>
-                        <md-icon slot="end" :key="index">chevron_right</md-icon>
-                    </md-list-item>
-                    <md-divider></md-divider>
-                </div>
-            </md-list>
-        </div>
+                    <md-ripple></md-ripple>
+                    {{ player.name }}
+                    <md-icon slot="start" :key="index">{{
+                        game.game_state === "DRAFT"
+                            ? player.is_ready
+                                ? "check"
+                                : ""
+                            : player.has_bingo
+                              ? "trophy"
+                              : ""
+                    }}</md-icon>
+                    <md-icon slot="end" :key="index">chevron_right</md-icon>
+                </md-list-item>
+                <md-divider></md-divider>
+            </div>
+        </md-list>
     </div>
 </template>
 
@@ -58,6 +47,7 @@ md-list {
     --md-list-container-color: var(--md-sys-color-surface-container);
     position: relative;
     width: 100%;
+    margin-bottom: 28px;
 }
 
 md-list-item {

@@ -1,4 +1,3 @@
-// TODO: Do manual validation.
 <script setup></script>
 <script>
 import { saveGameData, createGame } from "../../logic/token";
@@ -36,7 +35,6 @@ export default {
                 isPrivate,
             );
             socket.onmessage = (event) => {
-                // TODO: Error handling
                 let game = JSON.parse(event.data);
                 let id = game.id;
                 this.$router.push("/lobby/" + id);

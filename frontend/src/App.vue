@@ -80,4 +80,12 @@ a:hover {
     text-decoration: underline;
     color: var(--md-sys-color-on-primary-container);
 }
+
+@media screen and (max-width: 700px) {
+    main {
+        flex-direction: column;
+        height: auto;
+    }
+    
+}
 </style>

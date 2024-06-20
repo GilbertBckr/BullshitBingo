@@ -1,4 +1,3 @@
-// TODO: Do manual validation.
 <script setup></script>
 <script>
 import { joinGame } from "@/logic/token";
@@ -24,7 +23,6 @@ export default {
         onFormSubmit() {
             const username = this.username;
             const id = this.id;
-            // TODO: Error handling
             this.hide();
 
             joinGame(id, username).then(() => {

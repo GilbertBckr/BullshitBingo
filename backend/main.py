@@ -50,12 +50,12 @@ class ConnectionManager:
                 pass
 
 
-websocket_manager = ConnectionManager()
 
 
 class GameManager:
-    def __init__(self) -> None:
+    def __init__(self, websocket_manager: ConnectionManager) -> None:
         self.active_games: dict[str, schemas.Game] = {}
+        self.websocket_manager = websocket_manager
 
     def add_game(self, create_game_data: schemas.CreateGame) -> schemas.Game:
         """Throws error"""
@@ -72,7 +72,7 @@ class GameManager:
                 player.is_ready = True
                 break
 
-        await websocket_manager.broadcast(game_id, game.model_dump_json())
+        await self.websocket_manager.broadcast(game_id, game.model_dump_json())
 
     def generate_id(self) -> str:
         while True:
@@ -151,7 +151,7 @@ class GameManager:
     async def broadcast_game_state(self, game_id: str) -> None:
         game: schemas.Game = self.get_game_throws_error(game_id)
         print(f"{game.model_dump_json()=}")
-        await websocket_manager.broadcast(game_id, game.model_dump_json())
+        await self.websocket_manager.broadcast(game_id, game.model_dump_json())
         print("braodcasting game state")
 
     def get_active_games(self) -> list[schemas.Game]:
@@ -203,8 +203,9 @@ class GameManager:
         print(f"{game.game_state=}")
         await self.broadcast_game_state(payload)
 
+connection_manager = ConnectionManager()
 
-game_manager = GameManager()
+game_manager = GameManager(connection_manager)
 
 command_handler_instance = command_handler.CommandHandler(game_manager)
 
@@ -247,7 +248,7 @@ async def create(
         game_manager.join_game(game.id, validated_create_player_data)
 
         # After creating the game the admin socket is saved and receives the game state
-        await websocket_manager.save_connection(
+        await connection_manager.save_connection(
             game_id=game.id, user_id=user_id, websocket=websocket
         )
         await game_manager.broadcast_game_state(game.id)
@@ -283,7 +284,7 @@ async def join_game(
         name=username, user_id=user_id
     )
     game_manager.join_game(game_id, create_player_data)
-    await websocket_manager.save_connection(game_id, user_id, websocket)
+    await connection_manager.save_connection(game_id, user_id, websocket)
     await game_manager.broadcast_game_state(game_id)
 
     try:
@@ -292,7 +293,7 @@ async def join_game(
             await command_handler_instance.handle_command(command, game_id, user_id)
 
     except WebSocketDisconnect:
-        websocket_manager.disconnect(user_id, game_id)
+        connection_manager.disconnect(user_id, game_id)
 
 
 @app.post("/token")

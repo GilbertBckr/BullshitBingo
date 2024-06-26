@@ -93,7 +93,7 @@ export default {
         ></DialogCell>
         <div class="headline">
             <md-filled-icon-button
-                :hidden="board.user_id === getUserId()"
+                :data-hidden="board.user_id === getUserId()"
                 @click="onReturn"
             >
                 <md-icon>arrow_back</md-icon>
@@ -107,16 +107,16 @@ export default {
             </h2>
         </div>
 
-        <table border="1">
+        <table>
             <tr v-for="(row, rowIndex) in board.fields" :key="rowIndex">
                 <td
                     class="md-typescale-body-medium"
                     v-for="(elem, colIndex) of row"
                     :key="`${rowIndex};${colIndex}`"
                     v-on:click="onCellClick(rowIndex, colIndex, elem)"
-                    :empty="elem.content === '' ? true : null"
-                    :checked="elem.checked ? true : null"
-                    :watchingPlayer="board.user_id == getUserId() ? null : true"
+                    :data-empty="elem.content === '' ? true : null"
+                    :data-checked="elem.checked ? true : null"
+                    :data-watchingPlayer="board.user_id == getUserId() ? null : true"
                 >
                     <md-ripple></md-ripple>
                     {{ elem.content }}
@@ -127,7 +127,7 @@ export default {
             <md-filled-button
                 @click="$emit('start-game')"
                 :disabled="checkIfEveryOneIsReady()"
-                :hidden="checkIfUserIsAdmin() ? null : true"
+                :data-hidden="checkIfUserIsAdmin() ? null : true"
             >
                 Start Game
                 <md-icon slot="icon"> done_all </md-icon>
@@ -135,7 +135,7 @@ export default {
             <md-filled-tonal-button
                 @click="$emit('set-ready')"
                 :disabled="!checkIfAllFieldsHaveContent()"
-                :hidden="
+                :data-hidden="
                     board.is_ready || board.user_id !== getUserId()
                         ? true
                         : null
@@ -172,25 +172,21 @@ td:hover {
     cursor: pointer;
 }
 
-td[empty] {
+td[data-empty] {
     background-color: var(--md-sys-color-error-container);
 }
 
-td[checked] {
+td[data-checked] {
     background-color: #81c784;
 }
 
-td[watchingPlayer] {
+td[data-watchingPlayer] {
     pointer-events: none;
 }
 
-*[hidden] {
+*[data-hidden] {
     visibility: collapse;
     display: none;
-}
-
-.checked {
-    background-color: green;
 }
 
 .buttons {

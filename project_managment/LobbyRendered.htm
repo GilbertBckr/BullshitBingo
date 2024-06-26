@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en" data-lt-installed="true" class="fiuiweh idc0_343">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script type="module" src="Bullshit%20Bingo_files/client"></script>
+
+    <meta charset="UTF-8" />
+    <link rel="icon" href="http://localhost:5173/favicon.ico" />
+    <link href="Bullshit%20Bingo_files/css2.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bullshit Bingo</title>
+    <style
+      type="text/css"
+      data-vite-dev-id="C:/Users/marfi/dev/BullshitBingo/frontend/src/assets/main.css"
+    >
+      @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+      /* Generated with https://material-foundation.github.io/material-theme-builder/ */
+      .light {
+        --md-sys-color-primary: rgb(144 75 60);
+        --md-sys-color-surface-tint: rgb(144 75 60);
+        --md-sys-color-on-primary: rgb(255 255 255);
+        --md-sys-color-primary-container: rgb(255 218 211);
+        --md-sys-color-on-primary-container: rgb(58 10 3);
+        --md-sys-color-secondary: rgb(119 87 79);
+        --md-sys-color-on-secondary: rgb(255 255 255);
+        --md-sys-color-secondary-container: rgb(255 218 211);
+        --md-sys-color-on-secondary-container: rgb(44 21 16);
+        --md-sys-color-tertiary: rgb(110 93 46);
+        --md-sys-color-on-tertiary: rgb(255 255 255);
+        --md-sys-color-tertiary-container: rgb(248 224 166);
+        --md-sys-color-on-tertiary-container: rgb(36 26 0);
+        --md-sys-color-error: rgb(186 26 26);
+        --md-sys-color-on-error: rgb(255 255 255);
+        --md-sys-color-error-container: rgb(255 218 214);
+        --md-sys-color-on-error-container: rgb(65 0 2);
+        --md-sys-color-background: rgb(255 248 246);
+        --md-sys-color-on-background: rgb(35 25 23);
+        --md-sys-color-surface: rgb(255 248 246);
+        --md-sys-color-on-surface: rgb(35 25 23);
+        --md-sys-color-surface-variant: rgb(245 221 217);
+        --md-sys-color-on-surface-variant: rgb(83 67 64);
+        --md-sys-color-outline: rgb(133 115 111);
+        --md-sys-color-outline-variant: rgb(216 194 189);
+        --md-sys-color-shadow: rgb(0 0 0);
+        --md-sys-color-scrim: rgb(0 0 0);
+        --md-sys-color-inverse-surface: rgb(57 46 44);
+        --md-sys-color-inverse-on-surface: rgb(255 237 233);
+        --md-sys-color-inverse-primary: rgb(255 180 164);
+        --md-sys-color-primary-fixed: rgb(255 218 211);
+        --md-sys-color-on-primary-fixed: rgb(58 10 3);
+        --md-sys-color-primary-fixed-dim: rgb(255 180 164);
+        --md-sys-color-on-primary-fixed-variant: rgb(115 52 39);
+        --md-sys-color-secondary-fixed: rgb(255 218 211);
+        --md-sys-color-on-secondary-fixed: rgb(44 21 16);
+        --md-sys-color-secondary-fixed-dim: rgb(231 189 180);
+        --md-sys-color-on-secondary-fixed-variant: rgb(93 63 57);
+        --md-sys-color-tertiary-fixed: rgb(248 224 166);
+        --md-sys-color-on-tertiary-fixed: rgb(36 26 0);
+        --md-sys-color-tertiary-fixed-dim: rgb(219 196 140);
+        --md-sys-color-on-tertiary-fixed-variant: rgb(84 69 25);
+        --md-sys-color-surface-dim: rgb(232 214 210);
+        --md-sys-color-surface-bright: rgb(255 248 246);
+        --md-sys-color-surface-container-lowest: rgb(255 255 255);
+        --md-sys-color-surface-container-low: rgb(255 240 237);
+        --md-sys-color-surface-container: rgb(252 234 230);
+        --md-sys-color-surface-container-high: rgb(247 228 224);
+        --md-sys-color-surface-container-highest: rgb(241 223 219);
+      }
+      body {
+        background-color: var(--md-sys-color-surface);
+        color: var(--md-sys-color-on-surface);
+        margin: 0;
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
+      }
+      #app {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+    </style>
+    <style
+      type="text/css"
+      data-vite-dev-id="C:/Users/marfi/dev/BullshitBingo/frontend/src/components/PageTitle.vue?vue&amp;type=style&amp;index=0&amp;scoped=590dc939&amp;lang.css"
+    >
+      h1[data-v-590dc939] {
+        position: relative;
+        top: 0;
+        left: 0;
+        font-weight: bolder !important;
+        padding: 30px;
+        margin: 0;
+      }
+    </style>
+    <style
+      type="text/css"
+      data-vite-dev-id="C:/Users/marfi/dev/BullshitBingo/frontend/src/App.vue?vue&amp;type=style&amp;index=0&amp;scoped=7a7a37b1&amp;lang.css"
+    >
+      main[data-v-7a7a37b1] {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        gap: 18px;
+        flex-grow: 1;
+        height: 100%;
+        margin: 12px;
+        margin-top: 0;
+      }
+      main[data-v-7a7a37b1] > *:first-child {
+        flex-grow: 1;
+      }
+      main[data-v-7a7a37b1] > * {
+        border-radius: 28px;
+        background-color: var(--md-sys-color-surface-container);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+      footer > p[data-v-7a7a37b1] {
+        margin-top: 0;
+        text-align: center;
+      }
+      a[data-v-7a7a37b1] {
+        color: var(--md-sys-color-primary);
+        text-decoration: none;
+      }
+      a[data-v-7a7a37b1]:hover {
+        cursor: pointer;
+      }
+      a[data-v-7a7a37b1]:hover {
+        text-decoration: underline;
+        color: var(--md-sys-color-on-primary-container);
+      }
+      @media screen and (max-width: 700px) {
+        main[data-v-7a7a37b1] {
+          flex-direction: column;
+          height: auto;
+        }
+      }
+    </style>
+    <style
+      type="text/css"
+      data-vite-dev-id="C:/Users/marfi/dev/BullshitBingo/frontend/src/components/landingPage/GameCardContainer.vue?vue&amp;type=style&amp;index=0&amp;scoped=9e90e6a2&amp;lang.css"
+    >
+      .cardContainer[data-v-9e90e6a2] {
+        display: flex;
+
+        flex-direction: row;
+
+        padding-right: 30px;
+
+        padding-bottom: 30px;
+
+        padding-left: calc(30px + (var(--9e90e6a2-centeringOffset) * 1px));
+
+        gap: 13px;
+
+        flex-wrap: wrap;
+
+        overflow: scroll;
+
+        position: absolute;
+
+        top: 0;
+
+        bottom: 0;
+
+        right: 0;
+
+        left: 0;
+      }
+    </style>
+    <style
+      type="text/css"
+      data-vite-dev-id="C:/Users/marfi/dev/BullshitBingo/frontend/src/components/landingPage/DialogUsername.vue?vue&amp;type=style&amp;index=0&amp;scoped=408a478b&amp;lang.css"
+    >
+      #usernameForm[data-v-408a478b] {
+        display: flex;
+        flex-direction: column;
+      }
+      #usernameForm[data-v-408a478b] > * {
+        margin-bottom: 16px;
+      }
+    </style>
+    <style
+      type="text/css"
+      data-vite-dev-id="C:/Users/marfi/dev/BullshitBingo/frontend/src/components/landingPage/GameCard.vue?vue&amp;type=style&amp;index=0&amp;scoped=f29c8a82&amp;lang.css"
+    >
+      .card[data-v-f29c8a82] {
+        position: relative;
+        width: calc(200px - 24px);
+        height: calc(200px - 24px);
+        padding: 12px;
+        border-radius: 12px;
+        background-color: var(--md-sys-color-surface-container-highest);
+        --md-elevation-level: 1;
+      }
+      .name[data-v-f29c8a82],
+      .info[data-v-f29c8a82] {
+        margin: 0;
+      }
+      .button[data-v-f29c8a82] {
+        position: absolute;
+        bottom: 12px;
+        right: 12px;
+      }
+    </style>
+    <style
+      type="text/css"
+      data-vite-dev-id="C:/Users/marfi/dev/BullshitBingo/frontend/src/components/landingPage/DialogJoinGame.vue?vue&amp;type=style&amp;index=0&amp;scoped=fbd97e51&amp;lang.css"
+    >
+      #joinGameForm[data-v-fbd97e51] {
+        display: flex;
+        flex-direction: column;
+      }
+      #joinGameForm[data-v-fbd97e51] > * {
+        margin-bottom: 16px;
+      }
+    </style>
+    <style
+      type="text/css"
+      data-vite-dev-id="C:/Users/marfi/dev/BullshitBingo/frontend/src/components/landingPage/DialogCreateGame.vue?vue&amp;type=style&amp;index=0&amp;scoped=1c517fa9&amp;lang.css"
+    >
+      #createGameForm[data-v-1c517fa9] {
+        display: flex;
+        flex-direction: column;
+      }
+      #createGameForm[data-v-1c517fa9] > * {
+        margin-bottom: 16px;
+      }
+      label[data-v-1c517fa9] {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+    </style>
+    <style
+      type="text/css"
+      data-vite-dev-id="C:/Users/marfi/dev/BullshitBingo/frontend/src/components/landingPage/LandingPageContainer.vue?vue&amp;type=style&amp;index=0&amp;scoped=0e0112f6&amp;lang.css"
+    >
+      h2[data-v-0e0112f6] {
+        margin: 0;
+
+        padding: 30px;
+      }
+      .container[data-v-0e0112f6] {
+        position: relative;
+
+        flex-grow: 1;
+      }
+      .buttons[data-v-0e0112f6] {
+        position: absolute;
+
+        top: 30px;
+
+        right: 30px;
+      }
+    </style>
+    <style
+      type="text/css"
+      data-vite-dev-id="C:/Users/marfi/dev/BullshitBingo/frontend/src/components/lobby/PlayerList.vue?vue&amp;type=style&amp;index=0&amp;scoped=02c73853&amp;lang.css"
+    >
+      md-list[data-v-02c73853] {
+        --md-list-container-color: var(--md-sys-color-surface-container);
+        position: relative;
+        width: 100%;
+        margin-bottom: 28px;
+      }
+      md-list-item[data-v-02c73853] {
+        position: relative;
+      }
+      md-list-item[data-v-02c73853]:hover {
+        cursor: pointer;
+      }
+      h2[data-v-02c73853] {
+        margin: 0;
+        padding: 30px;
+      }
+    </style>
+    <style
+      type="text/css"
+      data-vite-dev-id="C:/Users/marfi/dev/BullshitBingo/frontend/src/components/lobby/DialogCell.vue?vue&amp;type=style&amp;index=0&amp;scoped=7906a921&amp;lang.css"
+    >
+      #cellForm[data-v-7906a921] {
+        display: flex;
+        flex-direction: column;
+      }
+      #cellForm[data-v-7906a921] > * {
+        margin-bottom: 16px;
+      }
+    </style>
+    <style
+      type="text/css"
+      data-vite-dev-id="C:/Users/marfi/dev/BullshitBingo/frontend/src/components/lobby/PlayerBoard.vue?vue&amp;type=style&amp;index=0&amp;scoped=29776ca9&amp;lang.css"
+    >
+      table[data-v-29776ca9] {
+        padding: 30px;
+
+        border: 0;
+
+        padding-top: 0;
+
+        border-spacing: 8px;
+      }
+      td[data-v-29776ca9] {
+        position: relative;
+
+        width: 100px;
+
+        height: 100px;
+
+        border: 0;
+
+        border-radius: 12px;
+
+        background-color: var(--md-sys-color-surface-container-highest);
+
+        text-align: center;
+
+        padding: 5px;
+
+        transition: background-color 0.5s;
+      }
+      td[data-v-29776ca9]:hover {
+        cursor: pointer;
+      }
+      td[data-empty][data-v-29776ca9] {
+        background-color: var(--md-sys-color-error-container);
+      }
+      td[data-checked][data-v-29776ca9] {
+        background-color: #81c784;
+      }
+      td[data-watchingPlayer][data-v-29776ca9] {
+        pointer-events: none;
+      }
+      [data-hidden][data-v-29776ca9] {
+        visibility: collapse;
+
+        display: none;
+      }
+      .buttons[data-v-29776ca9] {
+        position: absolute;
+
+        display: flex;
+
+        flex-direction: row-reverse;
+
+        bottom: 30px;
+
+        right: 30px;
+      }
+      .buttons[data-v-29776ca9] > * {
+        margin-left: 18px;
+      }
+      .headline[data-v-29776ca9] {
+        display: flex;
+      }
+      .headline[data-v-29776ca9] > * {
+        margin: 0;
+
+        padding: 30px;
+
+        padding-right: 0;
+      }
+    </style>
+  </head>
+  <body class="light">
+    <div id="app" data-v-app="">
+      <md-dialog data-v-7a7a37b1="" role="presentation"
+        ><div slot="headline">How to Play</div>
+        <div slot="content">
+          <h3>Start to play!</h3>
+          <ul>
+            <li>
+              Press "Create Game" to create a new Game! The private option lets
+              you specify if players need the game code to join or if the game
+              can be accessed from the list.
+            </li>
+            <li>
+              Join a private game with the "Join Game" button and enter the code
+              provided to you.
+            </li>
+            <li>
+              Or choose a game from the list of public games and start the fun!
+            </li>
+          </ul>
+          <h3>Create your bingo board!</h3>
+          <ul>
+            <li>Click on the fields of your bingo board to enter a value.</li>
+            <li>
+              If all fields are filled press on "Submit Board" to finish
+              editing.
+            </li>
+            <li>
+              Watch your opponents by clicking on them in the Player List!
+            </li>
+          </ul>
+          <h3>BINGOOOO!</h3>
+          <ul>
+            <li>
+              If something you wrote happens, click on the field to check it!
+            </li>
+            <li>
+              Once 3 fields in a row, column or diagonal are checked you WIN!
+              Don't forget to shout "BINGOOO"!
+            </li>
+            <li>
+              Watch your opponents by clicking on them in the player List!
+            </li>
+          </ul>
+        </div>
+        <div slot="actions">
+          <md-text-button role="presentation" value="cancel"
+            >Close</md-text-button
+          >
+        </div></md-dialog
+      ><md-dialog data-v-7a7a37b1="" lang="de" role="presentation"
+        ><div slot="headline">Imprint</div>
+        <div slot="content">
+          <p>
+            Angaben gemäß § 5 TMG: <br />
+            Mathis Köder <br />
+            Erzbergerstraße 121 <br />
+            76133 Karlsruhe <br />
+            015128867198 <br />
+            Mathis.koeder.a23@dhbw-karlsruhe.de <br />
+            Umsatzsteuer-ID: - <br />
+            Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:
+            - <br /><br /><strong>Haftung für Inhalte</strong> <br />
+            Die Inhalte unserer Webseite wurden mit größtmöglicher Sorgfalt
+            erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der
+            Inhalte können wir jedoch keine Gewähr übernehmen. Als
+            Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf
+            diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach § 8
+            bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet,
+            übermittelte oder gespeicherte fremde Informationen zu überwachen
+            oder nach Umständen zu forschen, die auf eine rechtswidrige
+            Tätigkeit hinweisen. Verpflichtungen zur Entfernung oder Sperrung
+            der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben
+            hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab
+            dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich.
+            Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir
+            diese Inhalte umgehend entfernen. <br /><br /><strong
+              >Urheberrecht</strong
+            >
+            <br />
+            Die durch die Seitenbetreiber erstellten Inhalte und Werke auf
+            diesen Seiten unterliegen dem deutschen Urheberrecht. Die
+            Vervielfältigung, Bearbeitung, Verbreitung und jede Art der
+            Verwertung außerhalb der Grenzen des Urheberrechts bedürfen der
+            schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers.
+            Downloads und Kopien dieser Seite sind nur für den privaten, nicht
+            kommerziellen Gebrauch gestattet. Soweit die Inhalte auf dieser
+            Seite nicht vom Betreiber erstellt wurden, werden die Urheberrechte
+            Dritter beachtet. Insbesondere werden Inhalte Dritter als solche
+            gekennzeichnet. Sollten Sie trotzdem auf eine
+            Urheberrechtsverletzung aufmerksam werden, bitten wir um einen
+            entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen
+            werden wir derartige Inhalte umgehend entfernen.
+          </p>
+        </div>
+        <div slot="actions">
+          <md-text-button role="presentation" value="cancel"
+            >Close</md-text-button
+          >
+        </div></md-dialog
+      >
+      <header data-v-7a7a37b1="">
+        <h1
+          data-v-590dc939=""
+          data-v-7a7a37b1=""
+          class="md-typescale-display-large"
+        >
+          Test (ZAEJE)
+        </h1>
+      </header>
+      <main data-v-7a7a37b1="">
+        <div>
+          <div>
+            <div data-v-29776ca9="">
+              <md-dialog
+                data-v-7906a921=""
+                data-v-29776ca9=""
+                role="presentation"
+                ><div data-v-7906a921="" slot="headline">Board Cell</div>
+                <form data-v-7906a921="" slot="content" id="cellForm">
+                  <md-outlined-text-field
+                    data-v-7906a921=""
+                    role="presentation"
+                    required=""
+                    inputmode=""
+                    type="text"
+                    autocomplete=""
+                  ></md-outlined-text-field>
+                </form>
+                <div data-v-7906a921="" slot="actions">
+                  <md-text-button
+                    data-v-7906a921=""
+                    role="presentation"
+                    value="cancel"
+                    >Cancel</md-text-button
+                  ><md-text-button
+                    data-v-7906a921=""
+                    form="cellForm"
+                    role="presentation"
+                    value="join"
+                    >Ok</md-text-button
+                  >
+                </div></md-dialog
+              >
+              <div data-v-29776ca9="" class="headline">
+                <md-filled-icon-button
+                  data-v-29776ca9=""
+                  data-hidden="true"
+                  role="presentation"
+                  value=""
+                  ><md-icon data-v-29776ca9="" aria-hidden="true"
+                    >arrow_back</md-icon
+                  ></md-filled-icon-button
+                >
+                <h2 data-v-29776ca9="" class="md-typescale-headline-large">
+                  test (You)
+                </h2>
+              </div>
+              <table data-v-29776ca9="">
+                <tr data-v-29776ca9="">
+                  <td
+                    data-v-29776ca9=""
+                    class="md-typescale-body-medium"
+                    data-empty="true"
+                  >
+                    <md-ripple
+                      data-v-29776ca9=""
+                      aria-hidden="true"
+                    ></md-ripple>
+                  </td>
+                  <td
+                    data-v-29776ca9=""
+                    class="md-typescale-body-medium"
+                    data-empty="true"
+                  >
+                    <md-ripple
+                      data-v-29776ca9=""
+                      aria-hidden="true"
+                    ></md-ripple>
+                  </td>
+                  <td
+                    data-v-29776ca9=""
+                    class="md-typescale-body-medium"
+                    data-empty="true"
+                  >
+                    <md-ripple
+                      data-v-29776ca9=""
+                      aria-hidden="true"
+                    ></md-ripple>
+                  </td>
+                </tr>
+                <tr data-v-29776ca9="">
+                  <td
+                    data-v-29776ca9=""
+                    class="md-typescale-body-medium"
+                    data-empty="true"
+                  >
+                    <md-ripple
+                      data-v-29776ca9=""
+                      aria-hidden="true"
+                    ></md-ripple>
+                  </td>
+                  <td
+                    data-v-29776ca9=""
+                    class="md-typescale-body-medium"
+                    data-empty="true"
+                  >
+                    <md-ripple
+                      data-v-29776ca9=""
+                      aria-hidden="true"
+                    ></md-ripple>
+                  </td>
+                  <td
+                    data-v-29776ca9=""
+                    class="md-typescale-body-medium"
+                    data-empty="true"
+                  >
+                    <md-ripple
+                      data-v-29776ca9=""
+                      aria-hidden="true"
+                    ></md-ripple>
+                  </td>
+                </tr>
+                <tr data-v-29776ca9="">
+                  <td
+                    data-v-29776ca9=""
+                    class="md-typescale-body-medium"
+                    data-empty="true"
+                  >
+                    <md-ripple
+                      data-v-29776ca9=""
+                      aria-hidden="true"
+                    ></md-ripple>
+                  </td>
+                  <td
+                    data-v-29776ca9=""
+                    class="md-typescale-body-medium"
+                    data-empty="true"
+                  >
+                    <md-ripple
+                      data-v-29776ca9=""
+                      aria-hidden="true"
+                    ></md-ripple>
+                  </td>
+                  <td
+                    data-v-29776ca9=""
+                    class="md-typescale-body-medium"
+                    data-empty="true"
+                  >
+                    <md-ripple
+                      data-v-29776ca9=""
+                      aria-hidden="true"
+                    ></md-ripple>
+                  </td>
+                </tr>
+              </table>
+              <div data-v-29776ca9="" class="buttons">
+                <md-filled-button
+                  data-v-29776ca9=""
+                  role="presentation"
+                  disabled=""
+                  value=""
+                  has-icon=""
+                >
+                  Start Game
+                  <md-icon data-v-29776ca9="" slot="icon" aria-hidden="true">
+                    done_all
+                  </md-icon></md-filled-button
+                ><md-filled-tonal-button
+                  data-v-29776ca9=""
+                  role="presentation"
+                  disabled=""
+                  value=""
+                  has-icon=""
+                >
+                  Submit Board
+                  <md-icon data-v-29776ca9="" slot="icon" aria-hidden="true">
+                    check
+                  </md-icon></md-filled-tonal-button
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div data-v-02c73853="">
+            <h2 data-v-02c73853="" class="md-typescale-headline-large">
+              Players
+            </h2>
+            <md-list data-v-02c73853=""
+              ><md-divider data-v-02c73853=""></md-divider>
+              <div data-v-02c73853="">
+                <md-list-item
+                  data-v-02c73853=""
+                  style="width: 100%"
+                  role="presentation"
+                  type="text"
+                  md-list-item=""
+                  ><md-ripple data-v-02c73853="" aria-hidden="true"></md-ripple>
+                  test
+                  <md-icon
+                    data-v-02c73853=""
+                    slot="start"
+                    aria-hidden="true"
+                  ></md-icon
+                  ><md-icon data-v-02c73853="" slot="end" aria-hidden="true"
+                    >chevron_right</md-icon
+                  ></md-list-item
+                ><md-divider data-v-02c73853=""></md-divider></div
+            ></md-list>
+          </div>
+        </div>
+      </main>
+      <footer data-v-7a7a37b1="">
+        <p data-v-7a7a37b1="" class="md-typescale-body-small">
+          <a data-v-7a7a37b1="">How to Play</a> ·
+          <a data-v-7a7a37b1="">Imprint</a>
+        </p>
+      </footer>
+    </div>
+    <script type="module" src="Bullshit%20Bingo_files/main.js"></script>
+  </body>
+</html>

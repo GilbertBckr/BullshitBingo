@@ -1,7 +1,7 @@
 <script setup></script>
 <script>
 export default {
-    emits: ["change-cell-text"],
+    emits: ["changeCellText"],
 
     data() {
         return {
@@ -30,7 +30,7 @@ export default {
         },
 
         onFormSubmit() {
-            this.$emit("change-cell-text", {
+            this.$emit("changeCellText", {
                 row: this.row,
                 col: this.column,
                 new_text: this.cell,

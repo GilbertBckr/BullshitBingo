@@ -86,6 +86,5 @@ a:hover {
         flex-direction: column;
         height: auto;
     }
-    
 }
 </style>

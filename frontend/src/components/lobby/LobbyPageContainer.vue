@@ -87,7 +87,7 @@ export default {
                 "
                 :game="game"
                 @change-cell-checked="changeCellChecked"
-                @change-cell-text="changeCellText"
+                @changeCellText="changeCellText"
                 @start-game="startGame"
                 @set-ready="setReady"
                 @watch-player="watchPlayer"

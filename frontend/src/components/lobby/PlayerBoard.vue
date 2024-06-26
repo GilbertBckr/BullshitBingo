@@ -7,7 +7,7 @@ export default {
     props: ["board", "game"],
     emits: [
         "change-cell-checked",
-        "change-cell-text",
+        "changeCellText",
         "start-game",
         "set-ready",
         "watch-player",
@@ -89,7 +89,7 @@ export default {
     <div v-if="board != null">
         <DialogCell
             ref="dialog"
-            @change-cell-text="(event) => $emit('change-cell-text', event)"
+            @changeCellText="(event) => $emit('changeCellText', event)"
         ></DialogCell>
         <div class="headline">
             <md-filled-icon-button

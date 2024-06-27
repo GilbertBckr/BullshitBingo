@@ -1,12 +1,12 @@
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    import main
+    import GameManager
 
 
 class CommandHandler:
 
-    def __init__(self, game_manager: "main.GameManager") -> None:
+    def __init__(self, game_manager: "GameManager.GameManager") -> None:
         self.game_manager = game_manager
 
     async def handle_command(self, command: str, game_id: str, logged_in_user_id: str):

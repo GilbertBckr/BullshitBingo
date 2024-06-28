@@ -37,6 +37,11 @@ export default {
                 <li>Once 3 fields in a row, column or diagonal are checked you WIN! Don't forget to shout "BINGOOO"!</li>
                 <li>Watch your opponents by clicking on them in the player List!</li>
             </ul>
+            <h3>Leave the game!</h3>
+            <ul>
+                <li>If your mama raised a quitter just close the tab.</li>
+                <li>We will continue to display your board, so the others can still see it.</li>
+            </ul>
         </div>
         <div slot="actions">
             <md-text-button value="cancel" ref="buttonCancel" @click="hide"

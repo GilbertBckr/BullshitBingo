@@ -114,8 +114,3 @@ async def login_for_access_token() -> security.Token:
     return security.Token(access_token=access_token, user_id=str(user_id))
 
 
-@app.get("/users/me/", response_model=str)
-async def read_users_me(
-    current_user: Annotated[str, Depends(security.get_current_user_id)],
-):
-    return current_user

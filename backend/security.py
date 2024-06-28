@@ -1,6 +1,3 @@
-import warnings
-import uuid
-import bcrypt
 from datetime import datetime, timedelta, timezone
 from typing import Annotated
 
@@ -24,47 +21,26 @@ ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24
 
 
-def mocked_user_token() -> str:
-    warnings.warn("Using mocked tokens")
-    return str(uuid.uuid4())
-
-
 class Token(BaseModel):
     access_token: str
     user_id: str
 
 
-# Hash a password using bcrypt
-def get_hash(password: str) -> str:
-    pwd_bytes = password.encode("utf-8")
-    salt = bcrypt.gensalt()
-    hashed_password = bcrypt.hashpw(password=pwd_bytes, salt=salt)
-    return str(hashed_password)
-
-
-# TODO write tests for this method
-def verify_hash(plain_text: str, hashed_text: str) -> bool:
-    password_byte_enc = plain_text.encode("utf-8")
-    hashed_byte_encoding = hashed_text.encode("utf-8")
-    return bcrypt.checkpw(
-        password=password_byte_enc, hashed_password=hashed_byte_encoding
-    )
-
-
 def create_access_token(data: dict[str, Any], expires_delta: timedelta | None = None):
+    """Creates a jwt with the specified payload"""
     to_encode = data.copy()
+    expire: datetime = datetime.now(timezone.utc) + timedelta(
+        minutes=ACCESS_TOKEN_EXPIRE_MINUTES
+    )
     if expires_delta:
         expire = datetime.now(timezone.utc) + expires_delta
-    else:
-        expire: datetime = datetime.now(timezone.utc) + timedelta(
-            minutes=ACCESS_TOKEN_EXPIRE_MINUTES
-        )
     to_encode.update({"exp": expire})
     encoded_jwt: str = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)  # type: ignore
     return encoded_jwt
 
 
 def get_current_user_id(authorization: Annotated[str | None, Header()] = None) -> str:
+    """Checks the provided jwt and throws an error if it is not valid, returns the sub of it"""
     if authorization is None or not authorization.strip():
         raise HTTPException(401, "Token is not set")
     try:

@@ -10,7 +10,6 @@ class GameManager:
 
     def add_game(self, create_game_data: schemas.CreateGame) -> schemas.Game:
         """Throws error"""
-        # TODO logic for generating game ids
         game = schemas.Game(**create_game_data.model_dump(), id=self.generate_id())
         self.active_games[game.id] = game
         return game
